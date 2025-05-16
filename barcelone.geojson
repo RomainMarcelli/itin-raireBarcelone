@@ -4,21 +4,6 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "Hotel SYSTELCOMS",
-                "description": "Hôtel Catalonia Ramblas",
-                "category": "hotel"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    2.1676,
-                    41.3842
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
                 "name": "Sagrada Família",
                 "description": "Une grande basilique catholique romaine inachevée conçue par Antoni Gaudí.",
                 "category": "monument"
@@ -28,6 +13,21 @@
                 "coordinates": [
                     2.1744,
                     41.4036
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Hotel SYSTELCOMS",
+                "description": "Hôtel Catalonia Ramblas",
+                "category": "hotel"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1676,
+                    41.3842
                 ]
             }
         },
@@ -226,5 +226,5 @@
                 ]
             }
         }
-  ]
+    ]
 }

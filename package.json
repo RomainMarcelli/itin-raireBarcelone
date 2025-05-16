@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@gegeweb/leaflet-routing-machine-openroute": "^0.1.10"
+  }
+}

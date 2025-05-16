@@ -5,76 +5,35 @@
     <meta charset="utf-8" />
     <title>Carte interactive de Barcelone</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-        }
-
-        #map {
-            height: 100vh;
-            z-index: 1;
-        }
-
-        #controls {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: white;
-            padding: 16px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            width: 220px;
-        }
-
-        #controls label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-
-        #controls select,
-        #controls button {
-            width: 100%;
-            margin-top: 5px;
-            padding: 6px;
-            font-size: 14px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        #controls button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        #controls button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <!-- Feuilles de style -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 
 <body>
     <div id="controls">
+
+        <label for="mode">Mode de déplacement :</label>
+        <select id="mode">
+            <option value="foot">🚶‍♂️ À pied</option>
+            <option value="driving">🚗 En voiture</option>
+        </select>
+
         <label for="start">Point de départ :</label>
         <select id="start"></select>
 
         <label for="end">Destination :</label>
         <select id="end"></select>
 
+        <div id="steps-holder"></div>
+        <button onclick="addStepSelect()">Ajouter une étape</button>
+
         <button onclick="calculateRoute()">Calculer l’itinéraire</button>
         <button onclick="resetRoute()">Réinitialiser</button>
-        <button onclick="createTour()">Créer une tournée touristique</button>
 
-
+        <!-- Le reste inchangé -->
         <label for="basemap">Fond de carte :</label>
         <select id="basemap" onchange="changeBaseMap(this.value)">
             <option value="light">Carte claire</option>
@@ -95,170 +54,17 @@
 
     <div id="map"></div>
 
+    <div id="route-info" style="position:absolute; top:10px; right:10px; background:white; padding:10px; border:1px solid #ccc; z-index:1000; max-width:250px; display:none;"></div>
+
+    <!-- librairies Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
-    <script>
-        const map = L.map('map').setView([41.3851, 2.1734], 13);
 
-        const tileLayers = {
-            light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap & Carto',
-                subdomains: 'abcd',
-                maxZoom: 19
-            }),
-            satellite: L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-                maxZoom: 20,
-                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                attribution: 'Données © Google Maps'
-            })
-        };
+    <!-- 🧭 OpenRouteService router -->
+    <script src="https://unpkg.com/lrm-openrouteservice@1.0.0/dist/lrm-openrouteservice.min.js"></script>
+    <script src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
 
-        tileLayers.light.addTo(map);
-
-        function changeBaseMap(style) {
-            Object.values(tileLayers).forEach(layer => map.removeLayer(layer));
-            tileLayers[style].addTo(map);
-        }
-
-        let routingControl = null;
-        const startSelect = document.getElementById('start');
-        const endSelect = document.getElementById('end');
-        const points = {};
-        const markersByCategory = {};
-
-        function getIcon(category) {
-            const colors = {
-                parc: "green",
-                restaurant: "red",
-                monument: "violet",
-                bar: "orange",
-                plage: "yellow",
-                hotel: "blue"
-            };
-            const color = colors[category] || "gray";
-
-            return L.icon({
-                iconUrl: `https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-${color}.png`,
-                shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowSize: [41, 41]
-            });
-        }
-
-
-        fetch('barcelone.geojson')
-            .then(response => response.json())
-            .then(data => {
-                data.features.forEach(feature => {
-                    const name = feature.properties.name;
-                    const desc = feature.properties.description;
-                    const cat = feature.properties.category || "autre";
-                    const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
-
-                    points[name] = coords;
-                    startSelect.appendChild(new Option(name, name));
-                    endSelect.appendChild(new Option(name, name));
-
-                    const marker = L.marker(coords, { icon: getIcon(cat) });
-                    marker.bindPopup(`<strong>${name}</strong><br>${desc}`);
-                    marker.addTo(map);
-
-                    if (!markersByCategory[cat]) markersByCategory[cat] = [];
-                    markersByCategory[cat].push(marker);
-                });
-            });
-
-        function calculateRoute() {
-            const start = startSelect.value;
-            const end = endSelect.value;
-
-            if (!start || !end || start === end) {
-                alert("Veuillez choisir deux lieux différents.");
-                return;
-            }
-
-            if (routingControl) {
-                map.removeControl(routingControl);
-            }
-
-            routingControl = L.Routing.control({
-                waypoints: [L.latLng(points[start]), L.latLng(points[end])],
-                routeWhileDragging: false,
-                language: 'fr',
-                createMarker: () => null
-            }).addTo(map);
-        }
-
-        function resetRoute() {
-            if (routingControl) {
-                map.removeControl(routingControl);
-                routingControl = null;
-            }
-            startSelect.selectedIndex = 0;
-            endSelect.selectedIndex = 0;
-        }
-
-        // Filtrage des marqueurs par catégorie
-        document.querySelectorAll('.filter').forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                const cat = checkbox.value;
-                const isChecked = checkbox.checked;
-                if (markersByCategory[cat]) {
-                    markersByCategory[cat].forEach(marker => {
-                        if (isChecked) {
-                            marker.addTo(map);
-                        } else {
-                            map.removeLayer(marker);
-                        }
-                    });
-                }
-            });
-        });
-
-        function createTour() {
-            if (routingControl) {
-                map.removeControl(routingControl);
-                routingControl = null;
-            }
-
-            // Lieux de la tournée (doivent correspondre EXACTEMENT aux noms du GeoJSON)
-            const tourStops = [
-                "Parc Güell",
-                "Sagrada Família",
-                "Tapas Season",
-                "Hotel SYSTELCOMS"
-            ];
-
-            // Vérifie que tous les points existent
-            const missing = tourStops.filter(name => !points[name]);
-            if (missing.length > 0) {
-                alert("Certains lieux de la tournée sont introuvables : " + missing.join(", "));
-                return;
-            }
-
-            // Créer les waypoints pour le routing
-            const waypoints = tourStops.map(name => L.latLng(points[name]));
-
-            routingControl = L.Routing.control({
-                waypoints: waypoints,
-                routeWhileDragging: false,
-                language: 'fr',
-                createMarker: (i, wp, n) => {
-                    return L.marker(wp, {
-                        icon: L.divIcon({
-                            className: 'tour-marker',
-                            html: `<div style="background:#007bff;color:white;border-radius:50%;padding:4px;width:24px;height:24px;text-align:center;">${i + 1}</div>`,
-                            iconSize: [30, 30],
-                            iconAnchor: [15, 15]
-                        })
-                    });
-                }
-            }).addTo(map);
-        }
-
-    </script>
 </body>
+
 
 </html>
