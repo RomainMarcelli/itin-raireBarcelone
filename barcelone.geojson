@@ -1,0 +1,230 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Hotel SYSTELCOMS",
+                "description": "Hôtel Catalonia Ramblas",
+                "category": "hotel"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1676,
+                    41.3842
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sagrada Família",
+                "description": "Une grande basilique catholique romaine inachevée conçue par Antoni Gaudí.",
+                "category": "monument"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1744,
+                    41.4036
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Parc Güell",
+                "description": "Un parc public avec des jardins et éléments architecturaux sur la colline du Carmel.",
+                "category": "parc"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1527,
+                    41.4145
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "La Rambla",
+                "description": "Une rue emblématique du centre de Barcelone, très fréquentée.",
+                "category": "monument"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1734,
+                    41.3826
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Quartier Gothique (Barri Gòtic)",
+                "description": "Le centre historique de la vieille ville de Barcelone.",
+                "category": "monument"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1763,
+                    41.3839
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Casa Batlló",
+                "description": "Chef-d'œuvre moderniste d'Antoni Gaudí situé dans le centre de Barcelone.",
+                "category": "monument"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.165,
+                    41.3917
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Casa Milà (La Pedrera)",
+                "description": "Un autre célèbre bâtiment moderniste conçu par Gaudí.",
+                "category": "monument"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.162,
+                    41.3954
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Musée Picasso",
+                "description": "Un musée consacré à l'œuvre du peintre Pablo Picasso.",
+                "category": "monument"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.18,
+                    41.3852
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Plage de la Barceloneta",
+                "description": "Une des plages les plus populaires de Barcelone.",
+                "category": "plage"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.191,
+                    41.3765
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Montjuïc",
+                "description": "Une colline qui offre une vue panoramique sur Barcelone.",
+                "category": "parc"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1589,
+                    41.3636
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Camp Nou",
+                "description": "Le stade du célèbre club de football FC Barcelone.",
+                "category": "monument"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1228,
+                    41.3809
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tapas Season",
+                "description": "Restaurant de tapas proche de la Casa Milà, avec produits frais et de saison.",
+                "category": "restaurant"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.156,
+                    41.391
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Bodega Joan",
+                "description": "Restaurant catalan traditionnel près de la plaça Catalunya.",
+                "category": "restaurant"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.157,
+                    41.394
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Nubar",
+                "description": "Un lieu chic pour sortir, situé dans le quartier Zona Alta.",
+                "category": "bar"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.134,
+                    41.398
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Mood Rooftop",
+                "description": "Un rooftop caché sur la rue Provença, parfait pour se détendre.",
+                "category": "bar"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.16,
+                    41.394
+                ]
+            }
+        }
+  ]
+}
