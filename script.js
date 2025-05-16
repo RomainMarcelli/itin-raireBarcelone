@@ -1,6 +1,5 @@
 const map = L.map('map').setView([41.3851, 2.1734], 13);
 
-// Fonds de carte
 const tileLayers = {
     light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap & Carto',
@@ -16,8 +15,7 @@ const tileLayers = {
 
 tileLayers.light.addTo(map);
 
-// Variables
-let routeLine = null;
+let routingControl = null;
 let localRoutes = [];
 const startSelect = document.getElementById('start');
 const endSelect = document.getElementById('end');
@@ -26,7 +24,6 @@ const stepSelects = [];
 const points = {};
 const markersByCategory = {};
 
-// Charger les données JSON de trajets
 fetch('trajet.json')
     .then(res => res.json())
     .then(data => {
@@ -65,11 +62,8 @@ fetch('barcelone.geojson')
 
             points[name] = coords;
 
-            const optionStart = new Option(name, name);
-            const optionEnd = new Option(name, name);
-
-            startSelect.add(optionStart);
-            endSelect.add(optionEnd);
+            startSelect.add(new Option(name, name));
+            endSelect.add(new Option(name, name));
 
             const marker = L.marker(coords, { icon: getIcon(cat) });
             marker.bindPopup(`<strong>${name}</strong><br>${desc}`);
@@ -79,8 +73,7 @@ fetch('barcelone.geojson')
             markersByCategory[cat].push(marker);
         });
 
-        // Valeur par défaut
-        startSelect.value = "Hotel SYSTELECOMS";
+        startSelect.value = "Hotel SYSTELCOMS";
         updateEndOptions();
         updateStartOptions();
     });
@@ -132,45 +125,52 @@ function calculateRoute() {
         return;
     }
 
-    // Supprimer ligne précédente
-    if (routeLine) {
-        map.removeLayer(routeLine);
-        routeLine = null;
+    if (routingControl) {
+        map.removeControl(routingControl);
+        routingControl = null;
     }
 
-    const infoBox = document.getElementById('route-info');
-
-    // Recherche dans les trajets JSON
     const route = localRoutes.find(r =>
         (r.from === start && r.to === end) || (r.from === end && r.to === start)
     );
-    if (!route) {
-        infoBox.innerHTML = "Aucune donnée disponible pour ce trajet.";
-        infoBox.style.display = 'block';
-        return;
-    }
 
-    const data = mode === 'foot' ? route.walking : route.driving;
+    const profile = mode === 'foot' ? 'foot-walking' : 'driving-car';
 
-    infoBox.innerHTML = `
-    <strong>Itinéraire ${mode === 'foot' ? 'à pied' : 'en voiture'}</strong><br>
-    De <em>${start}</em> à <em>${end}</em><br>
-    Distance : ${data.distance_km} km<br>
-    Durée estimée : ${data.duration_min} minutes
-`;
-
-    infoBox.style.display = 'block';
-
-    // Tracer la ligne simple
-    const latlngs = [points[start], points[end]];
-    routeLine = L.polyline(latlngs, { color: mode === 'foot' ? 'blue' : 'red' }).addTo(map);
-    map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+    routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(points[start]),
+            L.latLng(points[end])
+        ],
+        routeWhileDragging: false,
+        createMarker: () => null,
+        show: true,
+        language: 'fr',
+        router: new L.Routing.OpenRouteService('5b3ce3597851110001cf6248c0ecdf3661ce4d9f857064f107bee80c', {
+            profile: profile
+        }),
+        summaryTemplate: function (data) {
+            const route = localRoutes.find(r =>
+                (r.from === start && r.to === end) || (r.from === end && r.to === start)
+            );
+            if (!route) return '';
+            const info = mode === 'foot' ? route.walking : route.driving;
+            return `
+                <div style="margin-bottom: 10px;">
+                    <strong>Itinéraire ${mode === 'foot' ? 'à pied' : 'en voiture'}</strong><br>
+                    De <em>${start}</em> à <em>${end}</em><br>
+                    <u>Données locales</u><br>
+                    Distance : ${info.distance_km} km<br>
+                    Durée estimée : ${info.duration_min} minutes
+                </div>
+            `;
+        }
+    }).addTo(map);
 }
 
 function resetRoute() {
-    if (routeLine) {
-        map.removeLayer(routeLine);
-        routeLine = null;
+    if (routingControl) {
+        map.removeControl(routingControl);
+        routingControl = null;
     }
     startSelect.selectedIndex = 0;
     endSelect.selectedIndex = 0;
