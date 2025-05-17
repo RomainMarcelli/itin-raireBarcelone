@@ -115,6 +115,13 @@ function addStepSelect() {
     stepSelects.push(select);
 }
 
+function formatDuration(mins) {
+    if (mins < 60) return `${mins.toFixed(0)} min`;
+    const h = Math.floor(mins / 60);
+    const m = Math.round(mins % 60);
+    return `${h}h${m > 0 ? m : ''}`;
+}
+
 function calculateRoute() {
     const start = startSelect.value;
     const end = endSelect.value;
@@ -130,17 +137,13 @@ function calculateRoute() {
         routingControl = null;
     }
 
-    const route = localRoutes.find(r =>
-        (r.from === start && r.to === end) || (r.from === end && r.to === start)
-    );
+    const intermediate = stepSelects.map(sel => sel.value);
+    const allStops = [start, ...intermediate, end];
 
     const profile = mode === 'foot' ? 'foot-walking' : 'driving-car';
 
     routingControl = L.Routing.control({
-        waypoints: [
-            L.latLng(points[start]),
-            L.latLng(points[end])
-        ],
+        waypoints: allStops.map(name => L.latLng(points[name])),
         routeWhileDragging: false,
         createMarker: () => null,
         show: true,
@@ -148,21 +151,27 @@ function calculateRoute() {
         router: new L.Routing.OpenRouteService('5b3ce3597851110001cf6248c0ecdf3661ce4d9f857064f107bee80c', {
             profile: profile
         }),
-        summaryTemplate: function (data) {
-            const route = localRoutes.find(r =>
-                (r.from === start && r.to === end) || (r.from === end && r.to === start)
-            );
-            if (!route) return '';
-            const info = mode === 'foot' ? route.walking : route.driving;
-            return `
-                <div style="margin-bottom: 10px;">
-                    <strong>Itinéraire ${mode === 'foot' ? 'à pied' : 'en voiture'}</strong><br>
-                    De <em>${start}</em> à <em>${end}</em><br>
-                    <u>Données locales</u><br>
-                    Distance : ${info.distance_km} km<br>
-                    Durée estimée : ${info.duration_min} minutes
-                </div>
-            `;
+        summaryTemplate: function () {
+            let html = `<strong>Itinéraire ${mode === 'foot' ? 'à pied' : 'en voiture'}</strong><br><br>`;
+            let totalDistance = 0;
+            let totalDuration = 0;
+
+            for (let i = 0; i < allStops.length - 1; i++) {
+                const from = allStops[i];
+                const to = allStops[i + 1];
+                const seg = localRoutes.find(r => (r.from === from && r.to === to) || (r.from === to && r.to === from));
+                if (seg) {
+                    const data = mode === 'foot' ? seg.walking : seg.driving;
+                    totalDistance += data.distance_km;
+                    totalDuration += data.duration_min;
+                    html += `<u>Étape ${i + 1}</u> : ${from} → ${to}<br>`;
+                    html += `Distance : ${data.distance_km} km<br>`;
+                    html += `Durée : ${formatDuration(data.duration_min)}<br><br>`;
+                }
+            }
+
+            html += `<strong>Total</strong> : ${totalDistance.toFixed(2)} km, ${formatDuration(totalDuration)}`;
+            return `<div style="margin-bottom: 10px;">${html}</div>`;
         }
     }).addTo(map);
 }

@@ -42,22 +42,40 @@
 
         <hr>
         <label><strong>Filtres :</strong></label>
-        <div>
-            <label><input type="checkbox" class="filter" value="hotel" checked> 🟦 Hôtel</label><br>
-            <label><input type="checkbox" class="filter" value="parc" checked> 🟩 Parcs</label><br>
-            <label><input type="checkbox" class="filter" value="restaurant" checked> 🟥 Restaurants</label><br>
-            <label><input type="checkbox" class="filter" value="monument" checked> 🟪 Monuments</label><br>
-            <label><input type="checkbox" class="filter" value="bar" checked> 🟧 Bars</label><br>
-            <label><input type="checkbox" class="filter" value="plage" checked> 🟨 Plages</label>
+        <div class="filter-group">
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="hotel" checked>
+                <span class="filter-color hotel">🟦</span> Hôtel
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="parc" checked>
+                <span class="filter-color parc">🟩</span> Parcs
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="restaurant" checked>
+                <span class="filter-color restaurant">🟥</span> Restaurants
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="monument" checked>
+                <span class="filter-color monument">🟪</span> Monuments
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="bar" checked>
+                <span class="filter-color bar">🟧</span> Bars
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="plage" checked>
+                <span class="filter-color plage">🟨</span> Plages
+            </label>
         </div>
     </div>
 
     <div id="map"></div>
 
-    <div id="route-info"
+    <!-- <div id="route-info"
         style="position:absolute; top:10px; right:10px; background:white; padding:10px; border-radius:6px; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:1000;">
-    </div>
-    
+    </div> -->
+
     <!-- librairies Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>

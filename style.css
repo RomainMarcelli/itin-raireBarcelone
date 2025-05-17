@@ -79,3 +79,89 @@ body {
   color: #e60000;
   background-color: #f2f2f2;
 }
+
+
+/* Style du panneau d'itinéraire Leaflet */
+.leaflet-routing-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    max-width: 320px;
+    max-height: 70vh;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.leaflet-routing-container h2,
+.leaflet-routing-container h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.leaflet-routing-alt {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.leaflet-routing-instruction {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.leaflet-routing-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.leaflet-routing-container .leaflet-bar {
+    display: none; /* Cache les boutons inutiles */
+}
+
+.filter-group {
+    margin-top: 10px;
+    padding: 10px;
+    background: #fafafa;
+    border-radius: 8px;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    gap: 6px;
+}
+
+.filter-option input[type="checkbox"] {
+    accent-color: #007bff;
+    cursor: pointer;
+}
+
+.filter-color {
+    display: inline-block;
+    font-size: 18px;
+    width: 1.2em;
+}
+
+
+/* Responsive ajustement */
+@media (max-width: 768px) {
+    #controls {
+        width: 90%;
+        left: 5%;
+    }
+
+    .leaflet-routing-container {
+        max-width: 90%;
+        font-size: 14px;
+    }
+}
