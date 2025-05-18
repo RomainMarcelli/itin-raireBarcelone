@@ -66,7 +66,21 @@ fetch('barcelone.geojson')
             endSelect.add(new Option(name, name));
 
             const marker = L.marker(coords, { icon: getIcon(cat) });
-            marker.bindPopup(`<strong>${name}</strong><br>${desc}`);
+            marker.bindPopup(`
+                <div>
+                    <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 16px;">
+                        <span class="favorite-star ${isFavorite(name) ? 'active' : ''}" 
+                            onclick="toggleFavorite(this, '${name.replace(/'/g, "\\'")}')" 
+                            style="font-size: 18px; cursor: pointer;">
+                            ${isFavorite(name) ? '★' : '☆'}
+                        </span>
+                        <span>${name}</span>
+                    </div>
+                    <div style="margin-top: 4px; font-size: 14px; color: #444;">
+                        ${desc}
+                    </div>
+                </div>
+            `);
             marker.addTo(map);
 
             if (!markersByCategory[cat]) markersByCategory[cat] = [];
@@ -76,7 +90,30 @@ fetch('barcelone.geojson')
         startSelect.value = "Hotel SYSTELCOMS";
         updateEndOptions();
         updateStartOptions();
+        updateFavoritesList();
     });
+
+function isFavorite(name) {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    return favorites.includes(name);
+}
+
+function toggleFavorite(el, name) {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const index = favorites.indexOf(name);
+    if (index === -1) {
+        favorites.push(name);
+        el.textContent = '★';
+        el.classList.add('active');
+    } else {
+        favorites.splice(index, 1);
+        el.textContent = '☆';
+        el.classList.remove('active');
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    updateFavoritesList();
+}
+
 
 function getAvailableOptions() {
     const all = Object.keys(points);
@@ -240,4 +277,28 @@ document.querySelectorAll('.filter').forEach(checkbox => {
 function changeBaseMap(style) {
     Object.values(tileLayers).forEach(layer => map.removeLayer(layer));
     tileLayers[style].addTo(map);
+}
+
+
+function addToFavorites(name) {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    if (!favorites.includes(name)) {
+        favorites.push(name);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoritesList();
+        alert(`✅ "${name}" a été ajouté aux favoris.`);
+    } else {
+        alert(`"${name}" est déjà dans vos favoris.`);
+    }
+}
+
+function updateFavoritesList() {
+    const list = document.getElementById('favorites-list');
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    list.innerHTML = '';
+    favorites.forEach(name => {
+        const li = document.createElement('li');
+        li.textContent = '⭐ ' + name;
+        list.appendChild(li);
+    });
 }

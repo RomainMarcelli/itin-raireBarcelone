@@ -14,7 +14,6 @@
 
 <body>
     <div id="controls">
-
         <label for="mode">Mode de déplacement :</label>
         <select id="mode">
             <option value="foot">🚶‍♂️ À pied</option>
@@ -33,7 +32,6 @@
         <button onclick="calculateRoute()">Calculer l’itinéraire</button>
         <button onclick="resetRoute()">Réinitialiser</button>
 
-        <!-- Le reste inchangé -->
         <label for="basemap">Fond de carte :</label>
         <select id="basemap" onchange="changeBaseMap(this.value)">
             <option value="light">Carte claire</option>
@@ -68,13 +66,13 @@
                 <span class="filter-color plage">🟨</span> Plages
             </label>
         </div>
+
+        <hr>
+        <label><strong>⭐ Mes favoris :</strong></label>
+        <ul id="favorites-list" style="list-style-type: none; padding-left: 0; font-size: 14px; margin-top: 8px;"></ul>
     </div>
 
     <div id="map"></div>
-
-    <!-- <div id="route-info"
-        style="position:absolute; top:10px; right:10px; background:white; padding:10px; border-radius:6px; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:1000;">
-    </div> -->
 
     <!-- librairies Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -82,10 +80,8 @@
 
     <!-- 🧭 OpenRouteService router -->
     <script src="https://unpkg.com/lrm-openrouteservice@1.0.0/dist/lrm-openrouteservice.min.js"></script>
-    <script
-        src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
+    <script src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
 
 </body>
-
 
 </html>
