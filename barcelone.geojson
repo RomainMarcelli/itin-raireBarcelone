@@ -6,7 +6,8 @@
             "properties": {
                 "name": "Sagrada Família",
                 "description": "Une grande basilique catholique romaine inachevée conçue par Antoni Gaudí.",
-                "category": "monument"
+                "category": "monument",
+                "hours": "📅 Ouvert de 10h à 20h"
             },
             "geometry": {
                 "type": "Point",
@@ -21,7 +22,8 @@
             "properties": {
                 "name": "Hotel SYSTELCOMS",
                 "description": "Hôtel Catalonia Ramblas",
-                "category": "hotel"
+                "category": "hotel",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -36,7 +38,8 @@
             "properties": {
                 "name": "Parc Güell",
                 "description": "Un parc public avec des jardins et éléments architecturaux sur la colline du Carmel.",
-                "category": "parc"
+                "category": "parc",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -51,7 +54,8 @@
             "properties": {
                 "name": "La Rambla",
                 "description": "Une rue emblématique du centre de Barcelone, très fréquentée.",
-                "category": "monument"
+                "category": "monument",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -66,7 +70,8 @@
             "properties": {
                 "name": "Quartier Gothique (Barri Gòtic)",
                 "description": "Le centre historique de la vieille ville de Barcelone.",
-                "category": "monument"
+                "category": "monument",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -81,7 +86,8 @@
             "properties": {
                 "name": "Casa Batlló",
                 "description": "Chef-d'œuvre moderniste d'Antoni Gaudí situé dans le centre de Barcelone.",
-                "category": "monument"
+                "category": "monument",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -96,7 +102,8 @@
             "properties": {
                 "name": "Casa Milà (La Pedrera)",
                 "description": "Un autre célèbre bâtiment moderniste conçu par Gaudí.",
-                "category": "monument"
+                "category": "monument",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -111,7 +118,8 @@
             "properties": {
                 "name": "Musée Picasso",
                 "description": "Un musée consacré à l'œuvre du peintre Pablo Picasso.",
-                "category": "monument"
+                "category": "monument",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -126,7 +134,8 @@
             "properties": {
                 "name": "Plage de la Barceloneta",
                 "description": "Une des plages les plus populaires de Barcelone.",
-                "category": "plage"
+                "category": "plage",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -141,7 +150,8 @@
             "properties": {
                 "name": "Montjuïc",
                 "description": "Une colline qui offre une vue panoramique sur Barcelone.",
-                "category": "parc"
+                "category": "parc",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -156,7 +166,8 @@
             "properties": {
                 "name": "Camp Nou",
                 "description": "Le stade du célèbre club de football FC Barcelone.",
-                "category": "monument"
+                "category": "monument",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -171,7 +182,8 @@
             "properties": {
                 "name": "Tapas Season",
                 "description": "Restaurant de tapas proche de la Casa Milà, avec produits frais et de saison.",
-                "category": "restaurant"
+                "category": "restaurant",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -186,7 +198,8 @@
             "properties": {
                 "name": "Bodega Joan",
                 "description": "Restaurant catalan traditionnel près de la plaça Catalunya.",
-                "category": "restaurant"
+                "category": "restaurant",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -201,7 +214,8 @@
             "properties": {
                 "name": "Nubar",
                 "description": "Un lieu chic pour sortir, situé dans le quartier Zona Alta.",
-                "category": "bar"
+                "category": "bar",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",
@@ -216,7 +230,8 @@
             "properties": {
                 "name": "Mood Rooftop",
                 "description": "Un rooftop caché sur la rue Provença, parfait pour se détendre.",
-                "category": "bar"
+                "category": "bar",
+                "hours": ""
             },
             "geometry": {
                 "type": "Point",

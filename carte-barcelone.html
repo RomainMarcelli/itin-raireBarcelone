@@ -8,6 +8,11 @@
     <!-- Feuilles de style -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <!-- Générateur PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Capture de DOM pour la carte -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
 </head>
@@ -66,7 +71,6 @@
                 <span class="filter-color plage">🟨</span> Plages
             </label>
         </div>
-
         <hr>
         <label><strong>⭐ Mes favoris :</strong></label>
         <ul id="favorites-list" style="list-style-type: none; padding-left: 0; font-size: 14px; margin-top: 8px;"></ul>
@@ -80,7 +84,8 @@
 
     <!-- 🧭 OpenRouteService router -->
     <script src="https://unpkg.com/lrm-openrouteservice@1.0.0/dist/lrm-openrouteservice.min.js"></script>
-    <script src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
+    <script
+        src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
 
 </body>
 

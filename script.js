@@ -54,6 +54,8 @@ function getIcon(category) {
 fetch('barcelone.geojson')
     .then(res => res.json())
     .then(data => {
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
         data.features.forEach(feature => {
             const name = feature.properties.name;
             const desc = feature.properties.description;
@@ -61,11 +63,11 @@ fetch('barcelone.geojson')
             const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
 
             points[name] = coords;
-
             startSelect.add(new Option(name, name));
             endSelect.add(new Option(name, name));
 
             const marker = L.marker(coords, { icon: getIcon(cat) });
+
             marker.bindPopup(`
                 <div>
                     <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 16px;">
@@ -78,9 +80,12 @@ fetch('barcelone.geojson')
                     </div>
                     <div style="margin-top: 4px; font-size: 14px; color: #444;">
                         ${desc}
+                        ${feature.properties.hours ? `<div style="margin-top: 6px;">${feature.properties.hours}</div>` : ''}
+                        ${feature.properties.best_time ? `<div style="margin-top: 6px;">${feature.properties.best_time}</div>` : ''}
                     </div>
                 </div>
             `);
+
             marker.addTo(map);
 
             if (!markersByCategory[cat]) markersByCategory[cat] = [];
@@ -113,6 +118,88 @@ function toggleFavorite(el, name) {
     localStorage.setItem('favorites', JSON.stringify(favorites));
     updateFavoritesList();
 }
+
+function updateFavoritesList() {
+    const list = document.getElementById('favorites-list');
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    list.innerHTML = '';
+
+    favorites.forEach(name => {
+        const li = document.createElement('li');
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.marginBottom = '6px';
+
+        const star = document.createElement('span');
+        star.textContent = '★';
+        star.className = 'favorite-star active';
+        star.style.cursor = 'pointer';
+        star.style.fontSize = '22px'; // 👈 Augmente la taille ici
+        star.style.marginRight = '2px';
+        star.title = 'Supprimer des favoris';
+        star.onclick = () => {
+            removeFromFavorites(name);
+            updatePopupStars();
+        };
+
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = name;
+        nameSpan.style.cursor = 'pointer';
+        nameSpan.style.marginLeft = '6px';
+        nameSpan.style.fontWeight = 'bold';       // ✅ Gras
+        nameSpan.style.fontSize = '15px';         // ✅ Taille augmentée
+        nameSpan.title = 'Afficher sur la carte';
+        nameSpan.onclick = () => {
+            const marker = findMarkerByName(name);
+            if (marker) {
+                marker.openPopup();
+                map.setView(marker.getLatLng(), 16);
+            }
+        };
+
+        li.appendChild(star);
+        li.appendChild(nameSpan);
+        list.appendChild(li);
+    });
+}
+
+
+function removeFromFavorites(name) {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const index = favorites.indexOf(name);
+    if (index !== -1) {
+        favorites.splice(index, 1);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoritesList();
+    }
+}
+
+function findMarkerByName(name) {
+    for (const category in markersByCategory) {
+        const marker = markersByCategory[category].find(m => {
+            const popup = m.getPopup();
+            return popup && popup.getContent().includes(name);
+        });
+        if (marker) return marker;
+    }
+    return null;
+}
+
+
+function updatePopupStars() {
+    document.querySelectorAll('.leaflet-popup-content .favorite-star').forEach(star => {
+        const name = star.nextElementSibling?.textContent?.trim();
+        if (name && isFavorite(name)) {
+            star.textContent = '★';
+            star.classList.add('active');
+        } else {
+            star.textContent = '☆';
+            star.classList.remove('active');
+        }
+    });
+}
+
 
 
 function getAvailableOptions() {
@@ -176,7 +263,6 @@ function calculateRoute() {
 
     const intermediate = stepSelects.map(sel => sel.value);
     const allStops = [start, ...intermediate, end];
-
     const profile = mode === 'foot' ? 'foot-walking' : 'driving-car';
 
     routingControl = L.Routing.control({
@@ -280,6 +366,7 @@ function changeBaseMap(style) {
 }
 
 
+
 function addToFavorites(name) {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     if (!favorites.includes(name)) {
@@ -290,15 +377,4 @@ function addToFavorites(name) {
     } else {
         alert(`"${name}" est déjà dans vos favoris.`);
     }
-}
-
-function updateFavoritesList() {
-    const list = document.getElementById('favorites-list');
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    list.innerHTML = '';
-    favorites.forEach(name => {
-        const li = document.createElement('li');
-        li.textContent = '⭐ ' + name;
-        list.appendChild(li);
-    });
 }

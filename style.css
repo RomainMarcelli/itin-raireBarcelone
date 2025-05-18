@@ -9,6 +9,7 @@ body {
     z-index: 1;
 }
 
+
 #controls {
     position: absolute;
     top: 20px;
@@ -16,10 +17,34 @@ body {
     z-index: 1000;
     background: white;
     padding: 16px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    width: 220px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    width: 240px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    transform-origin: top left;
 }
+
+#controls.collapsed {
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+#controls.collapsed label,
+#controls.collapsed select,
+#controls.collapsed button,
+#controls.collapsed hr,
+#controls.collapsed .filter-group,
+#controls.collapsed ul {
+    display: none;
+}
+
+
 
 #controls label {
     font-weight: bold;
@@ -48,8 +73,23 @@ body {
 
 #controls button:hover {
     background-color: #0056b3;
+    transform: scale(1.03);
+    transition: background-color 0.2s, transform 0.2s;
 }
 
+
+#controls::-webkit-scrollbar {
+  width: 6px;
+}
+
+#controls::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+#controls::-webkit-scrollbar-track {
+  background-color: transparent;
+}
 
 .step-wrapper {
   display: flex;
@@ -160,7 +200,6 @@ body {
 .favorite-star.active {
   color: gold;
 }
-
 
 
 /* Responsive ajustement */
