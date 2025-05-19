@@ -7,7 +7,7 @@
                 "name": "Sagrada Família",
                 "description": "Une grande basilique catholique romaine inachevée conçue par Antoni Gaudí.",
                 "category": "monument",
-                "hours": "📅 Ouvert de 10h à 20h"
+                "hours": "📅 Ouvert de 09h à 19h"
             },
             "geometry": {
                 "type": "Point",
@@ -23,7 +23,7 @@
                 "name": "Hotel SYSTELCOMS",
                 "description": "Hôtel Catalonia Ramblas",
                 "category": "hotel",
-                "hours": ""
+                "hours": "📅 24h/24H"
             },
             "geometry": {
                 "type": "Point",
@@ -39,7 +39,7 @@
                 "name": "Parc Güell",
                 "description": "Un parc public avec des jardins et éléments architecturaux sur la colline du Carmel.",
                 "category": "parc",
-                "hours": ""
+                "hours": "📅 Ouvert de 09:30 - 19:30"
             },
             "geometry": {
                 "type": "Point",
@@ -55,7 +55,7 @@
                 "name": "La Rambla",
                 "description": "Une rue emblématique du centre de Barcelone, très fréquentée.",
                 "category": "monument",
-                "hours": ""
+                "hours": "📅 Ouvert 24/24 "
             },
             "geometry": {
                 "type": "Point",
@@ -71,7 +71,7 @@
                 "name": "Quartier Gothique (Barri Gòtic)",
                 "description": "Le centre historique de la vieille ville de Barcelone.",
                 "category": "monument",
-                "hours": ""
+                "hours": "📅 Ouvert de "
             },
             "geometry": {
                 "type": "Point",
@@ -87,7 +87,7 @@
                 "name": "Casa Batlló",
                 "description": "Chef-d'œuvre moderniste d'Antoni Gaudí situé dans le centre de Barcelone.",
                 "category": "monument",
-                "hours": ""
+                "hours": "📅 Ouvert de 09:00 - 21:00"
             },
             "geometry": {
                 "type": "Point",
@@ -103,7 +103,7 @@
                 "name": "Casa Milà (La Pedrera)",
                 "description": "Un autre célèbre bâtiment moderniste conçu par Gaudí.",
                 "category": "monument",
-                "hours": ""
+                "hours": "📅 Ouvert de 09:30 - 20:30"
             },
             "geometry": {
                 "type": "Point",
@@ -119,7 +119,7 @@
                 "name": "Musée Picasso",
                 "description": "Un musée consacré à l'œuvre du peintre Pablo Picasso.",
                 "category": "monument",
-                "hours": ""
+                "hours": "📅 Ouvert de 10:00 - 19:00"
             },
             "geometry": {
                 "type": "Point",
@@ -135,7 +135,7 @@
                 "name": "Plage de la Barceloneta",
                 "description": "Une des plages les plus populaires de Barcelone.",
                 "category": "plage",
-                "hours": ""
+                "hours": "📅 Ouvert 24/24"
             },
             "geometry": {
                 "type": "Point",
@@ -151,7 +151,7 @@
                 "name": "Montjuïc",
                 "description": "Une colline qui offre une vue panoramique sur Barcelone.",
                 "category": "parc",
-                "hours": ""
+                "hours": "📅 Ouvert de 10:00 - 19:00"
             },
             "geometry": {
                 "type": "Point",
@@ -167,7 +167,7 @@
                 "name": "Camp Nou",
                 "description": "Le stade du célèbre club de football FC Barcelone.",
                 "category": "monument",
-                "hours": ""
+                "hours": "📅 Ouvert de 10:00 - 18:30"
             },
             "geometry": {
                 "type": "Point",
@@ -183,7 +183,7 @@
                 "name": "Tapas Season",
                 "description": "Restaurant de tapas proche de la Casa Milà, avec produits frais et de saison.",
                 "category": "restaurant",
-                "hours": ""
+                "hours": "📅 Ouvert de 13:00 - 00:00"
             },
             "geometry": {
                 "type": "Point",
@@ -199,7 +199,7 @@
                 "name": "Bodega Joan",
                 "description": "Restaurant catalan traditionnel près de la plaça Catalunya.",
                 "category": "restaurant",
-                "hours": ""
+                "hours": "📅 Ouvert de 08:00 - 01:00"
             },
             "geometry": {
                 "type": "Point",
@@ -215,7 +215,7 @@
                 "name": "Nubar",
                 "description": "Un lieu chic pour sortir, situé dans le quartier Zona Alta.",
                 "category": "bar",
-                "hours": ""
+                "hours": "📅 Ouvert de 13:00 - 23:30"
             },
             "geometry": {
                 "type": "Point",
@@ -231,7 +231,7 @@
                 "name": "Mood Rooftop",
                 "description": "Un rooftop caché sur la rue Provença, parfait pour se détendre.",
                 "category": "bar",
-                "hours": ""
+                "hours": "📅 Ouvert de 12:00 - 00:00"
             },
             "geometry": {
                 "type": "Point",

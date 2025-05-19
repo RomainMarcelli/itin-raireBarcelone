@@ -1,0 +1,39 @@
+🗺️ Carte
+Affichage de la carte centrée sur Barcelone
+
+Changement entre carte claire et satellite
+
+📍 Points d’intérêt (POI)
+Chargés depuis barcelone.geojson
+
+Affichés avec des marqueurs colorés selon la catégorie
+
+Popups avec nom, description, horaires et étoile favoris
+
+⭐ Favoris
+Ajout/suppression via l’étoile dans la popup
+
+Liste des favoris dans le panneau
+
+Clic sur un favori → ouvre la popup sur la carte
+
+🚦 Itinéraire
+Départ, arrivée et étapes personnalisables
+
+Choix du mode : à pied / en voiture
+
+Itinéraire calculé avec OpenRouteService
+
+Résumé des distances et durées
+
+➕ Étapes
+Ajout et suppression d'étapes intermédiaires
+
+Mise à jour automatique des options
+
+🛠️ Autres
+Filtres par catégorie de lieux
+
+Données de trajets chargées depuis trajet.json
+
+Stockage des favoris en localStorage

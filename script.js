@@ -98,6 +98,68 @@ fetch('barcelone.geojson')
         updateFavoritesList();
     });
 
+const metroIcon = L.icon({
+    iconUrl: 'barcelonepng.png',
+    iconSize: [20, 20],
+    iconAnchor: [10, 20],
+    popupAnchor: [0, -20]
+});
+
+// Définir les couleurs par ligne
+const lineColors = {
+    L1: "#FF0000",
+    L2: "#800080",
+    L3: "#008000",
+    L4: "#FFD700",
+    L5: "#0000FF",
+    L6: "#A52A2A",
+    L7: "#FFA500",
+    L8: "#FFC0CB",
+    L9: "#FF9900",
+    L10: "#00CED1",
+    L11: "#808000"
+};
+
+fetch('metro_stations.geojson')
+    .then(res => res.json())
+    .then(data => {
+        const lineGroups = {}; // pour regrouper les stations par ligne
+
+        data.features.forEach(feature => {
+            const name = feature.properties.name;
+            const line = feature.properties.line;
+            const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+
+            // Marqueur
+            const marker = L.marker(coords, { icon: metroIcon });
+            marker.bindPopup(`<strong>${name}</strong><br>🚇 Ligne ${line}`);
+            marker.addTo(map);
+
+            if (!markersByCategory["metro"]) markersByCategory["metro"] = [];
+            markersByCategory["metro"].push(marker);
+
+            // Grouper les coordonnées par ligne
+            if (!lineGroups[line]) lineGroups[line] = [];
+            lineGroups[line].push(coords);
+        });
+
+        // Tracer les lignes par groupe
+        // Tracer les lignes par groupe avec un style plus fin et discret
+        for (const line in lineGroups) {
+            const coords = lineGroups[line];
+
+            const polyline = L.polyline(coords, {
+                color: lineColors[line] || "#999",
+                weight: 2,          // 🔽 plus fin
+                opacity: 0.6,       // 🔽 un peu plus transparent
+                smoothFactor: 1     // 🔁 pour un tracé plus fluide si besoin
+            }).addTo(map);
+        }
+
+    });
+
+
+
 function isFavorite(name) {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     return favorites.includes(name);
@@ -378,3 +440,26 @@ function addToFavorites(name) {
         alert(`"${name}" est déjà dans vos favoris.`);
     }
 }
+
+(function makeDraggable() {
+    const panel = document.getElementById('controls');
+    const handle = document.getElementById('drag-handle');
+    let offsetX = 0, offsetY = 0, isDragging = false;
+
+    handle.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - panel.offsetLeft;
+        offsetY = e.clientY - panel.offsetTop;
+        panel.style.transition = 'none'; // désactive transition pendant le drag
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        panel.style.left = `${e.clientX - offsetX}px`;
+        panel.style.top = `${e.clientY - offsetY}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+})();
