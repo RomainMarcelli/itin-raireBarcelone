@@ -111,7 +111,6 @@ function loadBarceloneData() {
                 const cat = feature.properties.category || "autre";
                 const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
 
-                // 🔍 Calcul des distances vers toutes les stations de métro
                 const distances = allMetroStations.map(st => {
                     const metroCoords = [st.geometry.coordinates[1], st.geometry.coordinates[0]];
                     return {
@@ -125,36 +124,71 @@ function loadBarceloneData() {
 
                 let metroInfo = '';
                 if (nearbyStations.length > 0) {
+                    const maxVisible = 3;
+                    const visibleStations = nearbyStations.slice(0, maxVisible);
+                    const hiddenStations = nearbyStations.slice(maxVisible);
+
                     metroInfo = `
                         <div style="margin-top: 6px;">
                             <strong>🚇 À proximité :</strong><br>
-                            ${nearbyStations.map(st => `
+                            ${visibleStations.map(st => `
                                 ${getLineDot(st.line)} 
                                 <a href="#" onclick="focusMetroStation('${st.name.replace(/'/g, "\\'")}'); return false;" 
-                                style="color: #666; text-decoration: none;">
+                                   style="color: #666; text-decoration: none;">
                                     ${st.name}
                                 </a> (L${st.line}) – ${Math.round(st.distance)} m
                             `).join('<br>')}
+                           ${hiddenStations.length > 0 ? `
+                                <a href="#" onclick="
+                                    event.preventDefault(); 
+                                    event.stopPropagation(); 
+                                    this.style.display='none'; 
+                                    const extra = this.nextElementSibling; 
+                                    extra.style.display='inline'; 
+                                    extra.nextElementSibling.style.display='inline';
+                                " 
+                                style="font-size: 13px; color: #666; text-decoration: underline;">
+                                    Voir plus...
+                                </a>
+
+                                <span style="display:none;">
+                                    <br>${hiddenStations.map(st => `
+                                        ${getLineDot(st.line)} 
+                                        <a href="#" onclick="event.preventDefault(); event.stopPropagation(); focusMetroStation('${st.name.replace(/'/g, "\\'")}'); return false;" 
+                                        style="color: #666; text-decoration: none;">
+                                            ${st.name}
+                                        </a> (L${st.line}) – ${Math.round(st.distance)} m
+                                    `).join('<br>')}
+                                </span>
+
+                                <a href="#" onclick="
+                                    event.preventDefault(); 
+                                    event.stopPropagation(); 
+                                    const moreLink = this.previousElementSibling.previousElementSibling; 
+                                    this.previousElementSibling.style.display='none'; 
+                                    this.style.display='none'; 
+                                    moreLink.style.display='inline';
+                                " 
+                                style="display:none; font-size: 13px; color: #666; text-decoration: underline;">
+                                    Réduire
+                                </a>
+                            ` : ''}
                         </div>`;
                 } else {
                     const closest = distances.reduce((a, b) => a.distance < b.distance ? a : b);
-                  metroInfo = `
+                    metroInfo = `
                         <div style="margin-top: 6px;">
                             <strong>🚇 Station la plus proche :</strong><br>
                             ${getLineDot(closest.line)} 
                             <a href="#" onclick="focusMetroStation('${closest.name.replace(/'/g, "\\'")}'); return false;" 
-                            style="color: #666; text-decoration: none;">
+                               style="color: #666; text-decoration: none;">
                                 ${closest.name}
-                            </a> (${closest.line}) – ${
-                                closest.distance < 1000 
-                                    ? Math.round(closest.distance) + ' m' 
-                                    : (closest.distance / 1000).toFixed(2) + ' km'
-                            }
+                            </a> (${closest.line}) – ${closest.distance < 1000
+                            ? Math.round(closest.distance) + ' m'
+                            : (closest.distance / 1000).toFixed(2) + ' km'
+                        }
                         </div>`;
                 }
-
-
-
 
                 points[name] = coords;
                 startSelect.add(new Option(name, name));
@@ -166,8 +200,8 @@ function loadBarceloneData() {
                     <div>
                         <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 16px;">
                             <span class="favorite-star ${isFavorite(name) ? 'active' : ''}" 
-                                onclick="toggleFavorite(this, '${name.replace(/'/g, "\\'")}')" 
-                                style="font-size: 18px; cursor: pointer;">
+                                  onclick="toggleFavorite(this, '${name.replace(/'/g, "\\'")}')" 
+                                  style="font-size: 18px; cursor: pointer;">
                                 ${isFavorite(name) ? '★' : '☆'}
                             </span>
                             <span>${name}</span>
@@ -616,17 +650,116 @@ function focusMetroStation(stationName) {
     }
 }
 
+const searchInput = document.getElementById('search-input');
+const suggestionList = document.getElementById('search-suggestions');
+const clearBtn = document.getElementById('clear-search');
 
-document.getElementById('search-input').addEventListener('input', function () {
-    const query = this.value.toLowerCase();
-    for (const name in points) {
-        const marker = findMarkerByName(name);
-        if (!marker) continue;
+let currentSuggestionIndex = -1;
+let currentMatches = [];
 
-        if (name.toLowerCase().includes(query)) {
-            marker.addTo(map);
-        } else {
-            map.removeLayer(marker);
+searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase().trim();
+    suggestionList.innerHTML = '';
+    clearBtn.style.display = query ? 'inline' : 'none';
+    currentSuggestionIndex = -1;
+    currentMatches = [];
+
+    // ✅ Si vide → recentrer la carte à la position initiale
+    if (!query) {
+        setTimeout(() => {
+            // Vérifie que la map est bien initialisée et que des marqueurs existent
+            if (Object.keys(points).length > 0) {
+                map.setView([41.3851, 2.1734], 13);
+            }
+        }, 0); // Exécute après l’event courant
+        return;
+    }
+
+
+    currentMatches = Object.keys(points).filter(name =>
+        name.toLowerCase().includes(query)
+    );
+
+    currentMatches.slice(0, 10).forEach((name, index) => {
+        const li = document.createElement('li');
+        li.textContent = name;
+        li.setAttribute('data-index', index);
+        li.onclick = () => selectSuggestion(index);
+        suggestionList.appendChild(li);
+    });
+});
+
+searchInput.addEventListener('keydown', (e) => {
+    const items = suggestionList.querySelectorAll('li');
+
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (currentSuggestionIndex < items.length - 1) {
+            currentSuggestionIndex++;
+            highlightSuggestion(items);
         }
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (currentSuggestionIndex > 0) {
+            currentSuggestionIndex--;
+            highlightSuggestion(items);
+        }
+    } else if (e.key === 'Enter') {
+        if (currentSuggestionIndex >= 0) {
+            e.preventDefault();
+            selectSuggestion(currentSuggestionIndex);
+        }
+    }
+});
+
+function highlightSuggestion(items) {
+    items.forEach(item => item.classList.remove('highlighted'));
+    if (currentSuggestionIndex >= 0 && items[currentSuggestionIndex]) {
+        const li = items[currentSuggestionIndex];
+        li.classList.add('highlighted');
+        searchInput.value = li.textContent;
+    }
+}
+
+function selectSuggestion(index) {
+    const name = currentMatches[index];
+    const marker = findMarkerByName(name);
+    if (marker) {
+        map.setView(marker.getLatLng(), 16);
+        marker.openPopup();
+        searchInput.value = name;
+        suggestionList.innerHTML = '';
+        clearBtn.style.display = 'inline';
+    }
+}
+
+clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    suggestionList.innerHTML = '';
+    clearBtn.style.display = 'none';
+    currentSuggestionIndex = -1;
+    searchInput.focus();
+
+    map.setView([41.3851, 2.1734], 13); // vue de base
+    map.closePopup(); // ferme toute popup ouverte
+
+    // Rétablir tous les filtres cochés sauf métro (stations masquées)
+    document.querySelectorAll('.filter').forEach(cb => {
+        if (cb.value === "metro") {
+            cb.checked = false;
+        } else {
+            cb.checked = true;
+        }
+        cb.dispatchEvent(new Event('change'));
+    });
+
+    updateStartOptions();
+    updateEndOptions();
+});
+
+
+document.addEventListener('click', (e) => {
+    if (!document.getElementById('search-container').contains(e.target)) {
+        suggestionList.innerHTML = '';
     }
 });
