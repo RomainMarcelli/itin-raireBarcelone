@@ -299,6 +299,29 @@ body {
     margin-bottom: 10px;
 }
 
+#recenter-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+#recenter-btn:hover {
+    background-color: #eee;
+}
+
+#recenter-btn i {
+    font-size: 20px;
+    color: #333;
+}
+
 
 
 /* Responsive ajustement */
@@ -313,3 +336,4 @@ body {
         font-size: 14px;
     }
 }
+

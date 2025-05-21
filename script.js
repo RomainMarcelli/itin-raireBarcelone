@@ -650,6 +650,7 @@ function focusMetroStation(stationName) {
     }
 }
 
+
 const searchInput = document.getElementById('search-input');
 const suggestionList = document.getElementById('search-suggestions');
 const clearBtn = document.getElementById('clear-search');
@@ -714,12 +715,26 @@ searchInput.addEventListener('keydown', (e) => {
 
 function highlightSuggestion(items) {
     items.forEach(item => item.classList.remove('highlighted'));
+
     if (currentSuggestionIndex >= 0 && items[currentSuggestionIndex]) {
         const li = items[currentSuggestionIndex];
         li.classList.add('highlighted');
         searchInput.value = li.textContent;
+
+        // ✅ Scroll dans la suggestion visible
+        const containerTop = suggestionList.scrollTop;
+        const containerBottom = containerTop + suggestionList.clientHeight;
+        const itemTop = li.offsetTop;
+        const itemBottom = itemTop + li.offsetHeight;
+
+        if (itemBottom > containerBottom) {
+            suggestionList.scrollTop = itemBottom - suggestionList.clientHeight;
+        } else if (itemTop < containerTop) {
+            suggestionList.scrollTop = itemTop;
+        }
     }
 }
+
 
 function selectSuggestion(index) {
     const name = currentMatches[index];
@@ -762,4 +777,10 @@ document.addEventListener('click', (e) => {
     if (!document.getElementById('search-container').contains(e.target)) {
         suggestionList.innerHTML = '';
     }
+});
+
+
+document.getElementById('recenter-btn').addEventListener('click', () => {
+    map.setView([41.3851, 2.1734], 13);
+    map.closePopup();
 });
