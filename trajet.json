@@ -7,10 +7,7 @@
       "driving": { "distance_km": 4.1, "duration_min": 12 }
     },
     {
-      "from": "Sagrada Família",
-      "to": "Parc Güell",
-      "walking": { "distance_km": 2.1, "duration_min": 35 },
-      "driving": { "distance_km": 2.3, "duration_min": 8 }
+      "from": "Sagrada Família","to": "Parc Güell", "walking": { "distance_km": 2.1, "duration_min": 35 }, "driving": { "distance_km": 2.3, "duration_min": 8 }
     },
     {
       "from": "Sagrada Família",

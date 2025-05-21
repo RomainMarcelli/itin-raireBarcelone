@@ -23,11 +23,21 @@ const stepsContainer = document.getElementById('steps-holder');
 const stepSelects = [];
 const points = {};
 const markersByCategory = {};
+let allMetroStations = [];
+
 
 fetch('trajet.json')
     .then(res => res.json())
     .then(data => {
         localRoutes = data.routes;
+    });
+
+
+fetch('metro_stations.geojson')
+    .then(res => res.json())
+    .then(data => {
+        allMetroStations = data.features;
+        loadBarceloneData(); // on charge les lieux seulement après avoir les métros
     });
 
 function getIcon(category) {
@@ -51,52 +61,139 @@ function getIcon(category) {
     });
 }
 
-fetch('barcelone.geojson')
-    .then(res => res.json())
-    .then(data => {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+function distanceMeters(coord1, coord2) {
+    const R = 6371e3; // rayon Terre en m
+    const toRad = x => x * Math.PI / 180;
 
-        data.features.forEach(feature => {
-            const name = feature.properties.name;
-            const desc = feature.properties.description;
-            const cat = feature.properties.category || "autre";
-            const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+    const lat1 = coord1[0], lon1 = coord1[1];
+    const lat2 = coord2[0], lon2 = coord2[1];
 
-            points[name] = coords;
-            startSelect.add(new Option(name, name));
-            endSelect.add(new Option(name, name));
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
 
-            const marker = L.marker(coords, { icon: getIcon(cat) });
+    const a = Math.sin(dLat / 2) ** 2 +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) ** 2;
 
-            marker.bindPopup(`
-                <div>
-                    <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 16px;">
-                        <span class="favorite-star ${isFavorite(name) ? 'active' : ''}" 
-                            onclick="toggleFavorite(this, '${name.replace(/'/g, "\\'")}')" 
-                            style="font-size: 18px; cursor: pointer;">
-                            ${isFavorite(name) ? '★' : '☆'}
-                        </span>
-                        <span>${name}</span>
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+// Fonction utilitaire pour obtenir un rond coloré
+function getLineDot(line) {
+    const color = lineColors[line] || "#999";
+    return `<span style="color:${color}; font-size: 16px;">●</span>`;
+}
+
+function getLineDotHTML(station) {
+    const color = lineColors[station.line] || "#999";
+    return `
+        <span 
+            class="metro-dot"
+            style="display: inline-block; margin-right: 8px; margin-bottom: 6px; cursor: pointer;"
+            onclick="focusMetroStation('${station.name.replace(/'/g, "\\'")}')"
+            title="Voir ${station.name}">
+            <span style="color:${color}; font-size: 16px;">●</span>
+            <span style="margin-left: 4px;">${station.name} (L${station.line})</span>
+        </span>`;
+}
+
+
+function loadBarceloneData() {
+    fetch('barcelone.geojson')
+        .then(res => res.json())
+        .then(data => {
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+            data.features.forEach(feature => {
+                const name = feature.properties.name;
+                const desc = feature.properties.description;
+                const cat = feature.properties.category || "autre";
+                const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+
+                // 🔍 Calcul des distances vers toutes les stations de métro
+                const distances = allMetroStations.map(st => {
+                    const metroCoords = [st.geometry.coordinates[1], st.geometry.coordinates[0]];
+                    return {
+                        name: st.properties.name,
+                        line: st.properties.line,
+                        distance: distanceMeters(coords, metroCoords)
+                    };
+                });
+
+                const nearbyStations = distances.filter(st => st.distance <= 500);
+
+                let metroInfo = '';
+                if (nearbyStations.length > 0) {
+                    metroInfo = `
+                        <div style="margin-top: 6px;">
+                            <strong>🚇 À proximité :</strong><br>
+                            ${nearbyStations.map(st => `
+                                ${getLineDot(st.line)} 
+                                <a href="#" onclick="focusMetroStation('${st.name.replace(/'/g, "\\'")}'); return false;" 
+                                style="color: #666; text-decoration: none;">
+                                    ${st.name}
+                                </a> (L${st.line}) – ${Math.round(st.distance)} m
+                            `).join('<br>')}
+                        </div>`;
+                } else {
+                    const closest = distances.reduce((a, b) => a.distance < b.distance ? a : b);
+                  metroInfo = `
+                        <div style="margin-top: 6px;">
+                            <strong>🚇 Station la plus proche :</strong><br>
+                            ${getLineDot(closest.line)} 
+                            <a href="#" onclick="focusMetroStation('${closest.name.replace(/'/g, "\\'")}'); return false;" 
+                            style="color: #666; text-decoration: none;">
+                                ${closest.name}
+                            </a> (${closest.line}) – ${
+                                closest.distance < 1000 
+                                    ? Math.round(closest.distance) + ' m' 
+                                    : (closest.distance / 1000).toFixed(2) + ' km'
+                            }
+                        </div>`;
+                }
+
+
+
+
+                points[name] = coords;
+                startSelect.add(new Option(name, name));
+                endSelect.add(new Option(name, name));
+
+                const marker = L.marker(coords, { icon: getIcon(cat) });
+
+                marker.bindPopup(`
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 16px;">
+                            <span class="favorite-star ${isFavorite(name) ? 'active' : ''}" 
+                                onclick="toggleFavorite(this, '${name.replace(/'/g, "\\'")}')" 
+                                style="font-size: 18px; cursor: pointer;">
+                                ${isFavorite(name) ? '★' : '☆'}
+                            </span>
+                            <span>${name}</span>
+                        </div>
+                        <div style="margin-top: 4px; font-size: 14px; color: #444;">
+                            ${desc}
+                            ${feature.properties.hours ? `<div style="margin-top: 6px;">${feature.properties.hours}</div>` : ''}
+                            ${feature.properties.best_time ? `<div style="margin-top: 6px;">${feature.properties.best_time}</div>` : ''}
+                            ${metroInfo}
+                        </div>
                     </div>
-                    <div style="margin-top: 4px; font-size: 14px; color: #444;">
-                        ${desc}
-                        ${feature.properties.hours ? `<div style="margin-top: 6px;">${feature.properties.hours}</div>` : ''}
-                        ${feature.properties.best_time ? `<div style="margin-top: 6px;">${feature.properties.best_time}</div>` : ''}
-                    </div>
-                </div>
-            `);
+                `);
 
-            marker.addTo(map);
+                marker.addTo(map);
 
-            if (!markersByCategory[cat]) markersByCategory[cat] = [];
-            markersByCategory[cat].push(marker);
+                if (!markersByCategory[cat]) markersByCategory[cat] = [];
+                markersByCategory[cat].push(marker);
+            });
+
+            startSelect.value = "Hotel SYSTELCOMS";
+            updateEndOptions();
+            updateStartOptions();
+            updateFavoritesList();
         });
+}
 
-        startSelect.value = "Hotel SYSTELCOMS";
-        updateEndOptions();
-        updateStartOptions();
-        updateFavoritesList();
-    });
 
 const metroIcon = L.icon({
     iconUrl: 'barcelonepng.png',
@@ -109,57 +206,75 @@ const metroLines = []; // ← ici on stockera les polylines
 
 // Définir les couleurs par ligne
 const lineColors = {
-    L1: "#FF0000",
-    L2: "#800080",
-    L3: "#008000",
-    L4: "#FFD700",
-    L5: "#0000FF",
-    L6: "#A52A2A",
-    L7: "#FFA500",
-    L8: "#FFC0CB",
-    L9: "#FF9900",
-    L10: "#00CED1",
-    L11: "#808000"
+    L1: "#DC241F",  // rouge
+    L2: "#93278F",  // violet
+    L3: "#00A550",  // vert
+    L4: "#FFD400",  // jaune
+    L5: "#0072BC",  // bleu
+    L6: "#A05DA5",  // violet clair
+    L7: "#935529",  // brun
+    L8: "#EF7CBA",  // rose
+    L9: "#F58220",  // orange
+    L9N: "#F58220",  // même que L9
+    L9S: "#F58220",  // même que L9
+    L10: "#00AEEF",  // cyan
+    L10N: "#00AEEF",  // même que L10
+    L10S: "#00AEEF",  // même que L10
+    L11: "#A8BD3A",  // vert olive
+    L12: "#B4A7D6"   // lavande
 };
 
 fetch('metro_stations.geojson')
     .then(res => res.json())
     .then(data => {
-        const lineGroups = {}; // pour regrouper les stations par ligne
+        const lineGroups = {};                // coordonnées par ligne
+        const stationLinesMap = {};           // lignes par station
+        const isMetroChecked = document.querySelector('input.filter[value="metro"]').checked;
 
+        // Première passe : préparer les données
         data.features.forEach(feature => {
             const name = feature.properties.name;
             const line = feature.properties.line;
             const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
 
-            // Marqueur
-            const marker = L.marker(coords, { icon: metroIcon });
-            marker.bindPopup(`<strong>${name}</strong><br>🚇 Ligne ${line}`);
-            marker.addTo(map);
+            // Regrouper les lignes desservant une même station
+            if (!stationLinesMap[name]) stationLinesMap[name] = new Set();
+            stationLinesMap[name].add(line);
 
-            if (!markersByCategory["metro"]) markersByCategory["metro"] = [];
-            markersByCategory["metro"].push(marker);
-
-            // Grouper les coordonnées par ligne
+            // Regrouper les points pour tracer les lignes par couleur
             if (!lineGroups[line]) lineGroups[line] = [];
             lineGroups[line].push(coords);
         });
 
-        // Tracer les lignes par groupe
-        // Tracer les lignes par groupe avec un style plus fin et discret
+        // Deuxième passe : créer les marqueurs
+        data.features.forEach(feature => {
+            const name = feature.properties.name;
+            const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+            const lines = Array.from(stationLinesMap[name]).sort();
+
+            const marker = L.marker(coords, { icon: metroIcon });
+            marker.bindPopup(`<strong>${name}</strong><br>🚇 Ligne${lines.length > 1 ? 's' : ''} ${lines.join(', ')}`);
+
+            if (isMetroChecked) marker.addTo(map);
+
+            if (!markersByCategory["metro"]) markersByCategory["metro"] = [];
+            markersByCategory["metro"].push(marker);
+        });
+
+        // Tracer les lignes
         for (const line in lineGroups) {
             const coords = lineGroups[line];
-
             const polyline = L.polyline(coords, {
                 color: lineColors[line] || "#999",
                 weight: 3,
                 opacity: 0.6,
                 smoothFactor: 1
-            }).addTo(map);
+            });
 
-            metroLines.push(polyline); // ← stocke chaque ligne ici
+            if (isMetroChecked) polyline.addTo(map);
+
+            metroLines.push(polyline);
         }
-
     });
 
 
@@ -488,3 +603,15 @@ function addToFavorites(name) {
         isDragging = false;
     });
 })();
+
+
+function focusMetroStation(stationName) {
+    for (const marker of (markersByCategory["metro"] || [])) {
+        const content = marker.getPopup()?.getContent();
+        if (content && content.includes(stationName)) {
+            marker.openPopup();
+            map.setView(marker.getLatLng(), 16);
+            break;
+        }
+    }
+}

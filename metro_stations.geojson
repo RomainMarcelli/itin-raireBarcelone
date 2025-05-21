@@ -187,8 +187,8 @@
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.124490601629847, 41.35718804709267] }, "properties": { "type": "METRO", "line": "L9S", "name": "EUROPA / FIRA" }},
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.118226621574783, 41.360670463745436] }, "properties": { "type": "METRO", "line": "L9S", "name": "CAN TRIES / GORNAL" }},
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.1165005614326264, 41.36830002959065] }, "properties": { "type": "METRO", "line": "L9S", "name": "TORRASSA" }},
-    { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.1181558270459937, 41.37585696855083] }, "properties": { "type": "METRO", "line": "9S", "name": "COLBLANC" }},
-    { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.111891236755942, 41.384358539363504] }, "properties": { "type": "METRO", "line": "9S", "name": "ZONA UNIVERSITÀRIA" }},
+    { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.1181558270459937, 41.37585696855083] }, "properties": { "type": "METRO", "line": "L9S", "name": "COLBLANC" }},
+    { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.111891236755942, 41.384358539363504] }, "properties": { "type": "METRO", "line": "L9S", "name": "ZONA UNIVERSITÀRIA" }},
 
 
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.186936943588096, 41.421420128727945] }, "properties": { "type": "METRO", "line": "L10N", "name": "LA SAGRERA" }},
@@ -209,7 +209,7 @@
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.124092041536052, 41.36135123706997] }, "properties": { "type": "METRO", "line": "L10S", "name": "PROVENCANA" }},
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.118226621574783, 41.360670463745436] }, "properties": { "type": "METRO", "line": "L10S", "name": "CAN TRIES / GORNAL" }},
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.1166199435844755, 41.368355425339324] }, "properties": { "type": "METRO", "line": "L10S", "name": "TORRASSA" }},
-    { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.1181558270459937, 41.37585696855083] }, "properties": { "type": "METRO", "line": "10S", "name": "COLBLANC" }},
+    { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.1181558270459937, 41.37585696855083] }, "properties": { "type": "METRO", "line": "L10S", "name": "COLBLANC" }},
 
 
     { "type": "Feature", "geometry": { "type": "Point", "coordinates": [2.182744792818884, 41.44923547315545] }, "properties": { "type": "METRO", "line": "L11", "name": "TRINITAT NOVA" }},
