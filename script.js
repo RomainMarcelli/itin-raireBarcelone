@@ -615,3 +615,18 @@ function focusMetroStation(stationName) {
         }
     }
 }
+
+
+document.getElementById('search-input').addEventListener('input', function () {
+    const query = this.value.toLowerCase();
+    for (const name in points) {
+        const marker = findMarkerByName(name);
+        if (!marker) continue;
+
+        if (name.toLowerCase().includes(query)) {
+            marker.addTo(map);
+        } else {
+            map.removeLayer(marker);
+        }
+    }
+});
