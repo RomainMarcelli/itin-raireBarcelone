@@ -1,0 +1,232 @@
+/* Base */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.2em;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin: 20px 0 10px;
+  color: #444;
+}
+
+a.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  background: #e0e0e0;
+  color: #222;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+a.back-link:hover {
+  background: #ccc;
+}
+
+/* Mini carte */
+#metro-map {
+  float: right;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+#metro-map img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+/* Plein écran */
+#fullscreen-map {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#fullscreen-map img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 6px;
+}
+
+#close-fullscreen {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#close-fullscreen:hover {
+  color: #f44336;
+}
+
+/* Lignes de métro */
+#metro-images {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.metro-line-img {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  display: block;
+}
+
+.metro-line-img img {
+  width: 100%;
+  max-width: 1000px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+.metro-line-img:hover {
+  transform: scale(1.01);
+}
+
+/* Légende */
+#legend {
+  margin-top: 50px;
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+#legend img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+/* Barre de recherche */
+#search-container {
+  max-width: 400px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+#search-input {
+  width: 100%;
+  padding: 10px 36px 10px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+#clear-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  display: none;
+  color: #888;
+}
+
+#clear-search:hover {
+  color: #d00;
+}
+
+/* Suggestions */
+#search-suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+
+#search-suggestions li {
+  padding: 6px 12px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+#search-suggestions li:hover {
+  background: #f0f0f0;
+}
+
+#download-image {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  z-index: 1001;
+  transition: transform 0.2s, color 0.2s;
+}
+
+#download-image:hover {
+  transform: scale(1.2);
+  color: #00e0ff;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  #metro-map {
+    float: none;
+    max-width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  #metro-images {
+    gap: 15px;
+  }
+}
