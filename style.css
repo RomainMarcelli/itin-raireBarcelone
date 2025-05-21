@@ -1,0 +1,242 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+}
+
+#map {
+    height: 100vh;
+    z-index: 1;
+}
+
+
+#controls {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    z-index: 1000;
+    background: white;
+    padding: 16px;
+    padding-top: 0px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    width: 240px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    transform-origin: top left;
+}
+
+#controls.collapsed {
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+#controls.collapsed label,
+#controls.collapsed select,
+#controls.collapsed button,
+#controls.collapsed hr,
+#controls.collapsed .filter-group,
+#controls.collapsed ul {
+    display: none;
+}
+
+
+
+#controls label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+#controls select,
+#controls button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 6px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#controls button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#controls button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+
+#controls::-webkit-scrollbar {
+  width: 6px;
+}
+
+#controls::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+#controls::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.step-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.step-select {
+  flex: 1;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-right: 6px;
+}
+
+.remove-step {
+  color: #888;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.remove-step:hover {
+  color: #e60000;
+  background-color: #f2f2f2;
+}
+
+
+/* Style du panneau d'itinéraire Leaflet */
+.leaflet-routing-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    max-width: 320px;
+    max-height: 70vh;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.leaflet-routing-container h2,
+.leaflet-routing-container h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.leaflet-routing-alt {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.leaflet-routing-instruction {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.leaflet-routing-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.leaflet-routing-container .leaflet-bar {
+    display: none; /* Cache les boutons inutiles */
+}
+
+.filter-group {
+    /* margin-top: 10px; */
+    padding: 10px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    gap: 6px;
+}
+
+.filter-option input[type="checkbox"] {
+    accent-color: #007bff;
+    cursor: pointer;
+}
+
+.filter-color {
+    display: inline-block;
+    font-size: 18px;
+    width: 1.2em;
+}
+
+.favorite-star {
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.favorite-star.active {
+  color: gold;
+}
+
+#drag-handle {
+    cursor: move;
+    text-align: center;
+    font-size: 17px;
+    color: #999;
+    user-select: none;
+
+}
+
+#weather-box {
+    font-size: 14px;
+    margin-bottom: 8px;
+    background-color: #f0f8ff;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+#forecast-box {
+    font-size: 13px;
+    color: #333;
+    background-color: #fff9e6;
+    padding: 6px 8px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
+
+/* Responsive ajustement */
+@media (max-width: 768px) {
+    #controls {
+        width: 90%;
+        left: 5%;
+    }
+
+    .leaflet-routing-container {
+        max-width: 90%;
+        font-size: 14px;
+    }
+}

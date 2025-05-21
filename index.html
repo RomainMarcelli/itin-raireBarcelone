@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Carte interactive de Barcelone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Feuilles de style -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <!-- Générateur PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Capture de DOM pour la carte -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+
+    <div id="controls">
+        <div id="drag-handle" title="Déplacer le panneau">⋮⋮⋮</div>
+
+        <!-- <div id="weather-box">🌡 22°C – ciel clair</div>
+        <div id="forecast-box">
+            <strong>📅 Prévisions (midi) :</strong><br>
+            samedi 25 juin : 26°C – partiellement nuageux<br>
+            dimanche 26 juin : 28°C – ciel dégagé
+        </div> -->
+
+        <label for="mode">Mode de déplacement :</label>
+        <select id="mode">
+            <option value="foot">🚶‍♂️ À pied</option>
+            <option value="driving">🚗 En voiture</option>
+        </select>
+
+        <label for="start">Point de départ :</label>
+        <select id="start"></select>
+
+        <label for="end">Destination :</label>
+        <select id="end"></select>
+
+        <div id="steps-holder"></div>
+        <button onclick="addStepSelect()">Ajouter une étape</button>
+
+        <button onclick="calculateRoute()">Calculer l’itinéraire</button>
+        <button onclick="resetRoute()">Réinitialiser</button>
+
+        <label for="basemap">Fond de carte :</label>
+        <select id="basemap" onchange="changeBaseMap(this.value)">
+            <option value="light">Carte claire</option>
+            <option value="satellite">Satellite</option>
+        </select>
+
+        <hr>
+        <label><strong>Filtres :</strong></label>
+        <div class="filter-group">
+            <div style="margin-bottom: 8px;">
+                <button id="toggle-filters" style="padding: 6px 12px; font-size: 14px; cursor: pointer;">
+                    Tout désélectionner
+                </button>
+            </div>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="hotel" checked>
+                <span class="filter-color hotel">🟦</span> Hôtel
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="parc" checked>
+                <span class="filter-color parc">🟩</span> Parcs
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="restaurant" checked>
+                <span class="filter-color restaurant">🟥</span> Restaurants
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="monument" checked>
+                <span class="filter-color monument">🟪</span> Monuments
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="bar" checked>
+                <span class="filter-color bar">🟧</span> Bars
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="plage" checked>
+                <span class="filter-color plage">🟨</span> Plages
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="metro">
+                <span class="filter-icon metro">
+                    <img src="barcelonepng.png" alt="Métro" style="width: 16px; height: 16px; vertical-align: middle;">
+                </span> Métros
+            </label>
+        </div>
+        <hr>
+        <label><strong>⭐ Mes favoris :</strong></label>
+        <ul id="favorites-list" style="list-style-type: none; padding-left: 0; font-size: 14px; margin-top: 8px;"></ul>
+    </div>
+
+
+    <div id="map"></div>
+
+    <!-- librairies Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+
+    <!-- 🧭 OpenRouteService router -->
+    <script src="https://unpkg.com/lrm-openrouteservice@1.0.0/dist/lrm-openrouteservice.min.js"></script>
+    <script
+        src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
+
+</body>
+
+</html>
