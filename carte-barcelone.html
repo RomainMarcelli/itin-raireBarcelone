@@ -56,6 +56,11 @@
         <hr>
         <label><strong>Filtres :</strong></label>
         <div class="filter-group">
+            <div style="margin-bottom: 8px;">
+                <button id="toggle-filters" style="padding: 6px 12px; font-size: 14px; cursor: pointer;">
+                    Tout désélectionner
+                </button>
+            </div>
             <label class="filter-option">
                 <input type="checkbox" class="filter" value="hotel" checked>
                 <span class="filter-color hotel">🟦</span> Hôtel
@@ -79,6 +84,12 @@
             <label class="filter-option">
                 <input type="checkbox" class="filter" value="plage" checked>
                 <span class="filter-color plage">🟨</span> Plages
+            </label>
+            <label class="filter-option">
+                <input type="checkbox" class="filter" value="metro" checked>
+                <span class="filter-icon metro">
+                    <img src="barcelonepng.png" alt="Métro" style="width: 16px; height: 16px; vertical-align: middle;">
+                </span> Métros
             </label>
         </div>
         <hr>

@@ -105,6 +105,8 @@ const metroIcon = L.icon({
     popupAnchor: [0, -20]
 });
 
+const metroLines = []; // ← ici on stockera les polylines
+
 // Définir les couleurs par ligne
 const lineColors = {
     L1: "#FF0000",
@@ -150,10 +152,12 @@ fetch('metro_stations.geojson')
 
             const polyline = L.polyline(coords, {
                 color: lineColors[line] || "#999",
-                weight: 2,          // 🔽 plus fin
-                opacity: 0.6,       // 🔽 un peu plus transparent
-                smoothFactor: 1     // 🔁 pour un tracé plus fluide si besoin
+                weight: 3,
+                opacity: 0.6,
+                smoothFactor: 1
             }).addTo(map);
+
+            metroLines.push(polyline); // ← stocke chaque ligne ici
         }
 
     });
@@ -419,6 +423,13 @@ document.querySelectorAll('.filter').forEach(checkbox => {
                 isChecked ? marker.addTo(map) : map.removeLayer(marker);
             });
         }
+
+        // 🔽 AJOUT pour gérer les lignes de métro
+        if (cat === "metro") {
+            metroLines.forEach(line => {
+                isChecked ? line.addTo(map) : map.removeLayer(line);
+            });
+        }
     });
 });
 
@@ -426,6 +437,20 @@ function changeBaseMap(style) {
     Object.values(tileLayers).forEach(layer => map.removeLayer(layer));
     tileLayers[style].addTo(map);
 }
+
+const toggleButton = document.getElementById('toggle-filters');
+let filtersEnabled = true; // état initial : tous cochés
+
+toggleButton.addEventListener('click', () => {
+    filtersEnabled = !filtersEnabled;
+
+    document.querySelectorAll('.filter').forEach(checkbox => {
+        checkbox.checked = filtersEnabled;
+        checkbox.dispatchEvent(new Event('change')); // déclenche le comportement normal
+    });
+
+    toggleButton.textContent = filtersEnabled ? "Tout désélectionner" : "Tout sélectionner";
+});
 
 
 

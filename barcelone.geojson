@@ -132,6 +132,22 @@
         {
             "type": "Feature",
             "properties": {
+                "name": "Moco Museum",
+                "description": "Le Moco Museum de Barcelone est un musée d'art contemporain.",
+                "category": "monument",
+                "hours": "📅 Ouvert de 10:00 - 19:00"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    2.1815137173878196,
+                    41.38509535692734
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
                 "name": "Plage de la Barceloneta",
                 "description": "Une des plages les plus populaires de Barcelone.",
                 "category": "plage",
