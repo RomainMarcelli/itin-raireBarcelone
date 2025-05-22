@@ -133,8 +133,8 @@
 
 
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.16882580708231, 41.387650690195166]}, "properties": {"type": "FGC", "line": "L6", "name": "BARCELONA PLCA. CATALUNYA"}},
-    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.158549665979335, 41.392676403350684]}, "properties": {"type": "FGC", "line": "L6", "name": "PROVENÇA"}},
-    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1676829100834123, 41.39009227716987]}, "properties": {"type": "FGC", "line": "L6", "name": "GRÀCIA"}},
+    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.158530733645616, 41.39284277966671]}, "properties": {"type": "FGC", "line": "L6", "name": "PROVENÇA"}},
+    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1523948946310085, 41.39986114594169]}, "properties": {"type": "FGC", "line": "L6", "name": "GRÀCIA"}},
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1470185420816703, 41.40138136404616]}, "properties": {"type": "FGC", "line": "L6", "name": "SANT GERVASI"}},
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1427563324952112, 41.39864032692878]}, "properties": {"type": "FGC", "line": "L6", "name": "MUNTANER"}},
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1351164320298426, 41.39790443496872]}, "properties": {"type": "FGC", "line": "L6", "name": "LA BONANOVA"}},
@@ -143,8 +143,8 @@
 
 
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.16882580708231, 41.387650690195166]}, "properties": {"type": "FGC", "line": "L7", "name": "BARCELONA PLCA. CATALUNYA"}},
-    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.158549665979335, 41.392676403350684]}, "properties": {"type": "FGC", "line": "L7", "name": "PROVENÇA"}},
-    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1676829100834123, 41.39009227716987]}, "properties": {"type": "FGC", "line": "L7", "name": "GRÀCIA"}},
+    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.158530733645616, 41.39284277966671]}, "properties": {"type": "FGC", "line": "L7", "name": "PROVENÇA"}},
+    {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1523948946310085, 41.39986114594169]}, "properties": {"type": "FGC", "line": "L7", "name": "GRÀCIA"}},
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.147575544374719, 41.40141289263426]}, "properties": {"type": "FGC", "line": "L7", "name": "PLAÇA MOLINA"}},
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1426196698759385, 41.40360519780606]}, "properties": {"type": "FGC", "line": "L7", "name": "PADUA"}},
     {"type": "Feature", "geometry": {"type": "Point", "coordinates": [2.1392505813696796, 41.40573995755271]}, "properties": {"type": "FGC", "line": "L7", "name": "EL PUTXET"}},

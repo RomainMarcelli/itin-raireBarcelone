@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lignes de métro de Barcelone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="metro.css">
+</head>
+
+<body>
+
+  <h1>Lignes de métro de Barcelone</h1>
+  <a href="../index.html" class="back-link">← Retour à la carte</a>
+
+  <!-- Barre de recherche -->
+  <div id="search-container">
+    <div class="search-wrapper">
+      <input type="text" id="search-input" placeholder="🔍 Rechercher une ligne ou un arrêt..." autocomplete="off">
+      <span id="clear-search" title="Effacer">✖</span>
+    </div>
+    <ul id="search-suggestions"></ul>
+  </div>
+
+
+
+  <!-- Miniature carte -->
+  <div id="metro-map">
+    <h2>🗺 Plan du métro</h2>
+    <img src="carte-metro.png" alt="Carte métro Barcelone" id="metro-thumbnail">
+  </div>
+
+  <!-- Plein écran de la carte -->
+  <div id="fullscreen-map">
+    <button id="close-fullscreen" title="Fermer">✖</button>
+    <button id="download-image" title="Télécharger l'image">
+      <i class="fas fa-download"></i>
+    </button>
+    <img src="" alt="Affichage plein écran">
+  </div>
+
+
+
+  <!-- Lignes de métro -->
+  <div id="metro-images">
+    <div class="metro-line-img" data-line="L1"><img src="L1.png" alt="L1"></div>
+    <div class="metro-line-img" data-line="L2"><img src="L2.png" alt="L2"></div>
+    <div class="metro-line-img" data-line="L3"><img src="L3.png" alt="L3"></div>
+    <div class="metro-line-img" data-line="L4"><img src="L4.png" alt="L4"></div>
+    <div class="metro-line-img" data-line="L5"><img src="L5.png" alt="L5"></div>
+    <div class="metro-line-img" data-line="L6"><img src="L6.png" alt="L6"></div>
+    <div class="metro-line-img" data-line="L7"><img src="L7.png" alt="L7"></div>
+    <div class="metro-line-img" data-line="L8"><img src="L8.png" alt="L8"></div>
+    <div class="metro-line-img" data-line="L9N"><img src="L9N.png" alt="L9N"></div>
+    <div class="metro-line-img" data-line="L9S"><img src="L9S.png" alt="L9S"></div>
+    <div class="metro-line-img" data-line="L10N"><img src="L10N.png" alt="L10N"></div>
+    <div class="metro-line-img" data-line="L10S"><img src="L10S.png" alt="L10S"></div>
+    <div class="metro-line-img" data-line="L11"><img src="L11.png" alt="L11"></div>
+    <div class="metro-line-img" data-line="L12"><img src="L12.png" alt="L12"></div>
+  </div>
+
+  <!-- Légende -->
+  <div id="legend">
+    <h2>🛈 Légende</h2>
+    <img src="legende.png" alt="Légende du métro de Barcelone">
+  </div>
+  <script src="lignes.js"></script>
+</body>
+
+</html>

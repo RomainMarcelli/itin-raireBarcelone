@@ -8,6 +8,8 @@
     <!-- Feuilles de style -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <!-- Générateur PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -18,6 +20,14 @@
 </head>
 
 <body>
+
+    <div id="search-container">
+        <div class="search-wrapper">
+            <input type="text" id="search-input" placeholder="Rechercher un lieu..." autocomplete="off" />
+            <span id="clear-search" title="Effacer">✖</span>
+        </div>
+        <ul id="search-suggestions"></ul>
+    </div>
 
     <div id="controls">
         <div id="drag-handle" title="Déplacer le panneau">⋮⋮⋮</div>
@@ -97,8 +107,16 @@
         <ul id="favorites-list" style="list-style-type: none; padding-left: 0; font-size: 14px; margin-top: 8px;"></ul>
     </div>
 
+    <a href="métro/metro-lignes.html"
+        style="position: absolute; z-index: 10000; top: 10px; right: 10px; background: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold;">
+        🗺 Lignes de métro
+    </a>
 
     <div id="map"></div>
+
+    <button id="recenter-btn" title="Revenir à la vue de départ">
+        <i class="fas fa-crosshairs"></i>
+    </button>
 
     <!-- librairies Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

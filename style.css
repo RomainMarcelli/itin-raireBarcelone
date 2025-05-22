@@ -9,6 +9,79 @@ body {
     z-index: 1;
 }
 
+#search-container {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 8px 12px;
+}
+
+#search-suggestions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 42px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1001;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 0 0 8px 8px;
+}
+
+#search-suggestions li {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#search-suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 240px;
+    padding-right: 24px;
+}
+
+#clear-search {
+    position: absolute;
+    right: 8px;
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+    display: none;
+}
+
+#clear-search:hover {
+    color: #333;
+}
+
+#search-suggestions li.highlighted {
+    background-color: #eee;
+    color: #000;
+}
+
+
 
 #controls {
     position: absolute;
@@ -226,6 +299,29 @@ body {
     margin-bottom: 10px;
 }
 
+#recenter-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+#recenter-btn:hover {
+    background-color: #eee;
+}
+
+#recenter-btn i {
+    font-size: 20px;
+    color: #333;
+}
+
 
 
 /* Responsive ajustement */
@@ -240,3 +336,4 @@ body {
         font-size: 14px;
     }
 }
+
