@@ -36,6 +36,9 @@ clearBtn.textContent = '✖';
 searchInput.parentElement.appendChild(clearBtn);
 
 let stationToLine = {};
+let currentSuggestionIndex = -1;
+let currentMatches = [];
+
 
 // Charger les stations depuis le GeoJSON
 fetch('../metro_stations.geojson')
@@ -59,6 +62,8 @@ searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toUpperCase();
     suggestionList.innerHTML = '';
     clearBtn.style.display = query ? 'inline' : 'none';
+    currentSuggestionIndex = -1;
+    currentMatches = [];
 
     if (!query) {
         showAllLines();
@@ -71,16 +76,16 @@ searchInput.addEventListener('input', () => {
         .filter(line => line.includes(query));
 
     const matches = [...new Set([...stationMatches, ...lineMatches])];
+    currentMatches = matches.slice(0, 8);
 
-    matches.slice(0, 8).forEach(text => {
+    currentMatches.forEach((text, index) => {
         const li = document.createElement('li');
         const lineInfo = stationToLine[text]?.length ? ` (${stationToLine[text].join(', ')})` : '';
         li.textContent = text + lineInfo;
+        li.setAttribute('data-index', index);
 
         li.onclick = () => {
-            searchInput.value = text;
-            suggestionList.innerHTML = '';
-            filterLines(text);
+            selectSuggestion(index);
         };
 
         suggestionList.appendChild(li);
@@ -88,6 +93,27 @@ searchInput.addEventListener('input', () => {
 
     filterLines(query);
 });
+
+searchInput.addEventListener('keydown', (e) => {
+    const items = suggestionList.querySelectorAll('li');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentSuggestionIndex = (currentSuggestionIndex + 1) % items.length;
+        highlightSuggestion(items);
+    } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentSuggestionIndex = (currentSuggestionIndex - 1 + items.length) % items.length;
+        highlightSuggestion(items);
+    } else if (e.key === 'Enter') {
+        if (currentSuggestionIndex >= 0) {
+            e.preventDefault();
+            selectSuggestion(currentSuggestionIndex);
+        }
+    }
+});
+
 
 function filterLines(query) {
     const upper = query.toUpperCase();
@@ -140,3 +166,23 @@ downloadBtn.addEventListener('click', () => {
     link.click();
     document.body.removeChild(link);
 });
+
+
+function highlightSuggestion(items) {
+    items.forEach(item => item.classList.remove('highlighted'));
+    const li = items[currentSuggestionIndex];
+    if (li) {
+        li.classList.add('highlighted');
+        searchInput.value = li.textContent.split(' (')[0]; // sans les lignes
+        li.scrollIntoView({ block: 'nearest' });
+    }
+}
+
+function selectSuggestion(index) {
+    const text = currentMatches[index];
+    if (!text) return;
+    searchInput.value = text;
+    suggestionList.innerHTML = '';
+    clearBtn.style.display = 'inline';
+    filterLines(text);
+}
