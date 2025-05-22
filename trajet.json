@@ -43,6 +43,19 @@
     {"from": "Port Olimpic","to": "Tapas Season","walking": { "distance_km": 5.1, "duration_min": 72 },"driving": { "distance_km": 6.2, "duration_min": 22 }},
     {"from": "Port Olimpic","to": "Bodega Joan","walking": { "distance_km": 5.4, "duration_min": 76 },"driving": { "distance_km": 6.3, "duration_min": 22 }},
     {"from": "Port Olimpic","to": "Nubar","walking": { "distance_km": 7, "duration_min": 101 },"driving": { "distance_km": 8.5, "duration_min": 27}},
-    {"from": "Port Olimpic","to": "Mood Rooftop","walking": { "distance_km": 4.7, "duration_min": 65 },"driving": { "distance_km": 5.3, "duration_min": 20 }}
+    {"from": "Port Olimpic","to": "Mood Rooftop","walking": { "distance_km": 4.7, "duration_min": 65 },"driving": { "distance_km": 5.3, "duration_min": 20 }},
+
+    {"from": "Parc Güell","to": "La Rambla","walking": { "distance_km": 4.1, "duration_min": 53 },"driving": { "distance_km": 4.5, "duration_min": 20 }},
+    {"from": "Parc Güell","to": "Quartier Gothique (Barri Gòtic)","walking": { "distance_km": 4.7, "duration_min": 61 },"driving": { "distance_km": 6.2, "duration_min": 31 }},
+    {"from": "Parc Güell","to": "Casa Batlló","walking": { "distance_km": 3.1, "duration_min": 40 },"driving": { "distance_km": 4.1, "duration_min": 14 }},
+    {"from": "Parc Güell","to": "Casa Milà (La Pedrera)","walking": { "distance_km": 2.7, "duration_min": 35 },"driving": { "distance_km": 3.5, "duration_min": 12 }},
+    {"from": "Parc Güell","to": "Musée Picasso","walking": { "distance_km": 4.3, "duration_min": 55 },"driving": { "distance_km": 5.8, "duration_min": 27 }},
+    {"from": "Parc Güell","to": "Plage de la Barceloneta","walking": { "distance_km": 5.5, "duration_min": 72 },"driving": { "distance_km": 5.9, "duration_min": 22 }},
+    {"from": "Parc Güell","to": "Montjuïc","walking": { "distance_km": 7.2, "duration_min": 104 },"driving": { "distance_km": 10.8, "duration_min": 26 }},
+    {"from": "Parc Güell","to": "Camp Nou","walking": { "distance_km": 5.3, "duration_min": 102 },"driving": { "distance_km": 5.7, "duration_min": 16 }},
+    {"from": "Parc Güell","to": "Tapas Season","walking": { "distance_km": 3.1, "duration_min": 40 },"driving": { "distance_km": 3.6, "duration_min": 17 }},
+    {"from": "Parc Güell","to": "Bodega Joan","walking": { "distance_km": 3, "duration_min": 39 },"driving": { "distance_km": 3.6, "duration_min": 16 }},
+    {"from": "Parc Güell","to": "Nubar","walking": { "distance_km": 3.2, "duration_min": 43 },"driving": { "distance_km": 3.5, "duration_min": 13}},
+    {"from": "Parc Güell","to": "Mood Rooftop","walking": { "distance_km": 2.5, "duration_min": 33 },"driving": { "distance_km": 3.4, "duration_min": 12 }}
 ]
 }

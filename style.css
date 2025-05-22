@@ -81,7 +81,9 @@ body {
     color: #000;
 }
 
-
+#drawer-handle {
+    display: none;
+}
 
 #controls {
     position: absolute;
@@ -295,24 +297,6 @@ body {
 
 }
 
-#weather-box {
-    font-size: 14px;
-    margin-bottom: 8px;
-    background-color: #f0f8ff;
-    padding: 6px 8px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-#forecast-box {
-    font-size: 13px;
-    color: #333;
-    background-color: #fff9e6;
-    padding: 6px 8px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
 #recenter-btn {
     position: fixed;
     bottom: 20px;
@@ -337,6 +321,48 @@ body {
     color: #333;
 }
 
+
+#metro-btn {
+    position: absolute;
+    z-index: 1000;
+    top: 12px;
+    right: 14px;
+    background: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+#metro-icon {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    background: white;
+    border-radius: 55%;
+    padding: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    display: none;
+    /* padding-top: 10px; */
+    padding-bottom: 5px;
+    padding-right: 7px;
+}
+
+#metro-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Gestion des modes */
+.mobile-only {
+    display: none;
+}
+
+.desktop-only {
+    display: block;
+}
 
 
 /* Responsive ajustement */

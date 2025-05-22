@@ -121,6 +121,7 @@ function loadBarceloneData() {
                 });
 
                 const nearbyStations = distances.filter(st => st.distance <= 500);
+                nearbyStations.sort((a, b) => a.distance - b.distance);
 
                 let metroInfo = '';
                 if (nearbyStations.length > 0) {
@@ -841,3 +842,28 @@ document.getElementById('recenter-btn').addEventListener('click', () => {
     map.closePopup();
 });
 
+
+// Drawer mobile toggle
+const drawer = document.getElementById('drawer');
+const handle = document.getElementById('drawer-handle');
+
+handle.addEventListener('click', () => {
+    drawer.classList.toggle('collapsed');
+});
+
+// 👉 Fermer le drawer si clic en dehors (mobile uniquement)
+document.addEventListener('click', (e) => {
+    const isMobile = window.innerWidth <= 768;
+    const clickedInsideDrawer = drawer.contains(e.target);
+    const clickedHandle = handle.contains(e.target);
+
+    if (isMobile && !clickedInsideDrawer && !clickedHandle && !drawer.classList.contains('collapsed')) {
+        drawer.classList.add('collapsed');
+    }
+});
+
+// 🧹 Supprimer ancien handle sur mobile
+if (window.innerWidth <= 768) {
+    const oldHandle = document.getElementById('drag-handle');
+    if (oldHandle) oldHandle.remove();
+}
