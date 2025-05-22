@@ -29,6 +29,8 @@
 
 { "type": "Feature", "properties": { "name": "Nubar", "description": "Un lieu chic pour sortir, situé dans le quartier Zona Alta.", "category": "bar", "hours": "📅 Ouvert de 13:00 - 23:30" }, "geometry": { "type": "Point", "coordinates": [2.134, 41.398] } },
 
-{ "type": "Feature", "properties": { "name": "Mood Rooftop", "description": "Un rooftop caché sur la rue Provença, parfait pour se détendre.", "category": "bar", "hours": "📅 Ouvert de 12:00 - 00:00" }, "geometry": { "type": "Point", "coordinates": [2.16, 41.394] } }
+{ "type": "Feature", "properties": { "name": "Mood Rooftop", "description": "Un rooftop caché sur la rue Provença, parfait pour se détendre.", "category": "bar", "hours": "📅 Ouvert de 12:00 - 00:00" }, "geometry": { "type": "Point", "coordinates": [2.16, 41.394] } }, 
+
+{ "type": "Feature", "properties": { "name": "Port Olimpic", "description": "Pour où se passera la sorti en Katamaran", "category": "hotel", "hours": "📅 Heure activité 11:00 - 16:00" }, "geometry": { "type": "Point", "coordinates": [2.201024271480614, 41.38672694901577] } }
 
 ] }

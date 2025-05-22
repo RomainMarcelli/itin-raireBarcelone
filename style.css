@@ -17,7 +17,7 @@ body {
     z-index: 1000;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     padding: 8px 12px;
 }
 
@@ -35,7 +35,7 @@ body {
     max-height: 200px;
     overflow-y: auto;
     z-index: 1001;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 8px 8px;
 }
 
@@ -153,47 +153,60 @@ body {
 
 
 #controls::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
 
 #controls::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 4px;
+    background-color: #ccc;
+    border-radius: 4px;
 }
 
 #controls::-webkit-scrollbar-track {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .step-wrapper {
-  display: flex;
-  align-items: center;
-  margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.step-label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 4px;
 }
 
 .step-select {
-  flex: 1;
-  padding: 6px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-right: 6px;
+    flex: 1;
+    padding: 6px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-right: 6px;
 }
 
+.select-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
 .remove-step {
-  color: #888;
-  font-size: 16px;
-  cursor: pointer;
-  user-select: none;
-  padding: 2px 6px;
-  border-radius: 4px;
+    color: #888;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 
 .remove-step:hover {
-  color: #e60000;
-  background-color: #f2f2f2;
+    color: #c00;
 }
-
 
 /* Style du panneau d'itinéraire Leaflet */
 .leaflet-routing-container {
@@ -235,7 +248,8 @@ body {
 }
 
 .leaflet-routing-container .leaflet-bar {
-    display: none; /* Cache les boutons inutiles */
+    display: none;
+    /* Cache les boutons inutiles */
 }
 
 .filter-group {
@@ -264,12 +278,12 @@ body {
 }
 
 .favorite-star {
-  color: #ccc;
-  transition: color 0.3s;
+    color: #ccc;
+    transition: color 0.3s;
 }
 
 .favorite-star.active {
-  color: gold;
+    color: gold;
 }
 
 #drag-handle {
@@ -313,6 +327,7 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+
 #recenter-btn:hover {
     background-color: #eee;
 }
@@ -336,4 +351,3 @@ body {
         font-size: 14px;
     }
 }
-

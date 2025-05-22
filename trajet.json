@@ -1,163 +1,48 @@
 {
   "routes": [
-    {
-      "from": "Sagrada Família",
-      "to": "Hotel SYSTELCOMS",
-      "walking": { "distance_km": 3, "duration_min": 41 },
-      "driving": { "distance_km": 4.1, "duration_min": 12 }
-    },
-    {
-      "from": "Sagrada Família","to": "Parc Güell", "walking": { "distance_km": 2.1, "duration_min": 35 }, "driving": { "distance_km": 2.3, "duration_min": 8 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "La Rambla",
-      "walking": { "distance_km": 2.9, "duration_min": 39 },
-      "driving": { "distance_km": 3.7, "duration_min": 11 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Quartier Gothique (Barri Gòtic)",
-      "walking": { "distance_km": 2.9, "duration_min": 40 },
-      "driving": { "distance_km": 4.1, "duration_min": 16 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Casa Batlló",
-      "walking": { "distance_km": 1.7, "duration_min": 24 },
-      "driving": { "distance_km": 2.5, "duration_min": 7 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Casa Milà (La Pedrera)",
-      "walking": { "distance_km": 1.4, "duration_min": 20 },
-      "driving": { "distance_km": 2, "duration_min": 8 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Musée Picasso",
-      "walking": { "distance_km": 2.5, "duration_min": 34 },
-      "driving": { "distance_km": 4.8, "duration_min": 18 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Plage de la Barceloneta",
-      "walking": { "distance_km": 3.4, "duration_min": 46 },
-      "driving": { "distance_km": 3.9, "duration_min": 16 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Montjuïc",
-      "walking": { "distance_km": 5.9, "duration_min": 88 },
-      "driving": { "distance_km": 8.6, "duration_min": 22 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Camp Nou",
-      "walking": { "distance_km": 5.6, "duration_min": 78 },
-      "driving": { "distance_km": 5.9, "duration_min": 17 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Tapas Season",
-      "walking": { "distance_km": 2.2, "duration_min": 30 },
-      "driving": { "distance_km": 3.6, "duration_min": 10 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Bodega Joan",
-      "walking": { "distance_km": 2.1, "duration_min": 29 },
-      "driving": { "distance_km": 3.7, "duration_min": 10 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Nubar",
-      "walking": { "distance_km": 3.7, "duration_min": 53 },
-      "driving": { "distance_km": 4.2, "duration_min": 14 }
-    },
-    {
-      "from": "Sagrada Família",
-      "to": "Mood Rooftop",
-      "walking": { "distance_km": 1.3, "duration_min": 18 },
-      "driving": { "distance_km": 1.9, "duration_min": 8 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Parc Güell",
-      "walking": { "distance_km": 4, "duration_min": 62 },
-      "driving": { "distance_km": 5.3, "duration_min": 17 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "La Rambla",
-      "walking": { "distance_km": 1, "duration_min": 3 },
-      "driving": { "distance_km": 1, "duration_min": 1 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Quartier Gothique (Barri Gòtic)",
-      "walking": { "distance_km": 1, "duration_min": 14 },
-      "driving": { "distance_km": 1.7, "duration_min": 9 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Casa Batlló",
-      "walking": { "distance_km": 1, "duration_min": 14 },
-      "driving": { "distance_km": 1.9, "duration_min": 8 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Casa Milà (La Pedrera)",
-      "walking": { "distance_km": 1.5, "duration_min": 22 },
-      "driving": { "distance_km": 2.2, "duration_min": 9 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Musée Picasso",
-      "walking": { "distance_km": 1.5, "duration_min": 19 },
-      "driving": { "distance_km": 3, "duration_min": 13 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Plage de la Barceloneta",
-      "walking": { "distance_km": 2.7, "duration_min": 37 },
-      "driving": { "distance_km": 2.9, "duration_min": 12 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Montjuïc",
-      "walking": { "distance_km": 3.5, "duration_min": 56 },
-      "driving": { "distance_km": 6, "duration_min": 16 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Camp Nou",
-      "walking": { "distance_km": 4.9, "duration_min": 69 },
-      "driving": { "distance_km": 5.9, "duration_min": 18 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Tapas Season",
-      "walking": { "distance_km": 1.3, "duration_min": 19 },
-      "driving": { "distance_km": 2, "duration_min": 8 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Bodega Joan",
-      "walking": { "distance_km": 1.3, "duration_min": 22 },
-      "driving": { "distance_km": 2, "duration_min": 8 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Nubar",
-      "walking": { "distance_km": 3.3, "duration_min": 47 },
-      "driving": { "distance_km": 4.3, "duration_min": 15 }
-    },
-    {
-      "from": "Hotel SYSTELCOMS",
-      "to": "Mood Rooftop",
-      "walking": { "distance_km": 1.7, "duration_min": 24 },
-      "driving": { "distance_km": 2.1, "duration_min": 8 }
-    }
-  ]
+    {"from": "Sagrada Família","to": "Hotel SYSTELCOMS","walking": { "distance_km": 3, "duration_min": 41 },"driving": { "distance_km": 4.1, "duration_min": 12 }},
+    {"from": "Sagrada Família","to": "Parc Güell", "walking": { "distance_km": 2.1, "duration_min": 35 }, "driving": { "distance_km": 2.3, "duration_min": 8 }},
+    {"from": "Sagrada Família","to": "La Rambla","walking": { "distance_km": 2.9, "duration_min": 39 },"driving": { "distance_km": 3.7, "duration_min": 11 }},
+    {"from": "Sagrada Família","to": "Quartier Gothique (Barri Gòtic)","walking": { "distance_km": 2.9, "duration_min": 40 },"driving": { "distance_km": 4.1, "duration_min": 16 }},
+    {"from": "Sagrada Família","to": "Casa Batlló","walking": { "distance_km": 1.7, "duration_min": 24 },"driving": { "distance_km": 2.5, "duration_min": 7 }},
+    {"from": "Sagrada Família","to": "Casa Milà (La Pedrera)","walking": { "distance_km": 1.4, "duration_min": 20 },"driving": { "distance_km": 2, "duration_min": 8 }},
+    {"from": "Sagrada Família","to": "Musée Picasso","walking": { "distance_km": 2.5, "duration_min": 34 },"driving": { "distance_km": 4.8, "duration_min": 18 }},
+    {"from": "Sagrada Família","to": "Plage de la Barceloneta","walking": { "distance_km": 3.4, "duration_min": 46 },"driving": { "distance_km": 3.9, "duration_min": 16 }},
+    {"from": "Sagrada Família","to": "Montjuïc","walking": { "distance_km": 5.9, "duration_min": 88 },"driving": { "distance_km": 8.6, "duration_min": 22 }},
+    {"from": "Sagrada Família","to": "Camp Nou","walking": { "distance_km": 5.6, "duration_min": 78 },"driving": { "distance_km": 5.9, "duration_min": 17 }},
+    {"from": "Sagrada Família","to": "Tapas Season","walking": { "distance_km": 2.2, "duration_min": 30 },"driving": { "distance_km": 3.6, "duration_min": 10 }},
+    {"from": "Sagrada Família","to": "Bodega Joan","walking": { "distance_km": 2.1, "duration_min": 29 },"driving": { "distance_km": 3.7, "duration_min": 10 }},
+    {"from": "Sagrada Família","to": "Nubar","walking": { "distance_km": 3.7, "duration_min": 53 },"driving": { "distance_km": 4.2, "duration_min": 14 }},
+    {"from": "Sagrada Família","to": "Port Olimpic","walking": { "distance_km": 3.5, "duration_min": 48 },"driving": { "distance_km": 4.4, "duration_min": 20 }},
+    {"from": "Sagrada Família","to": "Mood Rooftop","walking": { "distance_km": 1.3, "duration_min": 18 },"driving": { "distance_km": 1.9, "duration_min": 8 }},
+
+    {"from": "Hotel SYSTELCOMS","to": "Parc Güell","walking": { "distance_km": 4, "duration_min": 62 },"driving": { "distance_km": 5.3, "duration_min": 17 }},
+    {"from": "Hotel SYSTELCOMS","to": "La Rambla","walking": { "distance_km": 1, "duration_min": 3 },"driving": { "distance_km": 1, "duration_min": 1 }},
+    {"from": "Hotel SYSTELCOMS","to": "Quartier Gothique (Barri Gòtic)","walking": { "distance_km": 1, "duration_min": 14 },"driving": { "distance_km": 1.7, "duration_min": 9 }},
+    {"from": "Hotel SYSTELCOMS","to": "Casa Batlló","walking": { "distance_km": 1, "duration_min": 14 },"driving": { "distance_km": 1.9, "duration_min": 8 }},
+    {"from": "Hotel SYSTELCOMS","to": "Casa Milà (La Pedrera)","walking": { "distance_km": 1.5, "duration_min": 22 },"driving": { "distance_km": 2.2, "duration_min": 9 }},
+    {"from": "Hotel SYSTELCOMS","to": "Musée Picasso","walking": { "distance_km": 1.5, "duration_min": 19 },"driving": { "distance_km": 3, "duration_min": 13 }},
+    {"from": "Hotel SYSTELCOMS","to": "Plage de la Barceloneta","walking": { "distance_km": 2.7, "duration_min": 37 },"driving": { "distance_km": 2.9, "duration_min": 12 }},
+    {"from": "Hotel SYSTELCOMS","to": "Montjuïc","walking": { "distance_km": 3.5, "duration_min": 56 },"driving": { "distance_km": 6, "duration_min": 16 }},
+    {"from": "Hotel SYSTELCOMS","to": "Camp Nou","walking": { "distance_km": 4.9, "duration_min": 69 },"driving": { "distance_km": 5.9, "duration_min": 18 }},
+    {"from": "Hotel SYSTELCOMS","to": "Tapas Season","walking": { "distance_km": 1.3, "duration_min": 19 },"driving": { "distance_km": 2, "duration_min": 8 }},
+    {"from": "Hotel SYSTELCOMS","to": "Bodega Joan","walking": { "distance_km": 1.3, "duration_min": 22 },"driving": { "distance_km": 2, "duration_min": 8 }},
+    {"from": "Hotel SYSTELCOMS","to": "Nubar","walking": { "distance_km": 3.3, "duration_min": 47 },"driving": { "distance_km": 4.3, "duration_min": 15 }},
+    {"from": "Hotel SYSTELCOMS","to": "Port Olimpic","walking": { "distance_km": 3.9, "duration_min": 52 },"driving": { "distance_km": 4.2, "duration_min": 20 }},
+    {"from": "Hotel SYSTELCOMS","to": "Mood Rooftop","walking": { "distance_km": 1.7, "duration_min": 24 },"driving": { "distance_km": 2.1, "duration_min": 8 }},
+      
+    {"from": "Port Olimpic","to": "Parc Güell","walking": { "distance_km": 5.6, "duration_min": 86 },"driving": { "distance_km": 6.7, "duration_min": 25 }},
+    {"from": "Port Olimpic","to": "La Rambla","walking": { "distance_km": 3.6, "duration_min": 51 },"driving": { "distance_km": 4.9, "duration_min": 20 }},
+    {"from": "Port Olimpic","to": "Quartier Gothique (Barri Gòtic)","walking": { "distance_km": 2.9, "duration_min": 41 },"driving": { "distance_km": 5.9, "duration_min": 30 }},
+    {"from": "Port Olimpic","to": "Casa Batlló","walking": { "distance_km": 4.4, "duration_min": 63 },"driving": { "distance_km": 5.1, "duration_min": 18 }},
+    {"from": "Port Olimpic","to": "Casa Milà (La Pedrera)","walking": { "distance_km": 4.7, "duration_min": 67 },"driving": { "distance_km": 5.4, "duration_min": 20 }},
+    {"from": "Port Olimpic","to": "Musée Picasso","walking": { "distance_km": 2.5, "duration_min": 35 },"driving": { "distance_km": 3.1, "duration_min": 15 }},
+    {"from": "Port Olimpic","to": "Plage de la Barceloneta","walking": { "distance_km": 1.5, "duration_min": 20 },"driving": { "distance_km": 2.9, "duration_min": 12 }},
+    {"from": "Port Olimpic","to": "Montjuïc","walking": { "distance_km": 5.5, "duration_min": 84 },"driving": { "distance_km": 10.4, "duration_min": 20 }},
+    {"from": "Port Olimpic","to": "Camp Nou","walking": { "distance_km": 8.5, "duration_min": 120 },"driving": { "distance_km": 18.8, "duration_min": 28 }},
+    {"from": "Port Olimpic","to": "Tapas Season","walking": { "distance_km": 5.1, "duration_min": 72 },"driving": { "distance_km": 6.2, "duration_min": 22 }},
+    {"from": "Port Olimpic","to": "Bodega Joan","walking": { "distance_km": 5.4, "duration_min": 76 },"driving": { "distance_km": 6.3, "duration_min": 22 }},
+    {"from": "Port Olimpic","to": "Nubar","walking": { "distance_km": 7, "duration_min": 101 },"driving": { "distance_km": 8.5, "duration_min": 27}},
+    {"from": "Port Olimpic","to": "Mood Rooftop","walking": { "distance_km": 4.7, "duration_min": 65 },"driving": { "distance_km": 5.3, "duration_min": 20 }}
+]
 }

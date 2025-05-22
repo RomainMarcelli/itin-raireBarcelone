@@ -423,20 +423,39 @@ function getAvailableOptions() {
     return all.filter(name => !selected.has(name));
 }
 
-function addStepSelect() {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'step-wrapper';
 
-    const select = document.createElement('select');
-    select.className = 'step-select';
+function replaceEndWithStep() {
+    const oldEnd = endSelect.value;
 
-    const options = getAvailableOptions();
-    if (options.length === 0) {
+    if (!oldEnd) {
+        alert("Veuillez d'abord sélectionner une destination.");
+        return;
+    }
+
+    const availableOptions = getAvailableOptions().filter(name => name !== oldEnd);
+    if (availableOptions.length === 0) {
         alert("Plus de lieux disponibles.");
         return;
     }
 
-    options.forEach(name => select.appendChild(new Option(name, name)));
+    // 🟨 Étape 1 : ancienne destination (modifiable)
+    const wrapper = document.createElement('div');
+    wrapper.className = 'step-wrapper';
+
+    const label = document.createElement('label');
+    label.className = 'step-label';
+    label.textContent = `Étape ${stepSelects.length + 1} :`;
+
+    const select = document.createElement('select');
+    select.className = 'step-select';
+
+    // On met l'ancienne destination en premier
+    select.appendChild(new Option(oldEnd, oldEnd));
+
+    // On ajoute les autres options possibles
+    availableOptions.forEach(name => {
+        if (name !== oldEnd) select.appendChild(new Option(name, name));
+    });
 
     const removeBtn = document.createElement('span');
     removeBtn.textContent = '✖';
@@ -446,12 +465,46 @@ function addStepSelect() {
         stepsContainer.removeChild(wrapper);
         const i = stepSelects.indexOf(select);
         if (i !== -1) stepSelects.splice(i, 1);
+        relabelSteps();
     };
 
+    wrapper.appendChild(label);
     wrapper.appendChild(select);
     wrapper.appendChild(removeBtn);
     stepsContainer.appendChild(wrapper);
     stepSelects.push(select);
+
+    // 🟥 Mettre à jour le champ de destination finale (#end)
+    const endWrapper = document.getElementById('end-wrapper');
+    const newLabel = endWrapper.querySelector('label');
+    newLabel.textContent = 'Destination :';
+
+    endSelect.innerHTML = '';
+    availableOptions.forEach(name => {
+        const opt = new Option(name, name);
+        endSelect.appendChild(opt);
+    });
+
+    endSelect.value = endSelect.options[0].value;
+
+    const row = document.createElement('div');
+    row.className = 'select-row';
+
+    row.appendChild(select);
+    row.appendChild(removeBtn);
+    wrapper.appendChild(label);
+    wrapper.appendChild(row);
+
+    updateStartOptions();
+    updateEndOptions();
+    relabelSteps();
+}
+
+function relabelSteps() {
+    const labels = stepsContainer.querySelectorAll('.step-label');
+    labels.forEach((label, index) => {
+        label.textContent = `Étape ${index + 1} :`;
+    });
 }
 
 function formatDuration(mins) {
@@ -512,6 +565,7 @@ function calculateRoute() {
             return `<div style="margin-bottom: 10px;">${html}</div>`;
         }
     }).addTo(map);
+    console.log("Ordre des étapes :", [start, ...stepSelects.map(sel => sel.value), end]);
 }
 
 function resetRoute() {
@@ -706,9 +760,11 @@ searchInput.addEventListener('keydown', (e) => {
             highlightSuggestion(items);
         }
     } else if (e.key === 'Enter') {
+        e.preventDefault();
         if (currentSuggestionIndex >= 0) {
-            e.preventDefault();
             selectSuggestion(currentSuggestionIndex);
+        } else if (currentMatches.length > 0) {
+            selectSuggestion(0); // Sélectionne automatiquement le 1er résultat
         }
     }
 });
@@ -784,3 +840,4 @@ document.getElementById('recenter-btn').addEventListener('click', () => {
     map.setView([41.3851, 2.1734], 13);
     map.closePopup();
 });
+

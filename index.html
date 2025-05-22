@@ -45,14 +45,21 @@
             <option value="driving">🚗 En voiture</option>
         </select>
 
-        <label for="start">Point de départ :</label>
-        <select id="start"></select>
-
-        <label for="end">Destination :</label>
-        <select id="end"></select>
+        <div class="step-wrapper" id="start-wrapper">
+            <label for="start" class="step-label">Point de départ :</label>
+            <select id="start" class="step-select"></select>
+        </div>
 
         <div id="steps-holder"></div>
-        <button onclick="addStepSelect()">Ajouter une étape</button>
+
+        <div class="step-wrapper" id="end-wrapper">
+            <label for="end" class="step-label">Destination :</label>
+            <select id="end" class="step-select"></select>
+        </div>
+
+
+        <div id="steps-holder"></div>
+        <button onclick="replaceEndWithStep()">Ajouter une destination</button>
 
         <button onclick="calculateRoute()">Calculer l’itinéraire</button>
         <button onclick="resetRoute()">Réinitialiser</button>
