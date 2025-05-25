@@ -566,7 +566,24 @@ function calculateRoute() {
             return `<div style="margin-bottom: 10px;">${html}</div>`;
         }
     }).addTo(map);
-    console.log("Ordre des étapes :", [start, ...stepSelects.map(sel => sel.value), end]);
+
+    // 🟦 Spécifique au mobile
+    if (window.innerWidth <= 768) {
+        setTimeout(() => {
+            const routingPanel = document.querySelector('.leaflet-routing-container');
+            const contentContainer = document.getElementById('mobile-routing-content');
+
+            if (routingPanel && contentContainer) {
+                contentContainer.innerHTML = routingPanel.innerHTML; // Recopie le contenu
+                routingPanel.style.display = 'none'; // Cache le vrai panneau
+
+                // Affiche le drawer mobile
+                document.getElementById('controls').style.display = 'none';
+                document.getElementById('mobile-routing-wrapper').classList.remove('collapsed');
+                document.getElementById('drawer').classList.remove('collapsed');
+            }
+        }, 500); // attend que Leaflet ait rendu le panneau
+    }
 }
 
 function resetRoute() {
@@ -581,6 +598,15 @@ function resetRoute() {
     updateStartOptions();
     updateEndOptions();
     document.getElementById('route-info').style.display = 'none';
+
+    if (window.innerWidth <= 768) {
+        document.getElementById('controls').style.display = 'block';
+
+        const routingWrapper = document.getElementById('mobile-routing-wrapper');
+        if (routingWrapper) {
+            routingWrapper.remove(); // ou routingWrapper.classList.add('collapsed') si tu veux le garder
+        }
+    }
 }
 
 function updateEndOptions() {
