@@ -1,11 +1,11 @@
 { "type": "FeatureCollection", "features": [
 { "type": "Feature", "properties": { "name": "Sagrada Família", "description": "Une grande basilique catholique romaine inachevée conçue par Antoni Gaudí.", "category": "monument", "hours": "📅 Ouvert de 09h à 19h" }, "geometry": { "type": "Point", "coordinates": [2.1744, 41.4036] } },
 
-{ "type": "Feature", "properties": { "name": "Hotel SYSTELCOMS", "description": "Hôtel Catalonia Ramblas", "category": "hotel", "hours": "📅 24h/24H" }, "geometry": { "type": "Point", "coordinates": [2.1676, 41.3842] } },
+{ "type": "Feature", "properties": { "name": "Hotel SYSTELCOMS", "description": "Hôtel Catalonia Ramblas", "category": "hotel", "hours": "📅 24h/24H" }, "geometry": { "type": "Point", "coordinates": [2.166838603097566, 41.38578094380955] } },
 
 { "type": "Feature", "properties": { "name": "Parc Güell", "description": "Un parc public avec des jardins et éléments architecturaux sur la colline du Carmel.", "category": "parc", "hours": "📅 Ouvert de 09:30 - 19:30" }, "geometry": { "type": "Point", "coordinates": [2.1527, 41.4145] } },
 
-{ "type": "Feature", "properties": { "name": "La Rambla", "description": "Une rue emblématique du centre de Barcelone, très fréquentée.", "category": "monument", "hours": "📅 Ouvert 24/24 " }, "geometry": { "type": "Point", "coordinates": [2.1734, 41.3826] } },
+{ "type": "Feature", "properties": { "name": "La Rambla", "description": "Une rue emblématique du centre de Barcelone, très fréquentée.", "category": "monument", "hours": "📅 Ouvert 24/24 " }, "geometry": { "type": "Point", "coordinates": [2.169818407993976, 41.385684099725275] } },
 
 { "type": "Feature", "properties": { "name": "Quartier Gothique (Barri Gòtic)", "description": "Le centre historique de la vieille ville de Barcelone.", "category": "monument", "hours": "📅 Ouvert de " }, "geometry": { "type": "Point", "coordinates": [2.1763, 41.3839] } },
 
@@ -29,6 +29,8 @@
 
 { "type": "Feature", "properties": { "name": "Nubar", "description": "Un lieu chic pour sortir, situé dans le quartier Zona Alta.", "category": "bar", "hours": "📅 Ouvert de 13:00 - 23:30" }, "geometry": { "type": "Point", "coordinates": [2.134, 41.398] } },
 
-{ "type": "Feature", "properties": { "name": "Mood Rooftop", "description": "Un rooftop caché sur la rue Provença, parfait pour se détendre.", "category": "bar", "hours": "📅 Ouvert de 12:00 - 00:00" }, "geometry": { "type": "Point", "coordinates": [2.16, 41.394] } }
+{ "type": "Feature", "properties": { "name": "Mood Rooftop", "description": "Un rooftop caché sur la rue Provença, parfait pour se détendre.", "category": "bar", "hours": "📅 Ouvert de 12:00 - 00:00" }, "geometry": { "type": "Point", "coordinates": [2.16, 41.394] } }, 
+
+{ "type": "Feature", "properties": { "name": "Port Olimpic", "description": "Pour où se passera la sorti en Katamaran", "category": "hotel", "hours": "📅 Heure activité 11:00 - 16:00" }, "geometry": { "type": "Point", "coordinates": [2.201024271480614, 41.38672694901577] } }
 
 ] }

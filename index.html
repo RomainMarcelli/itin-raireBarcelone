@@ -16,6 +16,7 @@
     <!-- Capture de DOM pour la carte -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
     <script defer src="script.js"></script>
 </head>
 
@@ -28,89 +29,102 @@
         </div>
         <ul id="search-suggestions"></ul>
     </div>
-
-    <div id="controls">
-        <div id="drag-handle" title="Déplacer le panneau">⋮⋮⋮</div>
-
-        <!-- <div id="weather-box">🌡 22°C – ciel clair</div>
-        <div id="forecast-box">
-            <strong>📅 Prévisions (midi) :</strong><br>
-            samedi 25 juin : 26°C – partiellement nuageux<br>
-            dimanche 26 juin : 28°C – ciel dégagé
-        </div> -->
-
-        <label for="mode">Mode de déplacement :</label>
-        <select id="mode">
-            <option value="foot">🚶‍♂️ À pied</option>
-            <option value="driving">🚗 En voiture</option>
-        </select>
-
-        <label for="start">Point de départ :</label>
-        <select id="start"></select>
-
-        <label for="end">Destination :</label>
-        <select id="end"></select>
-
-        <div id="steps-holder"></div>
-        <button onclick="addStepSelect()">Ajouter une étape</button>
-
-        <button onclick="calculateRoute()">Calculer l’itinéraire</button>
-        <button onclick="resetRoute()">Réinitialiser</button>
-
-        <label for="basemap">Fond de carte :</label>
-        <select id="basemap" onchange="changeBaseMap(this.value)">
-            <option value="light">Carte claire</option>
-            <option value="satellite">Satellite</option>
-        </select>
-
-        <hr>
-        <label><strong>Filtres :</strong></label>
-        <div class="filter-group">
-            <div style="margin-bottom: 8px;">
-                <button id="toggle-filters" style="padding: 6px 12px; font-size: 14px; cursor: pointer;">
-                    Tout désélectionner
-                </button>
-            </div>
-            <label class="filter-option">
-                <input type="checkbox" class="filter" value="hotel" checked>
-                <span class="filter-color hotel">🟦</span> Hôtel
-            </label>
-            <label class="filter-option">
-                <input type="checkbox" class="filter" value="parc" checked>
-                <span class="filter-color parc">🟩</span> Parcs
-            </label>
-            <label class="filter-option">
-                <input type="checkbox" class="filter" value="restaurant" checked>
-                <span class="filter-color restaurant">🟥</span> Restaurants
-            </label>
-            <label class="filter-option">
-                <input type="checkbox" class="filter" value="monument" checked>
-                <span class="filter-color monument">🟪</span> Monuments
-            </label>
-            <label class="filter-option">
-                <input type="checkbox" class="filter" value="bar" checked>
-                <span class="filter-color bar">🟧</span> Bars
-            </label>
-            <label class="filter-option">
-                <input type="checkbox" class="filter" value="plage" checked>
-                <span class="filter-color plage">🟨</span> Plages
-            </label>
-            <label class="filter-option">
-                <input type="checkbox" class="filter" value="metro">
-                <span class="filter-icon metro">
-                    <img src="barcelonepng.png" alt="Métro" style="width: 16px; height: 16px; vertical-align: middle;">
-                </span> Métros
-            </label>
+    <div id="drawer" class="collapsed">
+        <div id="drawer-handle">
+            <span class="drawer-icon">⋮⋮⋮</span>
         </div>
-        <hr>
-        <label><strong>⭐ Mes favoris :</strong></label>
-        <ul id="favorites-list" style="list-style-type: none; padding-left: 0; font-size: 14px; margin-top: 8px;"></ul>
+        <div id="controls">
+            <div id="drag-handle" title="Déplacer le panneau">⋮⋮⋮</div>
+
+            <label for="mode">Mode de déplacement :</label>
+            <select id="mode">
+                <option value="foot">🚶‍♂️ À pied</option>
+                <option value="driving">🚗 En voiture</option>
+            </select>
+
+            <div class="step-wrapper" id="start-wrapper">
+                <label for="start" class="step-label">Point de départ :</label>
+                <select id="start" class="step-select"></select>
+            </div>
+
+            <div class="step-wrapper" id="end-wrapper">
+                <label for="end" class="step-label">Destination :</label>
+                <select id="end" class="step-select"></select>
+            </div>
+
+
+            <div id="steps-holder"></div>
+            <button onclick="replaceEndWithStep()">Ajouter une destination</button>
+
+            <button onclick="calculateRoute()">Calculer l’itinéraire</button>
+            <button onclick="resetRoute()">Réinitialiser</button>
+
+            <label for="basemap">Fond de carte :</label>
+            <select id="basemap" onchange="changeBaseMap(this.value)">
+                <option value="light">Carte claire</option>
+                <option value="satellite">Satellite</option>
+            </select>
+
+            <hr>
+            <label><strong>Filtres :</strong></label>
+            <div class="filter-group">
+                <div style="margin-bottom: 8px;">
+                    <button id="toggle-filters" style="padding: 6px 12px; font-size: 14px; cursor: pointer;">
+                        Tout désélectionner
+                    </button>
+                </div>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="hotel" checked>
+                    <span class="filter-color hotel">🟦</span> Hôtel
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="parc" checked>
+                    <span class="filter-color parc">🟩</span> Parcs
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="restaurant" checked>
+                    <span class="filter-color restaurant">🟥</span> Restaurants
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="monument" checked>
+                    <span class="filter-color monument">🟪</span> Monuments
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="bar" checked>
+                    <span class="filter-color bar">🟧</span> Bars
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="plage" checked>
+                    <span class="filter-color plage">🟨</span> Plages
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="metro">
+                    <span class="filter-icon metro">
+                        <img src="barcelonepng.png" alt="Métro"
+                            style="width: 16px; height: 16px; vertical-align: middle;">
+                    </span> Métros
+                </label>
+            </div>
+            <hr>
+            <label><strong>⭐ Mes favoris :</strong></label>
+            <ul id="favorites-list" style="list-style-type: none; padding-left: 0; font-size: 14px; margin-top: 8px;">
+            </ul>
+        </div>
     </div>
 
-    <a href="métro/metro-lignes.html"
-        style="position: absolute; z-index: 10000; top: 10px; right: 10px; background: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold;">
+    <!-- <div id="mobile-routing-wrapper" class="collapsed">
+        <div class="mobile-routing-handle">⋮⋮⋮</div>
+        <div id="mobile-routing-content"></div>
+    </div> -->
+
+    <a href="métro/metro-lignes.html" id="metro-btn" class="desktop-only">
         🗺 Lignes de métro
     </a>
+
+    <a href="métro/metro-lignes.html" id="metro-icon" class="mobile-only">
+        <img src="barcelonepng.png" alt="Métro" />
+    </a>
+
 
     <div id="map"></div>
 
