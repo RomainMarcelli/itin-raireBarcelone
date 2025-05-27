@@ -1,4 +1,4 @@
-// ----------- 🖼️ Plein écran avec navigation ----------- //
+/// ----------- 🖼️ Plein écran avec navigation ----------- //
 const fullscreen = document.getElementById('fullscreen-map');
 const fullscreenImg = fullscreen.querySelector('img');
 const allImages = Array.from(document.querySelectorAll('#metro-images img'));
@@ -9,56 +9,63 @@ const downloadBtn = document.getElementById('download-image');
 
 let currentIndex = -1;
 
-// ▶️ Afficher l'image en plein écran
-allImages.forEach((img, index) => {
-  img.addEventListener('click', () => {
+// ▶️ Fonction pour ouvrir une image en plein écran
+function openFullscreen(index) {
+  if (index >= 0 && index < allImages.length) {
     fullscreen.style.display = 'flex';
-    fullscreenImg.src = img.src;
+    fullscreenImg.src = allImages[index].src;
     currentIndex = index;
-  });
-});
+  }
+}
 
 // ❌ Fermer le plein écran
-closeBtn.addEventListener('click', () => {
+function closeFullscreen() {
   fullscreen.style.display = 'none';
   fullscreenImg.src = '';
   currentIndex = -1;
-});
+}
 
-// 💾 Télécharger l'image affichée
-downloadBtn.addEventListener('click', () => {
+// ◀️ Afficher l’image précédente
+function showPrevious() {
+  if (currentIndex > 0) {
+    openFullscreen(currentIndex - 1);
+  }
+}
+
+// ▶️ Afficher l’image suivante
+function showNext() {
+  if (currentIndex < allImages.length - 1) {
+    openFullscreen(currentIndex + 1);
+  }
+}
+
+// 💾 Télécharger l’image
+function downloadCurrentImage() {
   if (fullscreenImg.src) {
     const link = document.createElement('a');
     link.href = fullscreenImg.src;
     link.download = 'ligne-metro-barcelone.png';
     link.click();
   }
+}
+
+// 🎯 Lier les événements
+allImages.forEach((img, index) => {
+  img.addEventListener('click', () => openFullscreen(index));
 });
 
-// ◀️ Image précédente
-prevBtn.addEventListener('click', () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-    fullscreenImg.src = allImages[currentIndex].src;
-  }
-});
-
-// ▶️ Image suivante
-nextBtn.addEventListener('click', () => {
-  if (currentIndex < allImages.length - 1) {
-    currentIndex++;
-    fullscreenImg.src = allImages[currentIndex].src;
-  }
-});
+closeBtn?.addEventListener('click', closeFullscreen);
+prevBtn?.addEventListener('click', showPrevious);
+nextBtn?.addEventListener('click', showNext);
+downloadBtn?.addEventListener('click', downloadCurrentImage);
 
 // ⎋ Fermer avec la touche Échap
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    fullscreen.style.display = 'none';
-    fullscreenImg.src = '';
-    currentIndex = -1;
+    closeFullscreen();
   }
 });
+
 
 
 // ----------- 🔍 Barre de recherche + suggestions ----------- //

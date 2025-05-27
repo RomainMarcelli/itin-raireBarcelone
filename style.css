@@ -11,14 +11,14 @@ body {
 
 select,
 select option {
-  color: #000;
-  background-color: #fff;
+    color: #000;
+    background-color: #fff;
 }
 
 
 #search-container {
     position: absolute;
-    top: 12px;
+    top: calc(100% + 6px);
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
