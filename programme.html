@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programme</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+      animation: fadeIn 0.7s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .zoomable {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+      z-index: 2;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .zoomable.zoomed {
+      transform: scale(1.5);
+      cursor: zoom-out;
+    }
+
+    .buttons {
+      margin-top: 54px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      z-index: 2;
+      position: relative;
+      transition: opacity 0.3s ease;
+    }
+
+    .buttons.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #5b5fef, #4a00e0);
+      color: white;
+      padding: 14px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, background 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(135deg, #3d3fe3, #3600b3);
+    }
+
+    @media (max-width: 600px) {
+      .btn {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+      }
+
+      .zoomable.zoomed {
+        transform: scale(1.2);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay" id="overlay"></div>
+
+  <img src="Doc/programme.png" alt="Programme" class="zoomable" id="programmeImage">
+
+  <div class="buttons" id="buttonContainer">
+    <button class="btn" onclick="history.back()">⬅ Retour</button>
+    <a class="btn" href="Doc/programme.png" download>📥 Télécharger</a>
+  </div>
+
+  <script>
+    const img = document.getElementById('programmeImage');
+    const overlay = document.getElementById('overlay');
+    const buttons = document.getElementById('buttonContainer');
+
+    img.addEventListener('click', () => {
+      const isZoomed = img.classList.toggle('zoomed');
+      overlay.classList.toggle('active', isZoomed);
+      buttons.classList.toggle('hidden', isZoomed);
+    });
+
+    overlay.addEventListener('click', () => {
+      img.classList.remove('zoomed');
+      overlay.classList.remove('active');
+      buttons.classList.remove('hidden');
+    });
+  </script>
+
+</body>
+</html>
