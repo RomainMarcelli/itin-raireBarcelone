@@ -3,8 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
+    <link rel="icon" href="icons/favicon.ico" type="image/ico">
     <title>Carte interactive de Barcelone</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0072BC">
+    <meta name="offline" content="true">
+
     <!-- Feuilles de style -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
@@ -57,6 +62,7 @@
             <button onclick="replaceEndWithStep()">Ajouter une destination</button>
 
             <button onclick="calculateRoute()">Calculer l’itinéraire</button>
+            <button onclick="enregistrerMonPlan()">Enregistrer mon trajet</button>
             <button onclick="resetRoute()">Réinitialiser</button>
 
             <label for="basemap">Fond de carte :</label>
@@ -121,10 +127,6 @@
         <div id="mobile-routing-content"></div>
     </div> -->
 
-    <a href="métro/metro-lignes.html" id="metro-btn" class="desktop-only">
-        🗺 Lignes de métro
-    </a>
-
     <a href="métro/metro-lignes.html" id="metro-icon" class="mobile-only">
         <img src="barcelonepng.png" alt="Métro" />
     </a>
@@ -139,6 +141,10 @@
     <div id="mobileMenu">
         <a href="itinéraire.html" class="menu-link">Itinéraire de dimanche</a>
         <a href="programme.html" class="menu-link">Programme</a>
+        <a href="métro/metro-lignes.html" class="menu-link">
+            🗺 Lignes de métro
+        </a>
+        <button onclick="loadOfflinePlan() " class="menu-link">Charger mon itinéraire</button>
     </div>
 
 
