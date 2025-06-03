@@ -903,5 +903,8 @@ const menu = document.getElementById('mobileMenu');
 
 toggleBtn.addEventListener('click', () => {
     menu.classList.toggle('active');
-    toggleBtn.innerHTML = menu.classList.contains('active') ? '&#x25B6;' : '&#x25C0;';
+    
+    toggleBtn.innerHTML = menu.classList.contains('active')
+        ?  '<i class="fas fa-chevron-right"></i>'    
+        : '<i class="fas fa-chevron-left"></i>';      
 });
