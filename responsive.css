@@ -241,4 +241,9 @@
         color: #aaa;
         cursor: pointer;
     }
+
+    .itinerairePerso,
+    .programme {
+        display: none;
+    }
 }

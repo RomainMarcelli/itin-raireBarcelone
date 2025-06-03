@@ -58,8 +58,10 @@ a.back-link:hover {
 /* Plein écran */
 #fullscreen-map {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.95);
   display: none;
   align-items: center;
@@ -181,7 +183,7 @@ a.back-link:hover {
   border-radius: 0 0 6px 6px;
   overflow-y: auto;
   max-height: 250px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 #search-suggestions li {
@@ -262,5 +264,43 @@ a.back-link:hover {
 
   #metro-images {
     gap: 15px;
+  }
+
+  #fullscreen-map {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  #fullscreen-map img {
+    max-width: 95%;
+    max-height: 85vh;
+    object-fit: contain;
+    margin: auto;
+  }
+
+  #fullscreen-map .nav-arrow {
+    font-size: 32px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  #fullscreen-map .nav-arrow.left {
+    left: 10px;
+  }
+
+  #fullscreen-map .nav-arrow.right {
+    right: 10px;
+  }
+
+  #close-fullscreen,
+  #download-image {
+    font-size: 24px;
+    top: 15px;
   }
 }

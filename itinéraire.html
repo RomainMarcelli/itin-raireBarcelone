@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Itinéraire Barcelone</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background: #f0f0f0;
+      transform: translateY(-1px);
+    }
+
+    .back-btn i {
+      margin-right: 8px;
+    }
+
+    /* 📱 Responsive */
+    @media (max-width: 600px) {
+      .back-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+        top: 12px;
+        right: 12px;
+      }
+
+      .back-btn i {
+        margin-right: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="index.html" class="back-btn">
+    <i>&larr;</i> Revenir à la carte
+  </a>
+
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m72!1m8!1m3!1d5987.236901565903!2d2.1725651!3d41.3823737!3m2!1i1024!2i768!4f13.1!4m61!3e2!4m5!1s0x12a4a2f483c3b74d%3A0xc3607eb12bcef66e!2sHotel%20Catalonia%20Rambles!3m2!1d41.3856237!2d2.1668279999999998!4m5!1s0x12a4a2ed494b4161%3A0x40d2782f9e2e4e0f!2sCasa%20Batll%C3%B3!3m2!1d41.3917!2d2.164918!4m5!1s0x12a4a293998ae1d5%3A0xc49fa3624f371e6a!2sLa%20Pedrera!3m2!1d41.3952155!2d2.1619024!4m5!1s0x12a4a2dcd83dfb93%3A0x9bd8aac21bc3c950!2sSagrada%20Fam%C3%ADlia!3m2!1d41.4036299!2d2.1743558!4m5!1s0x12a4a2ae52d441ab%3A0x899a0ba01aaace58!2sParc%20G%C3%BCell!3m2!1d41.4144948!2d2.1526945!4m5!1s0x12a4a2a5e9644c97%3A0xe81ac026b980df66!2sGr%C3%A0cia%2C%20Barcelone%2C%20Espagne!3m2!1d41.4111806!2d2.157474!4m5!1s0x12a4a2a2323480a1%3A0xcef2071fd9460247!2sCasa%20Vicens!3m2!1d41.4034408!2d2.1506898!4m5!1s0x12a4a2f8901e0681%3A0xb7e57ec538cda7af!2sQuartier%20gothique!3m2!1d41.3819247!2d2.1773051999999997!4m5!1s0x12a4a2f7b51e5a01%3A0x860ac654dc73add5!2sLa%20Boqueria!3m2!1d41.3817399!2d2.1715853!4m5!1s0x12a4a2f483c3b74d%3A0xc3607eb12bcef66e!2sHotel%20Catalonia%20Rambles!3m2!1d41.3856237!2d2.1668279999999998!5e0!3m2!1sfr!2sfr!4v1748875405485!5m2!1sfr!2sfr"
+    allowfullscreen="" loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+</body>
+
+</html>
