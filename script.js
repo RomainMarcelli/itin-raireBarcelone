@@ -1,5 +1,11 @@
 const map = L.map('map').setView([41.3851, 2.1734], 13);
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('serviceWorker.js')
+    .then(() => console.log("✅ Service worker enregistré"))
+    .catch((err) => console.error("❌ Erreur SW:", err));
+}
+
 const tileLayers = {
     light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap & Carto',
@@ -564,7 +570,9 @@ function calculateRoute() {
             for (let i = 0; i < allStops.length - 1; i++) {
                 const from = allStops[i];
                 const to = allStops[i + 1];
-                const seg = localRoutes.find(r => (r.from === from && r.to === to) || (r.from === to && r.to === from));
+                const seg = localRoutes.find(r =>
+                    (r.from === from && r.to === to) || (r.from === to && r.to === from)
+                );
                 if (seg) {
                     const data = mode === 'foot' ? seg.walking : seg.driving;
                     totalDistance += data.distance_km;
@@ -580,23 +588,31 @@ function calculateRoute() {
         }
     }).addTo(map);
 
-    // 🟦 Spécifique au mobile
+    // 📱 Mobile drawer adaptation
     if (window.innerWidth <= 768) {
         setTimeout(() => {
             const routingPanel = document.querySelector('.leaflet-routing-container');
             const contentContainer = document.getElementById('mobile-routing-content');
 
             if (routingPanel && contentContainer) {
-                contentContainer.innerHTML = routingPanel.innerHTML; // Recopie le contenu
-                routingPanel.style.display = 'none'; // Cache le vrai panneau
-
-                // Affiche le drawer mobile
+                contentContainer.innerHTML = routingPanel.innerHTML;
+                routingPanel.style.display = 'none';
                 document.getElementById('controls').style.display = 'none';
                 document.getElementById('mobile-routing-wrapper').classList.remove('collapsed');
                 document.getElementById('drawer').classList.remove('collapsed');
             }
-        }, 500); // attend que Leaflet ait rendu le panneau
+        }, 500);
     }
+
+    // 💾 Sauvegarde locale pour le mode offline
+    const offlinePlan = {
+        start: start,
+        end: end,
+        steps: intermediate,
+        mode: mode,
+        favorites: JSON.parse(localStorage.getItem('favorites') || '[]')
+    };
+    localStorage.setItem('offlinePlan', JSON.stringify(offlinePlan));
 }
 
 function resetRoute() {
@@ -929,25 +945,84 @@ function checkSpecialPointCondition() {
   ];
   const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
-  // Convertir en minuscules pour comparaison fiable
-  const favLower = favorites.map(f => f.toLowerCase());
-  const reqLower = required.map(r => r.toLowerCase());
-
-  // Cherche l'ordre exact dans favorites
-  const startIndex = favLower.indexOf(reqLower[0]);
-
-  const inCorrectOrder =
-    startIndex !== -1 &&
-    favLower.slice(startIndex, startIndex + reqLower.length).join(',') === reqLower.join(',');
+  // Vérifie que les deux tableaux ont exactement les mêmes éléments et dans le même ordre
+  const isExactMatch = favorites.length === required.length &&
+    favorites.every((fav, i) => fav.toLowerCase() === required[i].toLowerCase());
 
   if (specialMarkerRef.marker) {
-    if (inCorrectOrder && !specialMarkerRef.added) {
+    if (isExactMatch && !specialMarkerRef.added) {
       specialMarkerRef.marker.addTo(map);
       specialMarkerRef.added = true;
-    } else if (!inCorrectOrder && specialMarkerRef.added) {
+    } else if (!isExactMatch && specialMarkerRef.added) {
       map.removeLayer(specialMarkerRef.marker);
       specialMarkerRef.added = false;
     }
   }
 }
 
+function loadOfflinePlan() {
+  const plan = JSON.parse(localStorage.getItem('offlinePlan') || 'null');
+  if (!plan) return alert("Aucun plan enregistré.");
+
+  startSelect.value = plan.start;
+  endSelect.value = plan.end;
+  document.getElementById('mode').value = plan.mode;
+
+  // Recharge les étapes
+  stepsContainer.innerHTML = '';
+  stepSelects.length = 0;
+  plan.steps.forEach((stepName, index) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'step-wrapper';
+
+    const label = document.createElement('label');
+    label.className = 'step-label';
+    label.textContent = `Étape ${index + 1} :`;
+
+    const select = document.createElement('select');
+    select.className = 'step-select';
+
+    Object.keys(points).forEach(name => {
+      const opt = new Option(name, name);
+      if (name === stepName) opt.selected = true;
+      select.appendChild(opt);
+    });
+
+    const removeBtn = document.createElement('span');
+    removeBtn.textContent = '✖';
+    removeBtn.className = 'remove-step';
+    removeBtn.onclick = () => {
+      stepsContainer.removeChild(wrapper);
+      const i = stepSelects.indexOf(select);
+      if (i !== -1) stepSelects.splice(i, 1);
+      relabelSteps();
+    };
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(select);
+    wrapper.appendChild(removeBtn);
+    stepsContainer.appendChild(wrapper);
+    stepSelects.push(select);
+  });
+
+  // Recharge les favoris
+  localStorage.setItem('favorites', JSON.stringify(plan.favorites));
+  updateFavoritesList();
+  relabelSteps();
+  calculateRoute();
+}
+
+
+function enregistrerMonPlan() {
+  const plan = {
+    start: startSelect.value,
+    end: endSelect.value,
+    steps: stepSelects.map(sel => sel.value),
+    mode: document.getElementById('mode').value,
+    favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
+    date: new Date().toISOString()
+  };
+
+  localStorage.setItem('offlinePlan', JSON.stringify(plan));
+  alert("✅ Ton trajet a bien été enregistré !");
+}

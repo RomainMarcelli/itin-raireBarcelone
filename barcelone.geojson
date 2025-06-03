@@ -33,13 +33,14 @@
 
 { "type": "Feature", "properties": { "name": "Corgis Café", "description": "Coffee shop original où l’on peut déguster boissons et douceurs tout en jouant avec de joyeux corgis", "category": "Maureen", "hours": "📅 Ouvert de 09:00 - 17:00" }, "geometry": { "type": "Point", "coordinates": [2.157684838810342, 41.38795234450737] } }, 
 
+{ "type": "Feature", "properties": { "name": "Musée de l'érotisme", "description": "Le Musée de l’érotisme de Barcelone présente l’histoire de l’art érotique à travers des œuvres intrigantes et insolites. Un lieu original au cœur de la ville", "category": "special", "hours": "📅 Ouvert de 10:00 - 00:00", "prix": "15€" }, "geometry": { "type": "Point", "coordinates": [2.172578707761179, 41.38252561405296] } }, 
+
 { "type": "Feature", "properties": { "name": "Chez Paulette", "description": "Une boutique charmante de style français, proposant déco, cadeaux et articles vintage soigneusement sélectionnés", "category": "Maureen", "hours": "📅 Ouvert de 12:00 - 20:00" }, "geometry": { "type": "Point", "coordinates": [2.178130723466574, 41.381366276467176] } }, 
 
 { "type": "Feature", "properties": { "name": "Aquarium de Barcelone", "description": "Un grand espace marin avec tunnels sous-marins et requins", "category": "monument", "hours": "📅 Ouvert de 10:00 - 20:00", "prix": "17€" }, "geometry": { "type": "Point", "coordinates": [2.1841731814060608, 41.37728520818537] } }, 
 
 { "type": "Feature", "properties": { "name": "Parc zoologique de Barcelone", "description": "Le Parc zoologique de Barcelone abrite de nombreuses espèces dans un cadre verdoyant", "category": "parc", "hours": "📅 Ouvert de 10:00 - 20:00", "prix": "12,95€" }, "geometry": { "type": "Point", "coordinates": [2.1871986406611983, 41.38646610993136] } }, 
 
-{ "type": "Feature", "properties": { "name": "Musée de l'érotisme", "description": "Le Musée de l’érotisme de Barcelone présente l’histoire de l’art érotique à travers des œuvres intrigantes et insolites. Un lieu original au cœur de la ville", "category": "special", "hours": "📅 Ouvert de 10:00 - 00:00", "prix": "15€" }, "geometry": { "type": "Point", "coordinates": [2.172578707761179, 41.38252561405296] } }, 
 
 { "type": "Feature", "properties": { "name": "Port Olimpic", "description": "Pour où se passera la sorti en Katamaran", "category": "hotel", "hours": "📅 Heure activité 11:00 - 16:00" }, "geometry": { "type": "Point", "coordinates": [2.201024271480614, 41.38672694901577] } }
 
