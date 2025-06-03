@@ -47,6 +47,7 @@ function getIcon(category) {
         monument: "violet",
         bar: "orange",
         plage: "yellow",
+        Maureen: "grey",
         hotel: "blue"
     };
     const color = colors[category] || "gray";
@@ -107,6 +108,7 @@ function loadBarceloneData() {
 
             data.features.forEach(feature => {
                 const name = feature.properties.name;
+                const prix = feature.properties.prix;
                 const desc = feature.properties.description;
                 const cat = feature.properties.category || "autre";
                 const coords = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
@@ -211,6 +213,7 @@ function loadBarceloneData() {
                             ${desc}
                             ${feature.properties.hours ? `<div style="margin-top: 6px;">${feature.properties.hours}</div>` : ''}
                             ${feature.properties.best_time ? `<div style="margin-top: 6px;">${feature.properties.best_time}</div>` : ''}
+                            ${prix ? `<p style="margin: 6px 0px 0px 0px;">Prix : ${prix}</p>` : ''}
                             ${metroInfo}
                         </div>
                     </div>
@@ -893,3 +896,12 @@ if (window.innerWidth <= 768) {
     const oldHandle = document.getElementById('drag-handle');
     if (oldHandle) oldHandle.remove();
 }
+
+
+const toggleBtn = document.getElementById('mobileToggle');
+const menu = document.getElementById('mobileMenu');
+
+toggleBtn.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    toggleBtn.innerHTML = menu.classList.contains('active') ? '&#x25B6;' : '&#x25C0;';
+});

@@ -98,6 +98,10 @@
                     <span class="filter-color plage">🟨</span> Plages
                 </label>
                 <label class="filter-option">
+                    <input type="checkbox" class="filter" value="Maureen" checked>
+                    <span class="filter-color Maureen">⬛</span> Maureen
+                </label>
+                <label class="filter-option">
                     <input type="checkbox" class="filter" value="metro">
                     <span class="filter-icon metro">
                         <img src="barcelonepng.png" alt="Métro"
@@ -128,9 +132,15 @@
 
     <div id="map"></div>
 
-    <a href="itinéraire.html" class="itinerairePerso">Itinéraire de dimanche</a>
+    <!-- Bouton flèche pour ouvrir -->
+    <div id="mobileToggle">&#x25C0;</div>
 
-    <a href="programme.html" class="programme">Programme</a>
+    <!-- Menu mobile caché -->
+    <div id="mobileMenu">
+        <a href="itinéraire.html" class="menu-link">Itinéraire de dimanche</a>
+        <a href="programme.html" class="menu-link">Programme</a>
+    </div>
+
 
     <button id="recenter-btn" title="Revenir à la vue de départ">
         <i class="fas fa-crosshairs"></i>
