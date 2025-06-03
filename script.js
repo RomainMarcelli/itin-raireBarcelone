@@ -24,7 +24,7 @@ const stepSelects = [];
 const points = {};
 const markersByCategory = {};
 let allMetroStations = [];
-
+const specialMarkerRef = {}; // à placer dans un scope global
 
 fetch('trajet.json')
     .then(res => res.json())
@@ -48,7 +48,8 @@ function getIcon(category) {
         bar: "orange",
         plage: "yellow",
         Maureen: "grey",
-        hotel: "blue"
+        hotel: "blue", 
+        special: "black"
     };
     const color = colors[category] || "gray";
 
@@ -213,13 +214,19 @@ function loadBarceloneData() {
                             ${desc}
                             ${feature.properties.hours ? `<div style="margin-top: 6px;">${feature.properties.hours}</div>` : ''}
                             ${feature.properties.best_time ? `<div style="margin-top: 6px;">${feature.properties.best_time}</div>` : ''}
-                            ${prix ? `<p style="margin: 6px 0px 0px 0px;">Prix : ${prix}</p>` : ''}
+                            ${prix ? `<p style="margin: 6px 0px 0px 0px;">Prix d'entrée : ${prix}</p>` : ''}
                             ${metroInfo}
                         </div>
                     </div>
                 `);
 
-                marker.addTo(map);
+                if (cat === "special") {
+                    specialMarkerRef.marker = marker;
+                    specialMarkerRef.added = false;
+                    // Ne pas l'ajouter tout de suite à la map
+                } else {
+                    marker.addTo(map);
+                }
 
                 if (!markersByCategory[cat]) markersByCategory[cat] = [];
                 markersByCategory[cat].push(marker);
@@ -229,6 +236,7 @@ function loadBarceloneData() {
             updateEndOptions();
             updateStartOptions();
             updateFavoritesList();
+            checkSpecialPointCondition();
         });
 }
 
@@ -336,6 +344,7 @@ function toggleFavorite(el, name) {
     }
     localStorage.setItem('favorites', JSON.stringify(favorites));
     updateFavoritesList();
+    checkSpecialPointCondition();
 }
 
 function updateFavoritesList() {
@@ -380,6 +389,7 @@ function updateFavoritesList() {
         li.appendChild(star);
         li.appendChild(nameSpan);
         list.appendChild(li);
+        checkSpecialPointCondition();
     });
 }
 
@@ -903,8 +913,41 @@ const menu = document.getElementById('mobileMenu');
 
 toggleBtn.addEventListener('click', () => {
     menu.classList.toggle('active');
-    
+
     toggleBtn.innerHTML = menu.classList.contains('active')
-        ?  '<i class="fas fa-chevron-right"></i>'    
-        : '<i class="fas fa-chevron-left"></i>';      
+        ? '<i class="fas fa-chevron-right"></i>'
+        : '<i class="fas fa-chevron-left"></i>';
 });
+
+
+function checkSpecialPointCondition() {
+  const required = [
+    "Camp Nou",
+    "Hotel SYSTELCOMS",
+    "Port Olimpic",
+    "Plage de la Barceloneta"
+  ];
+  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+  // Convertir en minuscules pour comparaison fiable
+  const favLower = favorites.map(f => f.toLowerCase());
+  const reqLower = required.map(r => r.toLowerCase());
+
+  // Cherche l'ordre exact dans favorites
+  const startIndex = favLower.indexOf(reqLower[0]);
+
+  const inCorrectOrder =
+    startIndex !== -1 &&
+    favLower.slice(startIndex, startIndex + reqLower.length).join(',') === reqLower.join(',');
+
+  if (specialMarkerRef.marker) {
+    if (inCorrectOrder && !specialMarkerRef.added) {
+      specialMarkerRef.marker.addTo(map);
+      specialMarkerRef.added = true;
+    } else if (!inCorrectOrder && specialMarkerRef.added) {
+      map.removeLayer(specialMarkerRef.marker);
+      specialMarkerRef.added = false;
+    }
+  }
+}
+

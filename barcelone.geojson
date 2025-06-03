@@ -39,6 +39,8 @@
 
 { "type": "Feature", "properties": { "name": "Parc zoologique de Barcelone", "description": "Le Parc zoologique de Barcelone abrite de nombreuses espèces dans un cadre verdoyant", "category": "parc", "hours": "📅 Ouvert de 10:00 - 20:00", "prix": "12,95€" }, "geometry": { "type": "Point", "coordinates": [2.1871986406611983, 41.38646610993136] } }, 
 
+{ "type": "Feature", "properties": { "name": "Musée de l'érotisme", "description": "Le Musée de l’érotisme de Barcelone présente l’histoire de l’art érotique à travers des œuvres intrigantes et insolites. Un lieu original au cœur de la ville", "category": "special", "hours": "📅 Ouvert de 10:00 - 00:00", "prix": "15€" }, "geometry": { "type": "Point", "coordinates": [2.172578707761179, 41.38252561405296] } }, 
+
 { "type": "Feature", "properties": { "name": "Port Olimpic", "description": "Pour où se passera la sorti en Katamaran", "category": "hotel", "hours": "📅 Heure activité 11:00 - 16:00" }, "geometry": { "type": "Point", "coordinates": [2.201024271480614, 41.38672694901577] } }
 
 ] }
