@@ -1026,3 +1026,63 @@ function enregistrerMonPlan() {
   localStorage.setItem('offlinePlan', JSON.stringify(plan));
   alert("✅ Ton trajet a bien été enregistré !");
 }
+
+
+function updateNetworkStatus() {
+  const badge = document.getElementById('networkStatus');
+  if (!badge) return;
+
+  if (navigator.onLine) {
+    badge.textContent = '🟢 En ligne';
+    badge.className = 'online';
+  } else {
+    badge.textContent = '🔴 Hors ligne';
+    badge.className = 'offline';
+  }
+}
+
+window.addEventListener('online', updateNetworkStatus);
+window.addEventListener('offline', updateNetworkStatus);
+window.addEventListener('load', updateNetworkStatus);
+
+// Fonction appelée par tous les boutons
+let userMarker;
+
+function locateMe() {
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par ce navigateur.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+    const userLatLng = L.latLng(lat, lng);
+
+    map.setView(userLatLng, 16);
+
+    if (userMarker) {
+      map.removeLayer(userMarker);
+    }
+
+    const userIcon = L.icon({
+      iconUrl: 'icons/user-position.png',
+      iconSize: [40, 40],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map);
+    userMarker.bindPopup("Vous êtes ici").openPopup();
+
+  }, () => {
+    alert("Impossible de vous localiser.");
+  });
+}
+
+document.getElementById('locateBtn').addEventListener('click', locateMe);
+
+
+// Lier le bouton fixe
+document.getElementById('locateBtn').addEventListener('click', locateMe);
+

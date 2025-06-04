@@ -368,8 +368,9 @@ select option {
   background: linear-gradient(145deg, #ffffff, #f0f0f0);
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
   padding: 32px 20px;
-  display: flex;
+   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 24px;
   transition: right 0.3s ease;
   z-index: 2000;
@@ -409,6 +410,7 @@ select option {
   background: #ffffff;
   padding: 14px 20px;
   border-radius: 12px;
+  border: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   transition: background 0.2s ease;
 }
@@ -450,6 +452,25 @@ select option {
     text-decoration: none;
     font-weight: bold;
     color: black;
+}
+
+#networkStatus {
+  align-self: flex-end; /* positionne à droite */
+  margin-top: auto;
+  margin-bottom: 44px;
+  background: #dfffe2;
+  color: green;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+#networkStatus.offline {
+  background: #fce2e2;
+  color: red;
 }
 
 /* Responsive ajustement */
