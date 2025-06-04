@@ -1,4 +1,4 @@
-const map = L.map('map').setView([41.3851, 2.1734], 13);
+const map = L.map('map').setView([41.3590, 2.1780], 12.5);
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('serviceWorker.js')
@@ -1086,3 +1086,45 @@ document.getElementById('locateBtn').addEventListener('click', locateMe);
 // Lier le bouton fixe
 document.getElementById('locateBtn').addEventListener('click', locateMe);
 
+
+window.addEventListener('deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation', function (event) {
+  if (event.alpha !== null) {
+    const compass = document.getElementById('compassArrow');
+    const heading = event.webkitCompassHeading || 360 - event.alpha;
+    compass.style.transform = `rotate(${heading}deg)`;
+  }
+});
+
+
+(() => {
+  const drawer = document.getElementById('drawer');
+  const handle = document.getElementById('drawer-handle');
+  let startY = 0;
+  let startHeight = 0;
+  let isDragging = false;
+
+  const minHeight = 120;   // Hauteur minimale en px
+  const maxHeight = window.innerHeight * 0.85; // max 85% de l’écran
+
+  // Commence à glisser
+  handle.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+    startHeight = drawer.offsetHeight;
+    isDragging = true;
+    drawer.style.transition = 'none'; // désactive transition
+  });
+
+  // Pendant le glisser
+  handle.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const delta = e.touches[0].clientY - startY;
+    const newHeight = Math.min(maxHeight, Math.max(minHeight, startHeight - delta));
+    drawer.style.height = `${newHeight}px`;
+  });
+
+  // Fin du glisser
+  handle.addEventListener('touchend', () => {
+    isDragging = false;
+    drawer.style.transition = ''; // réactive transition
+  });
+})();
