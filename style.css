@@ -87,19 +87,8 @@ select option {
     background-color: #eee;
     color: #000;
 }
-
-#drawer {
-  height: 800px; /* hauteur initiale */
-  max-height: 85vh;
-  overflow-y: auto;
-  transition: height 0.2s ease;
-}
-
-#drawer-handle {
-  cursor: grab;
-  text-align: center;
-  padding: 12px 0;
-  display: none;
+#drawer-handle{
+    display: none;
 }
 
 #controls {

@@ -1081,50 +1081,57 @@ function locateMe() {
 }
 
 document.getElementById('locateBtn').addEventListener('click', locateMe);
-
-
 // Lier le bouton fixe
 document.getElementById('locateBtn').addEventListener('click', locateMe);
 
 
-window.addEventListener('deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation', function (event) {
-  if (event.alpha !== null) {
-    const compass = document.getElementById('compassArrow');
-    const heading = event.webkitCompassHeading || 360 - event.alpha;
-    compass.style.transform = `rotate(${heading}deg)`;
-  }
-});
+function initCompass() {
+  const compass = document.getElementById('compassArrow');
 
+  window.addEventListener(
+    'deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation',
+    (event) => {
+      if (event.alpha !== null) {
+        let heading = event.webkitCompassHeading || 360 - event.alpha;
+        compass.style.transform = `rotate(${heading}deg)`;
+      }
+    },
+    true
+  );
+}
 
-(() => {
-  const drawer = document.getElementById('drawer');
-  const handle = document.getElementById('drawer-handle');
-  let startY = 0;
-  let startHeight = 0;
-  let isDragging = false;
+// 📱 iOS 13+ nécessite une autorisation
+if (
+  typeof DeviceOrientationEvent !== 'undefined' &&
+  typeof DeviceOrientationEvent.requestPermission === 'function'
+) {
+  // Ajouter un bouton pour demander la permission
+  const btn = document.createElement('button');
+  btn.innerText = 'Activer la boussole';
+  btn.style.position = 'fixed';
+  btn.style.bottom = '130px';
+  btn.style.right = '16px';
+  btn.style.zIndex = '1002';
+  btn.style.padding = '8px 12px';
+  btn.style.borderRadius = '8px';
+  btn.style.background = '#007BFF';
+  btn.style.color = 'white';
+  btn.style.border = 'none';
 
-  const minHeight = 120;   // Hauteur minimale en px
-  const maxHeight = window.innerHeight * 0.85; // max 85% de l’écran
+  document.body.appendChild(btn);
 
-  // Commence à glisser
-  handle.addEventListener('touchstart', (e) => {
-    startY = e.touches[0].clientY;
-    startHeight = drawer.offsetHeight;
-    isDragging = true;
-    drawer.style.transition = 'none'; // désactive transition
+  btn.addEventListener('click', () => {
+    DeviceOrientationEvent.requestPermission()
+      .then((response) => {
+        if (response === 'granted') {
+          initCompass();
+          btn.remove();
+        } else {
+          alert('Permission refusée pour la boussole.');
+        }
+      })
+      .catch(console.error);
   });
-
-  // Pendant le glisser
-  handle.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    const delta = e.touches[0].clientY - startY;
-    const newHeight = Math.min(maxHeight, Math.max(minHeight, startHeight - delta));
-    drawer.style.height = `${newHeight}px`;
-  });
-
-  // Fin du glisser
-  handle.addEventListener('touchend', () => {
-    isDragging = false;
-    drawer.style.transition = ''; // réactive transition
-  });
-})();
+} else {
+  initCompass();
+}
