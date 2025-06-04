@@ -1,9 +1,9 @@
 const map = L.map('map').setView([41.3590, 2.1780], 12.5);
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('serviceWorker.js')
-    .then(() => console.log("✅ Service worker enregistré"))
-    .catch((err) => console.error("❌ Erreur SW:", err));
+    navigator.serviceWorker.register('serviceWorker.js')
+        .then(() => console.log("✅ Service worker enregistré"))
+        .catch((err) => console.error("❌ Erreur SW:", err));
 }
 
 const tileLayers = {
@@ -54,7 +54,7 @@ function getIcon(category) {
         bar: "orange",
         plage: "yellow",
         Maureen: "grey",
-        hotel: "blue", 
+        hotel: "blue",
         special: "black"
     };
     const color = colors[category] || "gray";
@@ -937,108 +937,108 @@ toggleBtn.addEventListener('click', () => {
 
 
 function checkSpecialPointCondition() {
-  const required = [
-    "Camp Nou",
-    "Hotel SYSTELCOMS",
-    "Port Olimpic",
-    "Plage de la Barceloneta"
-  ];
-  const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const required = [
+        "Camp Nou",
+        "Hotel SYSTELCOMS",
+        "Port Olimpic",
+        "Plage de la Barceloneta"
+    ];
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
-  // Vérifie que les deux tableaux ont exactement les mêmes éléments et dans le même ordre
-  const isExactMatch = favorites.length === required.length &&
-    favorites.every((fav, i) => fav.toLowerCase() === required[i].toLowerCase());
+    // Vérifie que les deux tableaux ont exactement les mêmes éléments et dans le même ordre
+    const isExactMatch = favorites.length === required.length &&
+        favorites.every((fav, i) => fav.toLowerCase() === required[i].toLowerCase());
 
-  if (specialMarkerRef.marker) {
-    if (isExactMatch && !specialMarkerRef.added) {
-      specialMarkerRef.marker.addTo(map);
-      specialMarkerRef.added = true;
-    } else if (!isExactMatch && specialMarkerRef.added) {
-      map.removeLayer(specialMarkerRef.marker);
-      specialMarkerRef.added = false;
+    if (specialMarkerRef.marker) {
+        if (isExactMatch && !specialMarkerRef.added) {
+            specialMarkerRef.marker.addTo(map);
+            specialMarkerRef.added = true;
+        } else if (!isExactMatch && specialMarkerRef.added) {
+            map.removeLayer(specialMarkerRef.marker);
+            specialMarkerRef.added = false;
+        }
     }
-  }
 }
 
 function loadOfflinePlan() {
-  const plan = JSON.parse(localStorage.getItem('offlinePlan') || 'null');
-  if (!plan) return alert("Aucun plan enregistré.");
+    const plan = JSON.parse(localStorage.getItem('offlinePlan') || 'null');
+    if (!plan) return alert("Aucun plan enregistré.");
 
-  startSelect.value = plan.start;
-  endSelect.value = plan.end;
-  document.getElementById('mode').value = plan.mode;
+    startSelect.value = plan.start;
+    endSelect.value = plan.end;
+    document.getElementById('mode').value = plan.mode;
 
-  // Recharge les étapes
-  stepsContainer.innerHTML = '';
-  stepSelects.length = 0;
-  plan.steps.forEach((stepName, index) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'step-wrapper';
+    // Recharge les étapes
+    stepsContainer.innerHTML = '';
+    stepSelects.length = 0;
+    plan.steps.forEach((stepName, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'step-wrapper';
 
-    const label = document.createElement('label');
-    label.className = 'step-label';
-    label.textContent = `Étape ${index + 1} :`;
+        const label = document.createElement('label');
+        label.className = 'step-label';
+        label.textContent = `Étape ${index + 1} :`;
 
-    const select = document.createElement('select');
-    select.className = 'step-select';
+        const select = document.createElement('select');
+        select.className = 'step-select';
 
-    Object.keys(points).forEach(name => {
-      const opt = new Option(name, name);
-      if (name === stepName) opt.selected = true;
-      select.appendChild(opt);
+        Object.keys(points).forEach(name => {
+            const opt = new Option(name, name);
+            if (name === stepName) opt.selected = true;
+            select.appendChild(opt);
+        });
+
+        const removeBtn = document.createElement('span');
+        removeBtn.textContent = '✖';
+        removeBtn.className = 'remove-step';
+        removeBtn.onclick = () => {
+            stepsContainer.removeChild(wrapper);
+            const i = stepSelects.indexOf(select);
+            if (i !== -1) stepSelects.splice(i, 1);
+            relabelSteps();
+        };
+
+        wrapper.appendChild(label);
+        wrapper.appendChild(select);
+        wrapper.appendChild(removeBtn);
+        stepsContainer.appendChild(wrapper);
+        stepSelects.push(select);
     });
 
-    const removeBtn = document.createElement('span');
-    removeBtn.textContent = '✖';
-    removeBtn.className = 'remove-step';
-    removeBtn.onclick = () => {
-      stepsContainer.removeChild(wrapper);
-      const i = stepSelects.indexOf(select);
-      if (i !== -1) stepSelects.splice(i, 1);
-      relabelSteps();
-    };
-
-    wrapper.appendChild(label);
-    wrapper.appendChild(select);
-    wrapper.appendChild(removeBtn);
-    stepsContainer.appendChild(wrapper);
-    stepSelects.push(select);
-  });
-
-  // Recharge les favoris
-  localStorage.setItem('favorites', JSON.stringify(plan.favorites));
-  updateFavoritesList();
-  relabelSteps();
-  calculateRoute();
+    // Recharge les favoris
+    localStorage.setItem('favorites', JSON.stringify(plan.favorites));
+    updateFavoritesList();
+    relabelSteps();
+    calculateRoute();
 }
 
 
 function enregistrerMonPlan() {
-  const plan = {
-    start: startSelect.value,
-    end: endSelect.value,
-    steps: stepSelects.map(sel => sel.value),
-    mode: document.getElementById('mode').value,
-    favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
-    date: new Date().toISOString()
-  };
+    const plan = {
+        start: startSelect.value,
+        end: endSelect.value,
+        steps: stepSelects.map(sel => sel.value),
+        mode: document.getElementById('mode').value,
+        favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
+        date: new Date().toISOString()
+    };
 
-  localStorage.setItem('offlinePlan', JSON.stringify(plan));
-  alert("✅ Ton trajet a bien été enregistré !");
+    localStorage.setItem('offlinePlan', JSON.stringify(plan));
+    alert("✅ Ton trajet a bien été enregistré !");
 }
 
 
 function updateNetworkStatus() {
-  const badge = document.getElementById('networkStatus');
-  if (!badge) return;
+    const badge = document.getElementById('networkStatus');
+    if (!badge) return;
 
-  if (navigator.onLine) {
-    badge.textContent = '🟢 En ligne';
-    badge.className = 'online';
-  } else {
-    badge.textContent = '🔴 Hors ligne';
-    badge.className = 'offline';
-  }
+    if (navigator.onLine) {
+        badge.textContent = '🟢 En ligne';
+        badge.className = 'online';
+    } else {
+        badge.textContent = '🔴 Hors ligne';
+        badge.className = 'offline';
+    }
 }
 
 window.addEventListener('online', updateNetworkStatus);
@@ -1049,35 +1049,35 @@ window.addEventListener('load', updateNetworkStatus);
 let userMarker;
 
 function locateMe() {
-  if (!navigator.geolocation) {
-    alert("La géolocalisation n'est pas supportée par ce navigateur.");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition((position) => {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-    const userLatLng = L.latLng(lat, lng);
-
-    map.setView(userLatLng, 16);
-
-    if (userMarker) {
-      map.removeLayer(userMarker);
+    if (!navigator.geolocation) {
+        alert("La géolocalisation n'est pas supportée par ce navigateur.");
+        return;
     }
 
-    const userIcon = L.icon({
-      iconUrl: 'icons/user-position.png',
-      iconSize: [40, 40],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32]
+    navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const userLatLng = L.latLng(lat, lng);
+
+        map.setView(userLatLng, 16);
+
+        if (userMarker) {
+            map.removeLayer(userMarker);
+        }
+
+        const userIcon = L.icon({
+            iconUrl: 'icons/user-position.png',
+            iconSize: [40, 40],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map);
+        userMarker.bindPopup("Vous êtes ici").openPopup();
+
+    }, () => {
+        alert("Impossible de vous localiser.");
     });
-
-    userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map);
-    userMarker.bindPopup("Vous êtes ici").openPopup();
-
-  }, () => {
-    alert("Impossible de vous localiser.");
-  });
 }
 
 document.getElementById('locateBtn').addEventListener('click', locateMe);
@@ -1086,69 +1086,40 @@ document.getElementById('locateBtn').addEventListener('click', locateMe);
 
 
 function askOrientationPermission() {
-  if (
-    typeof DeviceOrientationEvent !== 'undefined' &&
-    typeof DeviceOrientationEvent.requestPermission === 'function'
-  ) {
-    DeviceOrientationEvent.requestPermission()
-      .then((response) => {
-        if (response === 'granted') {
-          startCompass(); // Lancer la boussole
-        } else {
-          alert('Permission refusée pour accéder à l’orientation');
-        }
-      })
-      .catch(console.error);
-  } else {
-    // Android ou navigateur sans besoin de permission
-    startCompass();
-  }
+    if (
+        typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function'
+    ) {
+        DeviceOrientationEvent.requestPermission()
+            .then((response) => {
+                if (response === 'granted') {
+                    startCompass(); // Lancer la boussole
+                } else {
+                    alert('Permission refusée pour accéder à l’orientation');
+                }
+            })
+            .catch(console.error);
+    } else {
+        // Android ou navigateur sans besoin de permission
+        startCompass();
+    }
 }
 
 function startCompass() {
-  const compass = document.getElementById('compassArrow');
+    const compass = document.getElementById('compassArrow');
 
-  window.addEventListener(
-    'deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation',
-    (event) => {
-      if (event.alpha !== null) {
-        const heading = event.webkitCompassHeading !== undefined
-          ? event.webkitCompassHeading
-          : 360 - event.alpha;
+    window.addEventListener(
+        'deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation',
+        (event) => {
+            if (event.alpha !== null) {
+                const heading = event.webkitCompassHeading !== undefined
+                    ? event.webkitCompassHeading
+                    : 360 - event.alpha;
 
-        compass.style.transform = `rotate(${heading}deg)`;
-      }
-    },
-    true
-  );
+                compass.style.transform = `rotate(${heading}deg)`;
+            }
+        },
+        true
+    );
 }
 
-// iOS 13+ : demande de permission obligatoire
-if (
-  typeof DeviceOrientationEvent !== 'undefined' &&
-  typeof DeviceOrientationEvent.requestPermission === 'function'
-) {
-  const btn = document.createElement('button');
-  btn.innerText = '📍 Activer la boussole';
-  btn.style.position = 'fixed';
-  btn.style.bottom = '130px';
-  btn.style.right = '16px';
-  btn.style.zIndex = '1002';
-  btn.style.padding = '10px 14px';
-  btn.style.borderRadius = '8px';
-  btn.style.background = '#007BFF';
-  btn.style.color = 'white';
-  btn.style.border = 'none';
-  btn.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.2)';
-  btn.style.fontSize = '14px';
-
-  document.body.appendChild(btn);
-
-  btn.addEventListener('click', () => {
-    askOrientationPermission();
-    btn.remove(); // Enlève le bouton après autorisation
-  });
-} else {
-  // Pas besoin de permission (Android ou navigateur supporté)
-  startCompass();
-}
