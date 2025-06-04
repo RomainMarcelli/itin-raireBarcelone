@@ -1085,14 +1085,37 @@ document.getElementById('locateBtn').addEventListener('click', locateMe);
 document.getElementById('locateBtn').addEventListener('click', locateMe);
 
 
-function initCompass() {
+function askOrientationPermission() {
+  if (
+    typeof DeviceOrientationEvent !== 'undefined' &&
+    typeof DeviceOrientationEvent.requestPermission === 'function'
+  ) {
+    DeviceOrientationEvent.requestPermission()
+      .then((response) => {
+        if (response === 'granted') {
+          startCompass(); // Lancer la boussole
+        } else {
+          alert('Permission refusée pour accéder à l’orientation');
+        }
+      })
+      .catch(console.error);
+  } else {
+    // Android ou navigateur sans besoin de permission
+    startCompass();
+  }
+}
+
+function startCompass() {
   const compass = document.getElementById('compassArrow');
 
   window.addEventListener(
     'deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation',
     (event) => {
       if (event.alpha !== null) {
-        let heading = event.webkitCompassHeading || 360 - event.alpha;
+        const heading = event.webkitCompassHeading !== undefined
+          ? event.webkitCompassHeading
+          : 360 - event.alpha;
+
         compass.style.transform = `rotate(${heading}deg)`;
       }
     },
@@ -1100,38 +1123,32 @@ function initCompass() {
   );
 }
 
-// 📱 iOS 13+ nécessite une autorisation
+// iOS 13+ : demande de permission obligatoire
 if (
   typeof DeviceOrientationEvent !== 'undefined' &&
   typeof DeviceOrientationEvent.requestPermission === 'function'
 ) {
-  // Ajouter un bouton pour demander la permission
   const btn = document.createElement('button');
-  btn.innerText = 'Activer la boussole';
+  btn.innerText = '📍 Activer la boussole';
   btn.style.position = 'fixed';
   btn.style.bottom = '130px';
   btn.style.right = '16px';
   btn.style.zIndex = '1002';
-  btn.style.padding = '8px 12px';
+  btn.style.padding = '10px 14px';
   btn.style.borderRadius = '8px';
   btn.style.background = '#007BFF';
   btn.style.color = 'white';
   btn.style.border = 'none';
+  btn.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.2)';
+  btn.style.fontSize = '14px';
 
   document.body.appendChild(btn);
 
   btn.addEventListener('click', () => {
-    DeviceOrientationEvent.requestPermission()
-      .then((response) => {
-        if (response === 'granted') {
-          initCompass();
-          btn.remove();
-        } else {
-          alert('Permission refusée pour la boussole.');
-        }
-      })
-      .catch(console.error);
+    askOrientationPermission();
+    btn.remove(); // Enlève le bouton après autorisation
   });
 } else {
-  initCompass();
+  // Pas besoin de permission (Android ou navigateur supporté)
+  startCompass();
 }
