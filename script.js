@@ -1,3 +1,9 @@
+try {
+    console.log('🔍 steps dans global :', steps);
+} catch (e) {
+    console.log('✅ steps n’existe pas globalement');
+}
+
 const map = L.map('map').setView([41.3590, 2.1780], 12.5);
 
 if ('serviceWorker' in navigator) {
@@ -16,6 +22,15 @@ const tileLayers = {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         attribution: 'Données © Google Maps'
+    }),
+    osmStandard: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+    }),
+    dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; CartoDB',
+        subdomains: 'abcd',
+        maxZoom: 19
     })
 };
 
@@ -557,7 +572,7 @@ function calculateRoute() {
         waypoints: allStops.map(name => L.latLng(points[name])),
         routeWhileDragging: false,
         createMarker: () => null,
-        show: true,
+        show: false,
         language: 'fr',
         router: new L.Routing.OpenRouteService('5b3ce3597851110001cf6248c0ecdf3661ce4d9f857064f107bee80c', {
             profile: profile
@@ -588,21 +603,45 @@ function calculateRoute() {
         }
     }).addTo(map);
 
-    // 📱 Mobile drawer adaptation
-    if (window.innerWidth <= 768) {
-        setTimeout(() => {
-            const routingPanel = document.querySelector('.leaflet-routing-container');
-            const contentContainer = document.getElementById('mobile-routing-content');
+    window.routingControl = routingControl;
 
-            if (routingPanel && contentContainer) {
-                contentContainer.innerHTML = routingPanel.innerHTML;
-                routingPanel.style.display = 'none';
-                document.getElementById('controls').style.display = 'none';
-                document.getElementById('mobile-routing-wrapper').classList.remove('collapsed');
-                document.getElementById('drawer').classList.remove('collapsed');
+    // Affichage mobile responsive
+    routingControl.on('routesfound', function (e) {
+        const route = e.routes[0];
+        if (window.innerWidth <= 768) {
+            const steps = stepSelects.map(sel => sel.value);// ✅ déclare steps correctement
+
+            let totalDistance = 0;
+            let totalDuration = 0;
+
+            for (let i = 0; i < allStops.length - 1; i++) {
+                const from = allStops[i];
+                const to = allStops[i + 1];
+
+                const segment = localRoutes.find(r =>
+                    (r.from === from && r.to === to) || (r.from === to && r.to === from)
+                );
+
+                if (segment) {
+                    const data = mode === 'foot' ? segment.walking : segment.driving;
+                    totalDistance += data.distance_km;
+                    totalDuration += data.duration_min;
+                }
             }
-        }, 500);
-    }
+
+            const modeLabel = mode === 'foot' ? 'À pied' : 'En voiture';
+
+
+            window.showMobileRoute(route, start, steps, end, {
+                distance: totalDistance.toFixed(1),
+                duration: formatDuration(totalDuration),
+                mode: modeLabel
+            });
+            document.getElementById('controls').style.display = 'none';
+            document.getElementById('drawer').classList.remove('collapsed');
+        }
+    });
+
 
     // 💾 Sauvegarde locale pour le mode offline
     const offlinePlan = {
@@ -1122,4 +1161,3 @@ function startCompass() {
         true
     );
 }
-

@@ -87,7 +87,8 @@ select option {
     background-color: #eee;
     color: #000;
 }
-#drawer-handle{
+
+#drawer-handle {
     display: none;
 }
 
@@ -358,64 +359,64 @@ select option {
 }
 
 #mobileMenu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 75%;
-  max-width: 300px;
-  height: 100%;
-  background: linear-gradient(145deg, #ffffff, #f0f0f0);
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
-  padding: 32px 20px;
-   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 24px;
-  transition: right 0.3s ease;
-  z-index: 2000;
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    max-width: 300px;
+    height: 100%;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    padding: 32px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    transition: right 0.3s ease;
+    z-index: 2000;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
 }
 
 #mobileMenu.active {
-  right: 0;
+    right: 0;
 }
 
 #mobileToggle {
-  position: fixed;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  background: #9d9b9b;
-  color: white;
-  padding: 10px 12px;
-  border-radius: 999px;
-  font-size: 18px;
-  cursor: pointer;
-  z-index: 2001;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: background 0.2s ease;
+    position: fixed;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    background: #9d9b9b;
+    color: white;
+    padding: 10px 12px;
+    border-radius: 999px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 2001;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s ease;
 }
 
 #mobileToggle:hover {
-  background: #333;
+    background: #333;
 }
 
 .menu-link {
-  font-size: 18px;
-  font-weight: 600;
-  color: #222;
-  text-decoration: none;
-  background: #ffffff;
-  padding: 14px 20px;
-  border-radius: 12px;
-  border: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  transition: background 0.2s ease;
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    text-decoration: none;
+    background: #ffffff;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s ease;
 }
 
 .menu-link:hover {
-  background: #e8e8e8;
+    background: #e8e8e8;
 }
 
 .itinerairePerso {
@@ -431,7 +432,7 @@ select option {
     color: black;
 }
 
-#metro-btn{
+#metro-btn {
     background: white;
     padding: 6px 12px;
     border-radius: 6px;
@@ -440,7 +441,7 @@ select option {
     color: black;
 }
 
-.programme{
+.programme {
     position: absolute;
     z-index: 1001;
     top: 12px;
@@ -454,45 +455,191 @@ select option {
 }
 
 #networkStatus {
-  align-self: flex-end; /* positionne à droite */
-  margin-top: auto;
-  margin-bottom: 44px;
-  background: #dfffe2;
-  color: green;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+    align-self: flex-end;
+    /* positionne à droite */
+    margin-top: auto;
+    margin-bottom: 44px;
+    background: #dfffe2;
+    color: green;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
 }
 
 #networkStatus.offline {
-  background: #fce2e2;
-  color: red;
+    background: #fce2e2;
+    color: red;
 }
 
 #compassWrapper {
-  position: fixed;
-  bottom: 75px;
-  right: 16px;
-  z-index: 1001;
-  background: white;
-  border-radius: 50%;
-  padding: 5px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    bottom: 75px;
+    right: 16px;
+    z-index: 1001;
+    background: white;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #compassArrow {
-  width: 26px;
-  height: 26px;
-  transition: transform 0.3s ease;
+    width: 26px;
+    height: 26px;
+    transition: transform 0.3s ease;
 }
+
+/* PANEL POUR L'ITINERAIRE */
+
+.panel-header {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.drag-bar {
+  width: 40px;
+  height: 4px;
+  margin: 0 auto 12px;
+  cursor: grab;
+}
+
+.close-cross {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+}
+
+.close-cross:hover {
+  color: #333;
+}
+
+
+.mobile-routing-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  max-height: 55vh;
+  background: #f9f9f9;
+  overflow-y: auto;
+  padding: 20px 24px 32px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 5000;
+  font-size: 15px;
+  color: #333;
+}
+
+.mobile-routing-panel.visible {
+  transform: translateY(0%);
+}
+
+.mobile-routing-panel h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+}
+
+/* Barre de glissement */
+.mobile-routing-panel::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 4px;
+  background: #ccc;
+  border-radius: 4px;
+  margin: 0 auto 16px;
+}
+
+/* Bouton Fermer stylé */
+.mobile-routing-panel .close-btn {
+  background-color: #007bff; /* bleu vif, comme les boutons Bootstrap */
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.mobile-routing-panel .close-btn:hover {
+  background-color: #0056b3; /* bleu foncé au hover */
+}
+
+
+.instructions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: flex-start;
+  background-color: #eef3fd;
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.instruction-item .icon {
+  font-size: 18px;
+  margin-right: 12px;
+  color: #007bff;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.instruction-item .text {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.route-meta {
+  font-size: 14px;
+  color: #666;
+  margin-top: -10px;
+  margin-bottom: 16px;
+}
+
+.mobile-routing-panel.collapsed {
+  transform: translateY(85%); /* replié mais visible */
+  transition: transform 0.4s ease;
+  cursor: pointer;
+}
+
+
+.mobile-routing-panel.expanded {
+  height: 100vh;
+  max-height: 100vh;
+  border-radius: 0;
+}
+
 
 
 /* Responsive ajustement */
