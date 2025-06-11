@@ -22,9 +22,8 @@ function showMobileRoute(route, startLabel, stepLabels, endLabel, meta) {
         panel.className = 'mobile-routing-panel';
         document.body.appendChild(panel);
     }
-
-    panel.innerHTML = `
-  <div class="panel-header">
+panel.innerHTML = `
+  <div class="mobile-routing-panel-header">
     <div class="panel-controls-row">
       <button class="toggle-size-btn" id="toggle-panel-size" title="Agrandir ou réduire">
         <i class="fas fa-up-down"></i>
@@ -34,15 +33,18 @@ function showMobileRoute(route, startLabel, stepLabels, endLabel, meta) {
         <i class="fas fa-times"></i>
       </button>
     </div>
+  </div>
+
+  <div class="mobile-routing-panel-body">
     <h3>Itinéraire : ${titleText}</h3>
     <p class="route-meta">${infoLine}</p>
-    </div>
     <div class="instructions-list">
-        ${instructions}
+      ${instructions}
     </div>
     <div style="margin-top: 20px; text-align: center;">
-        <button class="close-btn" id="close-routing-btn">Fermer</button>
+      <button class="close-btn" id="close-routing-btn">Fermer</button>
     </div>
+  </div>
 `;
     const toggleBtn = document.getElementById('toggle-panel-size');
 
