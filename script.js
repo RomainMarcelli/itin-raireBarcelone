@@ -578,7 +578,7 @@ function calculateRoute() {
             profile: profile
         }),
         summaryTemplate: function () {
-            let html = `<strong>Itinéraire ${mode === 'foot' ? 'à pied' : 'en voiture'}</strong><br><br>`;
+            let html = `<strong>Itinéraire ${mode === 'foot' ? '🚶‍♂️ à pied' : '🚗 en voiture'}</strong><br><br>`;
             let totalDistance = 0;
             let totalDuration = 0;
 
@@ -1122,42 +1122,3 @@ function locateMe() {
 document.getElementById('locateBtn').addEventListener('click', locateMe);
 // Lier le bouton fixe
 document.getElementById('locateBtn').addEventListener('click', locateMe);
-
-
-function askOrientationPermission() {
-    if (
-        typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function'
-    ) {
-        DeviceOrientationEvent.requestPermission()
-            .then((response) => {
-                if (response === 'granted') {
-                    startCompass(); // Lancer la boussole
-                } else {
-                    alert('Permission refusée pour accéder à l’orientation');
-                }
-            })
-            .catch(console.error);
-    } else {
-        // Android ou navigateur sans besoin de permission
-        startCompass();
-    }
-}
-
-function startCompass() {
-    const compass = document.getElementById('compassArrow');
-
-    window.addEventListener(
-        'deviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation',
-        (event) => {
-            if (event.alpha !== null) {
-                const heading = event.webkitCompassHeading !== undefined
-                    ? event.webkitCompassHeading
-                    : 360 - event.alpha;
-
-                compass.style.transform = `rotate(${heading}deg)`;
-            }
-        },
-        true
-    );
-}

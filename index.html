@@ -146,7 +146,6 @@
         </a>
         <button onclick="loadOfflinePlan() " class="menu-link">Charger mon itinéraire</button>
         <button id="locateBtn" class="map-button menu-link">📍 Me localiser</button>
-        <button onclick="askOrientationPermission()" class="menu-link">🧭 Activer la boussole</button>
         <div id="networkStatus" class="online">🟢 En ligne</div>
     </div>
 
@@ -154,10 +153,6 @@
     <button id="recenter-btn" title="Revenir à la vue de départ">
         <i class="fas fa-crosshairs"></i>
     </button>
-
-    <div id="compassWrapper">
-        <img src="icons/arrow-compass.png" id="compassArrow" alt="Boussole">
-    </div>
 
     <!-- librairies Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
