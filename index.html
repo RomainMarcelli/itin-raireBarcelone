@@ -81,38 +81,51 @@
                 </div>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="hotel" checked>
-                    <span class="filter-color hotel">🟦</span> Hôtel
+                    <span class="filter-color hotel" data-cat="hotel">🟦</span>
+                    <span class="filter-label" data-cat="hotel">Hôtel</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="parc" checked>
-                    <span class="filter-color parc">🟩</span> Parcs
+                    <span class="filter-color parc" data-cat="parc">🟩</span>
+                    <span class="filter-label" data-cat="parc">Parcs</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="restaurant" checked>
-                    <span class="filter-color restaurant">🟥</span> Restaurants
+                    <span class="filter-color restaurant" data-cat="restaurant">🟥</span>
+                    <span class="filter-label" data-cat="restaurant">Restaurants</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="monument" checked>
-                    <span class="filter-color monument">🟪</span> Monuments
+                    <span class="filter-color monument" data-cat="monument">🟪</span>
+                    <span class="filter-label" data-cat="monument">Monuments</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="bar" checked>
-                    <span class="filter-color bar">🟧</span> Bars
+                    <span class="filter-color bar" data-cat="bar">🟧</span>
+                    <span class="filter-label" data-cat="bar">Bars</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="plage" checked>
-                    <span class="filter-color plage">🟨</span> Plages
+                    <span class="filter-color plage" data-cat="plage">🟨</span>
+                    <span class="filter-label" data-cat="plage">Plages</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" class="filter" value="favoris" checked>
+                    <span class="filter-color plage" data-cat="favoris">⭐</span>
+                    <span class="filter-label" data-cat="favoris">Favoris</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="Maureen" checked>
-                    <span class="filter-color Maureen">⬛</span> Maureen
+                    <span class="filter-color Maureen" data-cat="Maureen">⬛</span>
+                    <span class="filter-label" data-cat="Maureen">Maureen</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="metro">
-                    <span class="filter-icon metro">
+                    <span class="filter-icon metro" data-cat="metro">
                         <img src="barcelonepng.png" alt="Métro"
                             style="width: 16px; height: 16px; vertical-align: middle;">
-                    </span> Métros
+                    </span>
+                    <span class="filter-label" data-cat="metro">Métros</span>
                 </label>
             </div>
             <hr>
@@ -163,6 +176,7 @@
     <script
         src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
     <script src="mobile-routing.js"></script>
+    <script src="filtres.js"></script>
 
 
 </body>

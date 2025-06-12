@@ -219,7 +219,7 @@ function loadBarceloneData() {
                 startSelect.add(new Option(name, name));
                 endSelect.add(new Option(name, name));
 
-                const marker = L.marker(coords, { icon: getIcon(cat) });
+                const marker = L.marker(coords, { icon: getIcon(cat), poiName: name });
 
                 marker.bindPopup(`
                     <div>
@@ -343,8 +343,6 @@ fetch('metro_stations.geojson')
             metroLines.push(polyline);
         }
     });
-
-
 
 function isFavorite(name) {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
@@ -712,42 +710,71 @@ function updateStartOptions() {
 startSelect.addEventListener('change', updateEndOptions);
 endSelect.addEventListener('change', updateStartOptions);
 
-document.querySelectorAll('.filter').forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
-        const cat = checkbox.value;
-        const isChecked = checkbox.checked;
-        if (markersByCategory[cat]) {
-            markersByCategory[cat].forEach(marker => {
-                isChecked ? marker.addTo(map) : map.removeLayer(marker);
-            });
-        }
+// --------- FONCTION PRINCIPALE DE FILTRAGE ----------
+function updateMapFilters() {
+    const filterCheckboxes = Array.from(document.querySelectorAll('.filter')).filter(cb => cb.value !== "metro");
+    const anyChecked = filterCheckboxes.some(cb => cb.checked);
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const favorisActive = document.querySelector('.filter[value="favoris"]').checked;
 
-        // 🔽 AJOUT pour gérer les lignes de métro
-        if (cat === "metro") {
-            metroLines.forEach(line => {
-                isChecked ? line.addTo(map) : map.removeLayer(line);
-            });
-        }
-    });
-});
+    // Met à jour le texte du bouton
+    const toggleButton = document.getElementById('toggle-filters');
+    toggleButton.textContent = anyChecked ? "Tout désélectionner" : "Tout sélectionner";
 
-function changeBaseMap(style) {
-    Object.values(tileLayers).forEach(layer => map.removeLayer(layer));
-    tileLayers[style].addTo(map);
+    // Affichage des marqueurs (hors métro et hors marker spécial)
+    for (const cat in markersByCategory) {
+        if (cat === "metro") continue;
+        const catCheckbox = document.querySelector(`.filter[value="${cat}"]`);
+        const isChecked = catCheckbox && catCheckbox.checked;
+        markersByCategory[cat].forEach(marker => {
+            if (specialMarkerRef.marker && marker === specialMarkerRef.marker) return;
+            if (anyChecked) {
+                if (favorisActive) {
+                    if (isChecked && favorites.includes(marker.options.poiName)) {
+                        marker.addTo(map);
+                    } else {
+                        map.removeLayer(marker);
+                    }
+                } else {
+                    isChecked ? marker.addTo(map) : map.removeLayer(marker);
+                }
+            } else {
+                map.removeLayer(marker);
+            }
+        });
+    }
+
+    // Affichage des lignes de métro
+    const metroCheckbox = document.querySelector('.filter[value="metro"]');
+    if (metroCheckbox) {
+        metroLines.forEach(line => {
+            metroCheckbox.checked ? line.addTo(map) : map.removeLayer(line);
+        });
+    }
 }
 
+// --------- EVENEMENT SUR CHAQUE CASE A COCHER ----------
+document.querySelectorAll('.filter').forEach(checkbox => {
+    checkbox.addEventListener('change', updateMapFilters);
+});
+
+// --------- BOUTON "TOUT SELECTIONNER / DESELECTIONNER" ----------
 const toggleButton = document.getElementById('toggle-filters');
-let filtersEnabled = true; // état initial : tous cochés
-
 toggleButton.addEventListener('click', () => {
-    filtersEnabled = !filtersEnabled;
+    const filterCheckboxes = Array.from(document.querySelectorAll('.filter')).filter(cb => cb.value !== "metro");
+    const allChecked = filterCheckboxes.every(cb => cb.checked);
 
-    document.querySelectorAll('.filter').forEach(checkbox => {
-        checkbox.checked = filtersEnabled;
-        checkbox.dispatchEvent(new Event('change')); // déclenche le comportement normal
+    // Tout décocher ou tout cocher
+    filterCheckboxes.forEach(cb => {
+        // Lors du "tout sélectionner", on décoche "favoris"
+        if (!allChecked && cb.value === "favoris") {
+            cb.checked = false;
+        } else {
+            cb.checked = !allChecked;
+        }
     });
 
-    toggleButton.textContent = filtersEnabled ? "Tout désélectionner" : "Tout sélectionner";
+    updateMapFilters();
 });
 
 
@@ -1044,6 +1071,8 @@ function loadOfflinePlan() {
         stepSelects.push(select);
     });
 
+    document.getElementById('mobileMenu').classList.remove('active');
+
     // Recharge les favoris
     localStorage.setItem('favorites', JSON.stringify(plan.favorites));
     updateFavoritesList();
@@ -1122,3 +1151,20 @@ function locateMe() {
 document.getElementById('locateBtn').addEventListener('click', locateMe);
 // Lier le bouton fixe
 document.getElementById('locateBtn').addEventListener('click', locateMe);
+
+
+// POUR LES FILTRES 
+
+// Clic sur nom ou couleur = isole la catégorie
+document.querySelectorAll('.filter-label, .filter-color').forEach(el => {
+    el.addEventListener('click', function (e) {
+        const cat = el.getAttribute('data-cat');
+        // Décoche toutes les cases
+        document.querySelectorAll('.filter').forEach(cb => {
+            cb.checked = (cb.value === cat);
+            cb.dispatchEvent(new Event('change'));
+        });
+        e.preventDefault();
+        e.stopPropagation();
+    });
+});
