@@ -2,50 +2,62 @@ const CACHE_NAME = "barcelone-cache-v1";
 const FILES_TO_CACHE = [
   // Pages principales
   "index.html",
-  "itinéraire.html",
+  "itineraire/itineraire.html",
   "programme.html",
-  "métro/metro-lignes.html",
+  "metro/metro-lignes.html",
+  "infos/info.html",
 
   // Feuilles de style
   "style.css",
   "responsive.css",
-  "métro/metro.css",
+  "metro/metro.css",
+  "infos/infos.css",
+  "itineraire/style.css",
 
   // Scripts
   "script.js",
-  "métro/lignes.js",
+  "metro/lignes.js",
+  "itineraire/script.js",
 
   // Données
   "barcelone.geojson",
   "metro_stations.geojson",
   "trajet.json",
   "manifest.json",
+  "itineraire/trajet.json",
+  "itineraire/barcelone.geojson",
 
   // Images générales
   "barcelonepng.png",
   "programme.png",
+  "image.png",
 
   // Icônes PWA (si tu les ajoutes)
   "icons/icon-192.png",
   "icons/icon-512.png",
 
-  // Images du dossier métro
-  "métro/carte-metro.png",
-  "métro/L1.png",
-  "métro/L2.png",
-  "métro/L3.png",
-  "métro/L4.png",
-  "métro/L5.png",
-  "métro/L6.png",
-  "métro/L7.png",
-  "métro/L8.png",
-  "métro/L9N.png",
-  "métro/L9S.png",
-  "métro/L10N.png",
-  "métro/L10S.png",
-  "métro/L11.png",
-  "métro/L12.png",
-  "métro/legende.png"
+  //Images Icons
+  "icons/arrow-compass.png",
+  "icons/favicon.ico",
+  "icons/user-position.png",
+
+  // Images du dossier metro
+  "metro/carte-metro.png",
+  "metro/L1.png",
+  "metro/L2.png",
+  "metro/L3.png",
+  "metro/L4.png",
+  "metro/L5.png",
+  "metro/L6.png",
+  "metro/L7.png",
+  "metro/L8.png",
+  "metro/L9N.png",
+  "metro/L9S.png",
+  "metro/L10N.png",
+  "metro/L10S.png",
+  "metro/L11.png",
+  "metro/L12.png",
+  "metro/legende.png"
 ];
 
 self.addEventListener("install", (event) => {

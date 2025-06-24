@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
         .catch((err) => console.error("❌ Erreur SW:", err));
 }
 
-const tileLayers = {
+const baseLayers = { // <-- utilise toujours baseLayers
     light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap & Carto',
         subdomains: 'abcd',
@@ -34,7 +34,18 @@ const tileLayers = {
     })
 };
 
-tileLayers.light.addTo(map);
+let currentBaseMap = baseLayers.light; // <-- let, pas var (pour le scope)
+currentBaseMap.addTo(map);
+
+function changeBaseMap(val) {
+    if (currentBaseMap) {
+        map.removeLayer(currentBaseMap);
+    }
+    currentBaseMap = baseLayers[val];
+    if (currentBaseMap) {
+        currentBaseMap.addTo(map);
+    }
+}
 
 let routingControl = null;
 let localRoutes = [];
