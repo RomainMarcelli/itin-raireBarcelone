@@ -46,6 +46,7 @@ body {
     font-size: 0.99em;
     color: #222;
 }
+
 .info-section li {
     margin-bottom: 4px;
     line-height: 1.6;
@@ -71,6 +72,7 @@ body {
     transition: background 0.16s;
     box-shadow: 0 2px 7px #a7c8f347;
 }
+
 .back-btn:hover {
     background: #145487;
 }
@@ -78,13 +80,18 @@ body {
 /* --- LOGIN MODAL --- */
 #login-modal {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(50,60,70,0.13);
-    display: flex; align-items: center; justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(50, 60, 70, 0.13);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 2000;
 }
 
-#login-form{
+#login-form {
     display: flex;
     flex-direction: column;
 }
@@ -117,11 +124,13 @@ body {
     background: #f7fafc;
     transition: border 0.13s;
 }
+
 #login-box input:focus {
     outline: none;
     border-color: #2270b4;
     background: #f0f5fa;
 }
+
 #login-box button {
     width: 100%;
     padding: 10px 0;
@@ -136,6 +145,7 @@ body {
     box-shadow: 0 2px 7px #bdd5f232;
     transition: background 0.15s;
 }
+
 #login-box button:hover {
     background: #145487;
 }
@@ -149,6 +159,28 @@ body {
     font-weight: 600;
 }
 
+.login-back {
+    position: absolute;
+    top: 22px;
+    left: 30px;
+    color: #2270b4;
+    border-radius: 50%;
+    font-size: 30px;
+    text-decoration: none;
+    box-shadow: 0 1px 6px #bdd5f220;
+    transition: background 0.14s, color 0.14s;
+    z-index: 3000;
+}
+
+.login-back i{
+    font-size: 20px;
+}
+
+.login-back:hover {
+    background: #d4e5f7;
+    color: #145487;
+}
+
 /* --- RESPONSIVE --- */
 @media (max-width: 600px) {
     .infos-container {
@@ -156,14 +188,26 @@ body {
         border-radius: 11px;
         padding: 9px 1vw 15px 1vw;
     }
+
     #login-box {
         padding: 14px 3vw;
         min-width: unset;
     }
+
+    .login-back {
+        top: 9px;
+        left: 7px;
+        padding: 7px 10px 7px 7px;
+        font-size: 1.02em;
+    }
 }
+
 @media (max-width: 370px) {
     .infos-container {
         padding: 4px 0vw 10px 0vw;
     }
-    #login-box { padding: 8px 1vw; }
+
+    #login-box {
+        padding: 8px 1vw;
+    }
 }
