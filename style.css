@@ -402,11 +402,11 @@ select option {
     background: #333;
 }
 
-.menu-link {
+.menu-link, button.menu-link, .menu-link:visited {
     font-size: 18px;
     font-weight: 600;
-    color: #222;
     text-align: left;
+    color: #222;
     text-decoration: none;
     background: #ffffff;
     padding: 14px 20px;
@@ -414,9 +414,15 @@ select option {
     border: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: background 0.2s ease;
+    display: block;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
-.menu-link:hover {
+.menu-link:hover, button.menu-link:hover  {
     background: #e8e8e8;
 }
 

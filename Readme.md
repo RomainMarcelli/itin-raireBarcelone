@@ -187,15 +187,6 @@ Barcelone Map permet de :
 
 ---
 
-## ⚠️ Sécurité & Limitations
-
-* **Aucune sécurité sur l’authentification** : le “mot de passe” est visible dans le code JavaScript, il ne protège que contre l’accès accidentel.
-* **Ne pas utiliser pour des infos sensibles ou des données personnelles**.
-* Pour une vraie sécurité : il faut un backend (PHP, Node.js, Python…) qui gère les accès côté serveur.
-* **Fichiers .env ou config.js ne protègent rien sur le web côté client** : tout est public.
-
----
-
 ## 👩‍💻 Auteur & contact
 
 * Projet réalisé par *Romain Marcelli* dans le cadre d’un séminaire.

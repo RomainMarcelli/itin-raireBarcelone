@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Itinéraire – Barcelone</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Feuille de style Leaflet (1 seule fois, version spécifique) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Routing Machine si besoin (sinon retire) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Ton style à la fin pour pouvoir override si besoin -->
+    <!-- JS d'abord Leaflet, ensuite Routing Machine -->
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/localization/fr.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.min.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <h2>Itinéraire du Dimanche à Barcelone</h2>
+        <h2>Itinéraire du Dimanche</h2>
         <div id="map"></div>
     </div>
+
+    <button id="recenter-btn" title="Revenir à la vue de départ">
+        <i class="fas fa-crosshairs"></i>
+    </button>
 
     <!-- Panel coulissant en dehors du flux container (fixe par rapport au viewport) -->
     <div id="details-panel">
@@ -53,14 +58,12 @@
         <a href="../index.html" class="menu-link">Revenir à la map</a>
         <a href="../programme.html" class="menu-link">Programme</a>
         <a href="../métro/metro-lignes.html" class="menu-link">🗺 Lignes de métro</a>
-        <button onclick="loadOfflinePlan()" class="menu-link">Charger mon itinéraire</button>
         <button id="locateBtn" class="map-button menu-link">📍 Me localiser</button>
         <div id="networkStatus" class="online">🟢 En ligne</div>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Script principal -->
     <script src="script.js"></script>
 </body>
+
 </html>
