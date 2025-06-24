@@ -15,6 +15,16 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd', maxZoom: 19
 }).addTo(map);
 
+
+const DEFAULT_CENTER = [41.3851, 2.17]; // Modifie si besoin
+const DEFAULT_ZOOM = 13;
+
+document.getElementById('recenter-btn').addEventListener('click', function() {
+    map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+});
+
+
+
 // Couleurs de marqueurs selon catégorie
 function getIcon(category) {
     const colors = {
@@ -91,33 +101,7 @@ function checkReady() {
 }
 
 function afficherItineraire() {
-    // Pour zoomer sur le parcours entier
-    const bounds = [];
-
-    // Trace chaque segment avec une couleur unique
-    for (let i = 0; i < etapes.length - 1; i++) {
-        const from = etapes[i], to = etapes[i + 1];
-        if (!lieuxCoords[from] || !lieuxCoords[to]) continue;
-
-        // On ajoute les coordonnées de chaque étape au bounds
-        bounds.push(lieuxCoords[from]);
-        bounds.push(lieuxCoords[to]);
-
-        L.polyline([lieuxCoords[from], lieuxCoords[to]], {
-            color: lineColors[i % lineColors.length],
-            weight: 3,
-            opacity: 0.88
-        }).addTo(map);
-    }
-
-    // On supprime les doublons dans bounds (optionnel)
-    const uniqueBounds = Array.from(new Set(bounds.map(JSON.stringify)), JSON.parse);
-
-    if (uniqueBounds.length > 0) {
-        map.fitBounds(uniqueBounds, { padding: [18, 18] });
-    }
-
-    // b. TABLEAU DES ÉTAPES
+    // Affichage panel + détails (sans tracer tout l'itinéraire sur la map)
     let totalWalkDist = 0, totalWalkTime = 0;
     const tableBody = document.querySelector('#stepsTable tbody');
     tableBody.innerHTML = "";
@@ -137,14 +121,50 @@ function afficherItineraire() {
         const w = segment.walking;
         totalWalkDist += w.distance_km;
         totalWalkTime += w.duration_min;
-        tableBody.innerHTML += `<tr>
-            <td>${from} → ${to}</td>
-            <td>${w.distance_km.toFixed(2)} km</td>
-            <td>${formatDuration(w.duration_min)}</td>
+        // Ajout d'une classe et dataset pour reconnaître la ligne
+        tableBody.innerHTML += `<tr data-from="${from}" data-to="${to}" style="cursor:pointer">
+         <td>${from} → ${to}</td>
+         <td>${w.distance_km.toFixed(2)} km</td>
+         <td>${formatDuration(w.duration_min)}</td>
         </tr>`;
     }
     document.getElementById('totWalkDist').textContent = totalWalkDist.toFixed(2) + " km";
     document.getElementById('totWalkTime').textContent = formatDuration(totalWalkTime);
+
+    // Après remplissage du tableau, activer les clics
+    document.querySelectorAll('#stepsTable tbody tr[data-from][data-to]').forEach((row, i) => {
+        row.addEventListener('click', function () {
+            const from = this.getAttribute('data-from');
+            const to = this.getAttribute('data-to');
+            afficherSegmentRouting(from, to, i);
+            // Panel se ferme
+            detailsPanel.classList.remove('expanded');
+            // Style actif
+            document.querySelectorAll('#stepsTable tbody tr').forEach(r => r.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+}
+
+
+function afficherSegmentRouting(from, to, colorIndex) {
+    if (window.routingControl) {
+        map.removeControl(window.routingControl);
+    }
+    if (!lieuxCoords[from] || !lieuxCoords[to]) return;
+    const wp = [lieuxCoords[from], lieuxCoords[to]].map(c => L.latLng(c[0], c[1]));
+    window.routingControl = L.Routing.control({
+        waypoints: wp,
+        lineOptions: {
+            styles: [{ color: lineColors[colorIndex % lineColors.length], weight: 6, opacity: 0.88 }]
+        },
+        addWaypoints: false,
+        draggableWaypoints: false,
+        fitSelectedRoutes: true,
+        routeWhileDragging: false,
+        show: false,
+        createMarker: function () { return null; }
+    }).addTo(map);
 }
 
 
@@ -166,39 +186,68 @@ togglePanelBtn.addEventListener('click', () => {
 
 function afficherEtapesDansPanel(etapes, trajetData) {
     const panelContent = document.getElementById('panel-content');
-    let html = "<h3>Parcours détaillé</h3><ul>";
+    let html = `
+        <table class="steps-table">
+            <thead>
+                <tr>
+                    <th>Étape</th>
+                    <th>Distance</th>
+                    <th>Durée</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    let totalWalkDist = 0, totalWalkTime = 0;
+
     for (let i = 0; i < etapes.length - 1; i++) {
-        const from = etapes[i];
-        const to = etapes[i + 1];
+        const from = etapes[i], to = etapes[i + 1];
         const segment = trajetData.find(r =>
             (r.from === from && r.to === to) || (r.from === to && r.to === from)
         );
         if (segment) {
-            html += `<li><strong>${from} → ${to}</strong><br>
-                🚶 ${segment.walking.distance_km} km, ${segment.walking.duration_min} min<br>
-            </li>`;
+            const w = segment.walking;
+            totalWalkDist += w.distance_km;
+            totalWalkTime += w.duration_min;
+            html += `<tr>
+                <td>${from} → ${to}</td>
+                <td>${w.distance_km.toFixed(2)} km</td>
+                <td>${formatDuration(w.duration_min)}</td>
+            </tr>`;
+        } else {
+            html += `<tr>
+                <td>${from} → ${to}</td>
+                <td colspan="2" style="color:#c00;">Données manquantes</td>
+            </tr>`;
         }
     }
 
-    html += "</ul>";
-    // ... après ton <ul>
+    html += `
+            </tbody>
+            <tfoot>
+                <tr style="font-weight:bold; background:#f0f6fc;">
+                    <td>Total</td>
+                    <td>${totalWalkDist.toFixed(2)} km</td>
+                    <td>${formatDuration(totalWalkTime)}</td>
+                </tr>
+            </tfoot>
+        </table>
+    `;
+
+    // Légende (optionnelle, si tu veux garder)
     html += `<div style="margin-top:18px; font-size: 0.97em; border-top:1px solid #eee; padding-top:8px;">
-    <b>Légende des segments :</b>
-    <ul style="margin-top: 10px; padding-left: 0; list-style: none;">`;
+        <b>Légende des segments :</b>
+        <ul style="margin-top: 10px; padding-left: 0; list-style: none;">`;
 
     for (let i = 0; i < etapes.length - 1; i++) {
         const from = etapes[i], to = etapes[i + 1];
         html += `<li style="display:flex;align-items:center;margin-bottom:5px;">
-        <span style="display:inline-block;width:22px;height:5px;border-radius:3px;background:${lineColors[i % lineColors.length]};margin-right:8px;"></span>
-        <span>${from} → ${to}</span>
-    </li>`;
+            <span style="display:inline-block;width:22px;height:5px;border-radius:3px;background:${lineColors[i % lineColors.length]};margin-right:8px;"></span>
+            <span>${from} → ${to}</span>
+        </li>`;
     }
-
     html += `</ul></div>`;
+
     panelContent.innerHTML = html;
-    afficherEtapesDansPanel(etapes, trajetData);
-
-
 }
 
 
@@ -214,3 +263,37 @@ toggleBtn.addEventListener('click', () => {
         ? '<i class="fas fa-chevron-right"></i>'
         : '<i class="fas fa-chevron-left"></i>';
 });
+
+
+// ME LOCALISER 
+document.getElementById('locateBtn').addEventListener('click', function() {
+    if (!navigator.geolocation) {
+        alert("La géolocalisation n'est pas supportée par ce navigateur.");
+        return;
+    }
+    navigator.geolocation.getCurrentPosition(function(pos) {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        map.setView([lat, lng], 16);
+
+        if (window.locateMarker) map.removeLayer(window.locateMarker);
+        window.locateMarker = L.marker([lat, lng], {
+            icon: L.icon({
+                iconUrl: '../icons/user-position.png',
+                iconSize: [40, 40],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -32]
+            })
+        }).addTo(map).bindPopup("Vous êtes ici !").openPopup();
+
+        // Ferme le menu mobile
+        document.getElementById('mobileMenu').classList.remove('active');
+        // Remet le bouton toggle dans son état normal (optionnel, si tu le fais ailleurs)
+        const toggleBtn = document.getElementById('mobileToggle');
+        if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    }, function() {
+        alert("Impossible de récupérer votre position.");
+    });
+});
+
+
