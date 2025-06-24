@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Itinéraire – Barcelone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Feuille de style Leaflet (1 seule fois, version spécifique) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Routing Machine si besoin (sinon retire) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Ton style à la fin pour pouvoir override si besoin -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Itinéraire du Dimanche à Barcelone</h2>
+        <div id="map"></div>
+    </div>
+
+    <!-- Panel coulissant en dehors du flux container (fixe par rapport au viewport) -->
+    <div id="details-panel" class="collapsed">
+        <div id="panel-header">
+            <button id="toggle-panel">📝 Itinéraire</button>
+        </div>
+        <div id="panel-content">
+            <table class="steps-table" id="stepsTable">
+                <thead>
+                    <tr>
+                        <th>Étape</th>
+                        <th>Distance</th>
+                        <th>Durée</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr style="font-weight:bold; background:#f0f6fc;">
+                        <td>Total</td>
+                        <td id="totWalkDist"></td>
+                        <td id="totWalkTime"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- Toggle Menu Mobile -->
+    <div id="mobileToggle"><i class="fas fa-chevron-left"></i></div>
+    <!-- Menu Mobile -->
+    <div id="mobileMenu">
+        <a href="/index.html" class="menu-link">Revenir à la map</a>
+        <a href="programme.html" class="menu-link">Programme</a>
+        <a href="métro/metro-lignes.html" class="menu-link">🗺 Lignes de métro</a>
+        <button onclick="loadOfflinePlan()" class="menu-link">Charger mon itinéraire</button>
+        <button id="locateBtn" class="map-button menu-link">📍 Me localiser</button>
+        <div id="networkStatus" class="online">🟢 En ligne</div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Script principal -->
+    <script src="script.js"></script>
+</body>
+</html>

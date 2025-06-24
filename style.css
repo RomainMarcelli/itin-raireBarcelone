@@ -406,6 +406,7 @@ select option {
     font-size: 18px;
     font-weight: 600;
     color: #222;
+    text-align: left;
     text-decoration: none;
     background: #ffffff;
     padding: 14px 20px;

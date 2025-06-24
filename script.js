@@ -66,7 +66,7 @@ function getIcon(category) {
         parc: "green",
         restaurant: "red",
         monument: "violet",
-        bar: "orange",
+        quartier: "orange",
         plage: "yellow",
         Maureen: "grey",
         hotel: "blue",

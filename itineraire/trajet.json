@@ -30,7 +30,6 @@
     {"from": "Hotel SYSTELCOMS","to": "Nubar","walking": { "distance_km": 3.3, "duration_min": 47 },"driving": { "distance_km": 4.3, "duration_min": 15 }},
     {"from": "Hotel SYSTELCOMS","to": "Port Olimpic","walking": { "distance_km": 3.9, "duration_min": 52 },"driving": { "distance_km": 4.2, "duration_min": 20 }},
     {"from": "Hotel SYSTELCOMS","to": "Mood Rooftop","walking": { "distance_km": 1.7, "duration_min": 24 },"driving": { "distance_km": 2.1, "duration_min": 8 }},
-    {"from": "Hotel SYSTELCOMS","to": "Celler de Tapas","walking": { "distance_km": 0.3, "duration_min": 3 },"driving": { "distance_km": 1.5, "duration_min": 7 }},
       
     {"from": "Port Olimpic","to": "Parc Güell","walking": { "distance_km": 5.6, "duration_min": 86 },"driving": { "distance_km": 6.7, "duration_min": 25 }},
     {"from": "Port Olimpic","to": "La Rambla","walking": { "distance_km": 3.6, "duration_min": 51 },"driving": { "distance_km": 4.9, "duration_min": 20 }},

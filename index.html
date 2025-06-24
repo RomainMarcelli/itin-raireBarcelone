@@ -92,7 +92,7 @@
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="restaurant" checked>
                     <span class="filter-color restaurant" data-cat="restaurant">🟥</span>
-                    <span class="filter-label" data-cat="restaurant">Restaurants</span>
+                    <span class="filter-label" data-cat="restaurant">Restaurants / Bars</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="monument" checked>
@@ -100,9 +100,9 @@
                     <span class="filter-label" data-cat="monument">Monuments</span>
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox" class="filter" value="bar" checked>
-                    <span class="filter-color bar" data-cat="bar">🟧</span>
-                    <span class="filter-label" data-cat="bar">Bars</span>
+                    <input type="checkbox" class="filter" value="quartier" checked>
+                    <span class="filter-color quartier" data-cat="quartier">🟧</span>
+                    <span class="filter-label" data-cat="quartier">Quartier</span>
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" class="filter" value="plage" checked>
@@ -152,13 +152,14 @@
 
     <!-- Menu mobile caché -->
     <div id="mobileMenu">
-        <a href="itinéraire.html" class="menu-link">Itinéraire de dimanche</a>
+        <a href="itineraire/itinéraire.html" class="menu-link">Itinéraire de dimanche</a>
         <a href="programme.html" class="menu-link">Programme</a>
         <a href="métro/metro-lignes.html" class="menu-link">
             🗺 Lignes de métro
         </a>
         <button onclick="loadOfflinePlan() " class="menu-link">Charger mon itinéraire</button>
         <button id="locateBtn" class="map-button menu-link">📍 Me localiser</button>
+        <a href="infos/info.html" class="menu-link"><i class="fas fa-sign-in-alt"></i> Connexion</a>
         <div id="networkStatus" class="online">🟢 En ligne</div>
     </div>
 
