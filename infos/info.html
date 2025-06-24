@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Infos pratiques – Barcelone</title>
@@ -9,8 +10,12 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="info.css">
 </head>
+
 <body>
     <!-- Fenêtre de connexion -->
+    <a href="../index.html" class="login-back" id="login-back">
+        <i class="fas fa-arrow-left"></i>
+    </a>
     <div id="login-modal">
         <div id="login-box">
             <h2>Connexion requise</h2>
@@ -24,6 +29,9 @@
     </div>
 
     <div class="infos-container" id="main-content" style="display:none;">
+        <a href="../index.html" class="login-back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <h2><i class="fas fa-info-circle"></i> Infos pratiques Barcelone</h2>
         <div class="info-section">
             <h3><i class="fas fa-map-marked-alt"></i> Adresse & Quartier de l'hôtel</h3>
@@ -78,34 +86,37 @@
     </div>
 
     <script>
-    // Identifiants autorisés (à modifier selon ton choix)
-    const LOGIN = "Julie";
-    const PASS = "test";
+        // Identifiants autorisés (à modifier selon ton choix)
+        const LOGIN = "Julie";
+        const PASS = "test";
 
-    const form = document.getElementById('login-form');
-    const errorDiv = document.getElementById('login-error');
-    const modal = document.getElementById('login-modal');
-    const mainContent = document.getElementById('main-content');
+        const form = document.getElementById('login-form');
+        const errorDiv = document.getElementById('login-error');
+        const modal = document.getElementById('login-modal');
+        const mainContent = document.getElementById('main-content');
+        const login = document.getElementById('login-back');
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const user = document.getElementById('username').value.trim();
-        const pass = document.getElementById('password').value.trim();
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
 
-        if (user === LOGIN && pass === PASS) {
-            // Connexion ok : on cache le modal et on affiche le contenu
-            modal.style.display = 'none';
-            mainContent.style.display = 'block';
-        } else {
-            errorDiv.style.display = 'block';
-            setTimeout(() => errorDiv.style.display = 'none', 2400);
+            if (user === LOGIN && pass === PASS) {
+                // Connexion ok : on cache le modal et on affiche le contenu
+                modal.style.display = 'none';
+                mainContent.style.display = 'block';
+                login.style.display = 'none'
+            } else {
+                errorDiv.style.display = 'block';
+                setTimeout(() => errorDiv.style.display = 'none', 2400);
+            }
+        });
+
+        // Option : focus sur l'input user au chargement
+        window.onload = () => {
+            document.getElementById('username').focus();
         }
-    });
-
-    // Option : focus sur l'input user au chargement
-    window.onload = () => {
-        document.getElementById('username').focus();
-    }
     </script>
 </body>
+
 </html>
