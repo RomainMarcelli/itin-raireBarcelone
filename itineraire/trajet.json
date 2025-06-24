@@ -57,11 +57,10 @@
     {"from": "Parc Güell","to": "Bodega Joan","walking": { "distance_km": 3, "duration_min": 39 },"driving": { "distance_km": 3.6, "duration_min": 16 }},
     {"from": "Parc Güell","to": "Nubar","walking": { "distance_km": 3.2, "duration_min": 43 },"driving": { "distance_km": 3.5, "duration_min": 13}},
     {"from": "Parc Güell","to": "Mood Rooftop","walking": { "distance_km": 2.5, "duration_min": 33 },"driving": { "distance_km": 3.4, "duration_min": 12 }},
-
     
     {"from": "Casa Batlló","to": "Casa Milà (La Pedrera)","walking": { "distance_km": 0.5, "duration_min": 7 },"driving": { "distance_km": 0.4, "duration_min": 3 }},
-    {"from": "Parc Güell","to": "Quartier Gracia","walking": { "distance_km": 0.5, "duration_min": 6 },"driving": { "distance_km": 2.1, "duration_min": 10 }},
-    {"from": "Casa Vicens","to": "Quartier Gracia","walking": { "distance_km": 1.4, "duration_min": 18 },"driving": { "distance_km": 3.4, "duration_min": 12 }},
+    {"from": "Parc Güell","to": "Quartier Gràcia","walking": { "distance_km": 0.5, "duration_min": 6 },"driving": { "distance_km": 2.1, "duration_min": 10 }},
+    {"from": "Casa Vicens","to": "Quartier Gràcia","walking": { "distance_km": 1.4, "duration_min": 18 },"driving": { "distance_km": 3.4, "duration_min": 12 }},
     {"from": "Casa Vicens","to": "Quartier Gothique (Barri Gòtic)","walking": { "distance_km": 3.4, "duration_min": 45 },"driving": { "distance_km": 4.2, "duration_min": 27 }},
     {"from": "Palais Güell","to": "Quartier Gothique (Barri Gòtic)","walking": { "distance_km": 0.7, "duration_min": 10 },"driving": { "distance_km": 1.9, "duration_min": 11 }},
     {"from": "Palais Güell","to": "La Boqueria","walking": { "distance_km": 0.5, "duration_min": 6 },"driving": { "distance_km": 1, "duration_min": 9 }},
