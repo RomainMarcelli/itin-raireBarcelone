@@ -162,7 +162,6 @@ const detailsPanel = document.getElementById('details-panel');
 const togglePanelBtn = document.getElementById('toggle-panel');
 togglePanelBtn.addEventListener('click', () => {
     detailsPanel.classList.toggle('expanded');
-    detailsPanel.classList.toggle('collapsed');
 });
 
 function afficherEtapesDansPanel(etapes, trajetData) {
@@ -214,10 +213,4 @@ toggleBtn.addEventListener('click', () => {
     toggleBtn.innerHTML = menu.classList.contains('active')
         ? '<i class="fas fa-chevron-right"></i>'
         : '<i class="fas fa-chevron-left"></i>';
-});
-
-togglePanelBtn.addEventListener('click', () => {
-    console.log('CLIC PANEL');
-    detailsPanel.classList.toggle('expanded');
-    detailsPanel.classList.toggle('collapsed');
 });
