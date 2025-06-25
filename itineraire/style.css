@@ -352,6 +352,12 @@ h2 {
     color: #333;
 }
 
+#stepsTable tr.active {
+  background-color: #e0e0e0; /* gris clair */
+  color: #444;
+  font-weight: bold;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     .container {
