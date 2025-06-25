@@ -358,6 +358,27 @@ h2 {
   font-weight: bold;
 }
 
+
+/* Bouton Reset étape */
+#resetRoutesBtn {
+    background-color: #007BFF; /* Bleu doux */
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.2s ease;
+    margin: 5px 0 10px 0;
+}
+
+#resetRoutesBtn:hover {
+    background-color: #0056b3; /* Bleu plus foncé au survol */
+}
+
+
 /* Responsive */
 @media (max-width: 900px) {
     .container {
