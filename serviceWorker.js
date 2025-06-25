@@ -1,23 +1,27 @@
-const CACHE_NAME = "barcelone-cache-v1";
+const CACHE_NAME = "barcelone-cache-v9";
+
 const FILES_TO_CACHE = [
-  // Pages principales
-  "index.html",
+  "/", // page racine
+
+  // Pages HTML
+  "index.html", 
   "itineraire/itineraire.html",
   "programme.html",
   "metro/metro-lignes.html",
   "infos/info.html",
 
-  // Feuilles de style
+  // CSS
   "style.css",
   "responsive.css",
   "metro/metro.css",
-  "infos/infos.css",
+  "infos/info.css",
   "itineraire/style.css",
 
-  // Scripts
+  // JS
   "script.js",
   "metro/lignes.js",
   "itineraire/script.js",
+  "mobile-routing.js",
 
   // Données
   "barcelone.geojson",
@@ -32,16 +36,43 @@ const FILES_TO_CACHE = [
   "programme.png",
   "image.png",
 
-  // Icônes PWA (si tu les ajoutes)
+  // Icônes
   "icons/icon-192.png",
   "icons/icon-512.png",
-
-  //Images Icons
   "icons/arrow-compass.png",
   "icons/favicon.ico",
   "icons/user-position.png",
 
-  // Images du dossier metro
+  // Librairies locales
+  "libs/leaflet/leaflet.js",
+  "libs/leaflet/leaflet.css",
+  "libs/routing/leaflet-routing-machine.min.js",
+  "libs/routing/leaflet-routing-machine.css",
+  "libs/fontawesome/all.min.css",
+  "libs/routing/lrm-openrouteservice.min.js",
+  "libs/routing/leaflet-routing-openroute.min.js",
+  "libs/pdf/jspdf.umd.min.js",
+  "libs/canva/html2canvas.min.js",
+
+  // WEBFONTS
+
+  "libs/webfonts/fa-solid-900.woff2",
+  "libs/webfonts/fa-solid-900.ttf",
+
+  // MARKERS
+
+  "libs/markers/marker-icon-blue.png",
+  "libs/markers/marker-icon-green.png",
+  "libs/markers/marker-icon-red.png",
+  "libs/markers/marker-icon-black.png",
+  "libs/markers/marker-icon-gold.png",
+  "libs/markers/marker-icon-grey.png",
+  "libs/markers/marker-icon-orange.png",
+  "libs/markers/marker-icon-violet.png",
+  "libs/markers/marker-icon-yellow.png",
+  "libs/markers/marker-shadow.png",
+
+  // Images métro
   "metro/carte-metro.png",
   "metro/L1.png",
   "metro/L2.png",
@@ -62,27 +93,49 @@ const FILES_TO_CACHE = [
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
+    caches.open(CACHE_NAME).then(async (cache) => {
+      for (const file of FILES_TO_CACHE) {
+        try {
+          await cache.add(file);
+          console.log("✅ Ajouté au cache :", file);
+        } catch (error) {
+          console.error("❌ Erreur de mise en cache :", file, error);
+        }
+      }
+    })
   );
   self.skipWaiting();
 });
 
 self.addEventListener("fetch", (event) => {
+  if (!event.request.url.startsWith(self.location.origin)) return;
+
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse; // ✅ sert depuis le cache
-      }
+      if (cachedResponse) return cachedResponse;
+
       return fetch(event.request).catch(() => {
-        // ❌ si la requête échoue ET qu'on n'a rien en cache
-        if (event.request.destination === 'document') {
-          return caches.match("index.html");
+        // Fallbacks personnalisés
+        switch (event.request.destination) {
+          case "document":
+            return caches.match("index.html");
+          case "image":
+            return caches.match("icons/user-position.png"); // ou "icons/user-position.png"
+          case "script":
+          case "style":
+            console.warn("⛔ Fichier non trouvé hors ligne :", event.request.url);
+            return new Response("<h1>Hors ligne</h1>", {
+              status: 503,
+              statusText: "Offline",
+              headers: { "Content-Type": "text/html" }
+            });
+          default:
+            return new Response("", { status: 503, statusText: "Offline" });
         }
       });
     })
   );
 });
-
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
@@ -90,6 +143,7 @@ self.addEventListener("activate", (event) => {
       Promise.all(
         keyList.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log("🗑️ Suppression ancien cache :", key);
             return caches.delete(key);
           }
         })

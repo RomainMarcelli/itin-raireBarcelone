@@ -86,8 +86,8 @@ function getIcon(category) {
     const color = colors[category] || "gray";
 
     return L.icon({
-        iconUrl: `https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-${color}.png`,
-        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+        iconUrl: `libs/markers/marker-icon-${color}.png`,
+        shadowUrl: "libs/markers/marker-shadow.png",
         iconSize: [25, 41],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],

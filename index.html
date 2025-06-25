@@ -10,15 +10,21 @@
     <meta name="offline" content="true">
 
     <!-- Feuilles de style -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" /> -->
+    <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" /> -->
+    <link rel="stylesheet" href="libs/routing/leaflet-routing-machine.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> -->
+    <link rel="stylesheet" href="libs/fontawesome/all.min.css">
 
     <!-- Générateur PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+    <script src="libs/pdf/jspdf.umd.min.js"></script>
 
     <!-- Capture de DOM pour la carte -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> -->
+    <script src="libs/canva/html2canvas.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
     <script defer src="script.js"></script>
@@ -169,13 +175,19 @@
     </button>
 
     <!-- librairies Leaflet -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+    <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script> -->
+
+    <script src="libs/leaflet/leaflet.js"></script>
+    <script src="libs/routing/leaflet-routing-machine.min.js"></script>
 
     <!-- 🧭 OpenRouteService router -->
-    <script src="https://unpkg.com/lrm-openrouteservice@1.0.0/dist/lrm-openrouteservice.min.js"></script>
-    <script
-        src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script>
+    <!-- <script src="https://unpkg.com/lrm-openrouteservice@1.0.0/dist/lrm-openrouteservice.min.js"></script> -->
+    <script src="libs/routing/lrm-openrouteservice.min.js"></script>
+
+    <!-- <script src="https://unpkg.com/@gegeweb/leaflet-routing-machine-openroute@latest/dist/leaflet-routing-openroute.min.js"></script> -->
+    <script src="libs/routing/leaflet-routing-openroute.min.js"></script>
+
     <script src="mobile-routing.js"></script>
 
 
