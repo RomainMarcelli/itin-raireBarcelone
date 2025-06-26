@@ -6,6 +6,7 @@ const etapes = [
 
 let lieuxCoords = {};
 let map;
+window.routingControls = [];
 let trajetData = null;
 
 // Création immédiate de la map AVANT tout fetch !
@@ -19,7 +20,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 const DEFAULT_CENTER = [41.3851, 2.17]; // Modifie si besoin
 const DEFAULT_ZOOM = 13;
 
-document.getElementById('recenter-btn').addEventListener('click', function() {
+document.getElementById('recenter-btn').addEventListener('click', function () {
     map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
 });
 
@@ -136,36 +137,75 @@ function afficherItineraire() {
         row.addEventListener('click', function () {
             const from = this.getAttribute('data-from');
             const to = this.getAttribute('data-to');
-            afficherSegmentRouting(from, to, i);
-            // Panel se ferme
-            detailsPanel.classList.remove('expanded');
-            // Style actif
-            document.querySelectorAll('#stepsTable tbody tr').forEach(r => r.classList.remove('active'));
-            this.classList.add('active');
+            const segmentId = `${from}_${to}`;
+
+            if (!window.routingSegments) window.routingSegments = {};
+
+            const isActive = this.classList.contains('active');
+
+            if (isActive) {
+                // Si déjà actif → on supprime
+                if (window.routingSegments[segmentId]) {
+                    map.removeControl(window.routingSegments[segmentId]);
+                    delete window.routingSegments[segmentId];
+                }
+                this.classList.remove('active');
+                // NE PAS fermer le panel dans ce cas
+            } else {
+                // Sinon → on ajoute le trajet
+                afficherSegmentRouting(from, to, i, segmentId);
+
+                // Griser la ligne
+                this.classList.add('active');
+
+                // Fermer le panel
+                detailsPanel.classList.remove('expanded');
+            }
         });
     });
 }
 
 
-function afficherSegmentRouting(from, to, colorIndex) {
-    if (window.routingControl) {
-        map.removeControl(window.routingControl);
-    }
+function afficherSegmentRouting(from, to, colorIndex, segmentId) {
     if (!lieuxCoords[from] || !lieuxCoords[to]) return;
+
     const wp = [lieuxCoords[from], lieuxCoords[to]].map(c => L.latLng(c[0], c[1]));
-    window.routingControl = L.Routing.control({
+
+    const control = L.Routing.control({
         waypoints: wp,
         lineOptions: {
             styles: [{ color: lineColors[colorIndex % lineColors.length], weight: 6, opacity: 0.88 }]
         },
         addWaypoints: false,
         draggableWaypoints: false,
-        fitSelectedRoutes: true,
+        fitSelectedRoutes: true, // recentre la carte
         routeWhileDragging: false,
         show: false,
-        createMarker: function () { return null; }
+        createMarker: () => null
     }).addTo(map);
+
+    if (!window.routingSegments) window.routingSegments = {};
+    window.routingSegments[segmentId] = control;
 }
+
+document.getElementById('resetRoutesBtn').addEventListener('click', function () {
+    // ❌ Supprime tous les contrôles de trajets encore affichés sur la carte
+    if (window.routingSegments) {
+        Object.values(window.routingSegments).forEach(control => {
+            map.removeControl(control);
+        });
+        window.routingSegments = {};
+    }
+
+    // ❌ Réinitialise les lignes grises actives
+    document.querySelectorAll('#stepsTable tbody tr.active').forEach(row => {
+        row.classList.remove('active');
+    });
+
+    // ✅ Rouvre le panel (si tu le veux toujours ouvert après réinitialisation)
+    detailsPanel.classList.add('expanded');
+});
+
 
 
 // Utilitaire : format XXhYY ou XX min
@@ -266,12 +306,12 @@ toggleBtn.addEventListener('click', () => {
 
 
 // ME LOCALISER 
-document.getElementById('locateBtn').addEventListener('click', function() {
+document.getElementById('locateBtn').addEventListener('click', function () {
     if (!navigator.geolocation) {
         alert("La géolocalisation n'est pas supportée par ce navigateur.");
         return;
     }
-    navigator.geolocation.getCurrentPosition(function(pos) {
+    navigator.geolocation.getCurrentPosition(function (pos) {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         map.setView([lat, lng], 16);
@@ -291,9 +331,18 @@ document.getElementById('locateBtn').addEventListener('click', function() {
         // Remet le bouton toggle dans son état normal (optionnel, si tu le fais ailleurs)
         const toggleBtn = document.getElementById('mobileToggle');
         if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-    }, function() {
+    }, function () {
         alert("Impossible de récupérer votre position.");
     });
 });
 
 
+// Fermer le panel si on clique en dehors
+document.addEventListener('click', function (e) {
+    const panel = document.getElementById('details-panel');
+    const toggleBtn = document.getElementById('toggle-panel');
+
+    if (!panel.contains(e.target) && !toggleBtn.contains(e.target)) {
+        panel.classList.remove('expanded');
+    }
+});

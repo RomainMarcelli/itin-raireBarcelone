@@ -53,6 +53,8 @@
 
 { "type": "Feature", "properties": { "name": "Celler de Tapas", "description": "Restaurant du Vendredi soir.Il conserve, comme élément décoratif, sa cuisine entièrement ouverte permet d'observer les chefs préparer les tapas.", "category": "restaurant", "hours": "📅 Ouvert de 12:30 - 23:30"}, "geometry": { "type": "Point", "coordinates": [2.164369055820763, 41.38552894351864] } }, 
 
+{ "type": "Feature", "properties": { "name": "Casino Barcelona", "description": "Casino de Barcelone", "category": "hotel", "hours": "📅 Ouvert 24/24"}, "geometry": { "type": "Point", "coordinates": [2.197070826023681, 41.3868708593069] } }, 
+
 { "type": "Feature", "properties": { "name": "Port Olimpic", "description": "Port où se passera la sorti en Katamaran", "category": "hotel", "hours": "📅 Heure activité 11:00 - 16:00" }, "geometry": { "type": "Point", "coordinates": [2.201024271480614, 41.38672694901577] } }
 
 ] }

@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
         .catch((err) => console.error("❌ Erreur SW:", err));
 }
 
-const tileLayers = {
+const baseLayers = { // <-- utilise toujours baseLayers
     light: L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap & Carto',
         subdomains: 'abcd',
@@ -34,7 +34,18 @@ const tileLayers = {
     })
 };
 
-tileLayers.light.addTo(map);
+let currentBaseMap = baseLayers.light; // <-- let, pas var (pour le scope)
+currentBaseMap.addTo(map);
+
+function changeBaseMap(val) {
+    if (currentBaseMap) {
+        map.removeLayer(currentBaseMap);
+    }
+    currentBaseMap = baseLayers[val];
+    if (currentBaseMap) {
+        currentBaseMap.addTo(map);
+    }
+}
 
 let routingControl = null;
 let localRoutes = [];
@@ -75,8 +86,8 @@ function getIcon(category) {
     const color = colors[category] || "gray";
 
     return L.icon({
-        iconUrl: `https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-${color}.png`,
-        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+        iconUrl: `libs/markers/marker-icon-${color}.png`,
+        shadowUrl: "libs/markers/marker-shadow.png",
         iconSize: [25, 41],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],

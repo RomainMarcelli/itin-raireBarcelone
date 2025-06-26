@@ -2,121 +2,122 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Infos pratiques – Barcelone</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- FontAwesome pour les icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="info.css">
+  <meta charset="UTF-8" />
+  <link rel="icon" href="../icons/favicon.ico" type="image/ico">
+  <title>Infos pratiques – Barcelone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="info.css" />
 </head>
 
 <body>
-    <!-- Fenêtre de connexion -->
-    <a href="../index.html" class="login-back" id="login-back">
-        <i class="fas fa-arrow-left"></i>
+  <!-- Bouton retour -->
+
+
+  <!-- Connexion désactivée pour dev -->
+
+  <div id="login-modal">
+    <div id="login-box">
+      <h2>Connexion requise</h2>
+      <div id="login-error">Identifiant ou mot de passe incorrect</div>
+      <form id="login-form" autocomplete="off">
+        <input type="text" id="username" placeholder="Nom d'utilisateur" required autofocus />
+
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Mot de passe" required />
+          <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+        </div>
+
+        <button type="submit"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="media-wrapper">
+
+    <!-- Bloc d’infos pratiques -->
+    <div class="allInfo">
+      <h2><i class="fas fa-info-circle"></i> Infos pratiques – Barcelone</h2>
+      <div class="info-toggle-buttons">
+        <button class="toggle-btn active" data-target="transport">Infos transport</button>
+        <button class="toggle-btn" data-target="bateau">Infos bateau</button>
+      </div>
+
+      <div class="info-cards transport-info" style="display: none;">
+        <h4>Info transport : </h4>
+        <div class="info-card"><strong>Date et heure de la sortie</strong><br />27 juin 20H30</div>
+        <div class="info-card"><strong>Numéro de vol:</strong><br />VY8251</div>
+        <div class="info-card"><strong>Itinéraire :</strong><br />Aéroport Barcelone -> Hôtel Catalonia Ramblas</div>
+        <div class="info-card"><strong>Durée :</strong><br />18 minutes</div>
+        <div class="info-card"><strong>Distance :</strong><br />13Km</div>
+        <div class="info-card"><strong>Passager :</strong><br />16</div>
+        <div class="info-card"><strong>Mail Agence :</strong><br />info@transfeero.com</div>
+        <div class="info-card"><strong>Site web agence :</strong><br /><a
+            href="https://www.transfeero.com/fr/?source=ads&utm_source=gads&utm_term&gad_source=1&gad_campaignid=20655231552&gbraid=0AAAAACZt_NTSMlSomdlPM4zlqtBLgvXaE&gclid=CjwKCAjw3_PCBhA2EiwAkH_j4rx0dqy2zRvJlPEaqRdZvX_rcpizBnx3DgplKlgJ0rr153eZtZOoKRoC4N4QAvD_BwE"
+            target="_blank" rel="noopener noreferrer">Transfeero</a>
+        </div>
+        <div class="info-card"><strong>Numéro Europpéen :</strong><br />UK : +44 20 4586 9665 Italie : +39 06 9450 5426
+        </div>
+      </div>
+      <div class="info-cards bateau-info" style="display: none;">
+        <h4>Info Bateau : </h4>
+        <div class="info-card"><strong>Date et heure</strong><br />28 juin de 11H30 à 15h30</div>
+        <div class="info-card"><strong>Nom du bateau:</strong><br />Blue Magic Cat</div>
+        <div class="info-card"><strong>Contact :</strong><br />Ricardo : +34 633 562 011 <br> Xavi: +34 647 966 869 <br>
+          Carmen: +34 610 669 333</div>
+        <div class="info-card"><strong>Adresse :</strong><br />port Olímpic Barcelona, Amarre: 1544, 08005 Barcelona,
+          Espagne</div>
+        <div class="info-card"><strong>Service Inclut :</strong><br />Eau, 2 boissons sans alcool et 2 bières par
+          personne, 2 bouteilles de cava et 2 bouteilles de vin blanc
+          Snacks : jambon, fuet (saucisson catalan), fromage, chips, olives, noix et crackers</div>
+      </div>
+    </div>
+
+
+    <!-- Affichage image + visionneuse -->
+    <div class="info-gallery">
+      <div class="slider-wrapper">
+        <button class="slider-btn left"><i class="fas fa-chevron-left"></i></button>
+
+        <div class="slider">
+          <img src="info.png" alt="Infos pratiques Barcelone" class="thumbnail slider-image" data-full="info.png" />
+          <img src="boarding_info.png" alt="Aperçu PDF" class="thumbnail slider-image" data-full="boarding_info.png" />
+        </div>
+
+        <button class="slider-btn right"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <!-- Modale de visualisation -->
+      <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="fullImage" />
+        <a class="download-btn" id="downloadImg" href="#" download><i class="fas fa-download"></i> Télécharger</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- === FOOTER MOBILE === -->
+  <footer class="mobile-footer">
+    <a href="../index.html" class="footer-link">
+      <i class="fas fa-map"></i>
+      <span>Carte</span>
     </a>
-    <div id="login-modal">
-        <div id="login-box">
-            <h2>Connexion requise</h2>
-            <div id="login-error">Identifiant ou mot de passe incorrect</div>
-            <form id="login-form" autocomplete="off">
-                <input type="text" id="username" placeholder="Nom d'utilisateur" required autofocus>
-                <input type="password" id="password" placeholder="Mot de passe" required>
-                <button type="submit"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="infos-container" id="main-content" style="display:none;">
-        <a href="../index.html" class="login-back">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-        <h2><i class="fas fa-info-circle"></i> Infos pratiques Barcelone</h2>
-        <div class="info-section">
-            <h3><i class="fas fa-map-marked-alt"></i> Adresse & Quartier de l'hôtel</h3>
-            <ul>
-                <li>Hotel SYSTELCOMS<br>
-                    <small>Adresse : C/ de l’Exemple 123, 08009 Barcelona</small>
-                </li>
-                <li>Quartier : Eixample</li>
-            </ul>
-        </div>
-        <div class="info-section">
-            <h3><i class="fas fa-train"></i> Transports</h3>
-            <ul>
-                <li>Carte T-Casual : 11,35 € (10 trajets, métro/bus)</li>
-                <li>Métro 24h/24 le samedi soir (lignes principales)</li>
-                <li>Appli métro : TMBApp</li>
-                <li>Taxi : prise en charge minimum 2,55 €, appli FreeNow</li>
-            </ul>
-        </div>
-        <div class="info-section">
-            <h3><i class="fas fa-euro-sign"></i> Argent & paiements</h3>
-            <ul>
-                <li>Paiement CB presque partout</li>
-                <li>Retraits : privilégier les distributeurs des banques, éviter Euronet</li>
-            </ul>
-        </div>
-        <div class="info-section">
-            <h3><i class="fas fa-utensils"></i> Repas & horaires</h3>
-            <ul>
-                <li>Petit-déj. souvent après 9h</li>
-                <li>Déjeuner : 13h30-15h</li>
-                <li>Dîner : à partir de 20h30 (voire plus tard !)</li>
-                <li>Réservations recommandées le soir</li>
-            </ul>
-        </div>
-        <div class="info-section">
-            <h3><i class="fas fa-exclamation-triangle"></i> Astuces & sécurité</h3>
-            <ul>
-                <li>Attention pickpockets dans le métro et les lieux touristiques</li>
-                <li>Ne jamais laisser sac/portable sans surveillance en terrasse</li>
-                <li>Numéro d'urgence : 112</li>
-            </ul>
-        </div>
-        <div class="info-section">
-            <h3><i class="fas fa-wifi"></i> Internet</h3>
-            <ul>
-                <li>WiFi gratuit dans beaucoup de bars/restaurants</li>
-                <li>Réseau 4G/5G OK partout</li>
-            </ul>
-        </div>
-        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Revenir à la carte</a>
-    </div>
-
-    <script>
-        // Identifiants autorisés (à modifier selon ton choix)
-        const LOGIN = "Julie";
-        const PASS = "test";
-
-        const form = document.getElementById('login-form');
-        const errorDiv = document.getElementById('login-error');
-        const modal = document.getElementById('login-modal');
-        const mainContent = document.getElementById('main-content');
-        const login = document.getElementById('login-back');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value.trim();
-
-            if (user === LOGIN && pass === PASS) {
-                // Connexion ok : on cache le modal et on affiche le contenu
-                modal.style.display = 'none';
-                mainContent.style.display = 'block';
-                login.style.display = 'none'
-            } else {
-                errorDiv.style.display = 'block';
-                setTimeout(() => errorDiv.style.display = 'none', 2400);
-            }
-        });
-
-        // Option : focus sur l'input user au chargement
-        window.onload = () => {
-            document.getElementById('username').focus();
-        }
-    </script>
+    <a href="../metro/metro-lignes.html" class="footer-link">
+      <i class="fas fa-subway"></i>
+      <span>Métro</span>
+    </a>
+    <a href="../programme.html" class="footer-link">
+      <i class="fas fa-calendar-alt"></i>
+      <span>Programme</span>
+    </a>
+    <a href="../itineraire/itineraire.html" class="footer-link">
+      <i class="fas fa-route"></i>
+      <span>Dimanche</span>
+    </a>
+  </footer>
+  <script src="info.js" defer></script>
 </body>
-    
+
 </html>
