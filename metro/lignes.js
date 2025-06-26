@@ -1,20 +1,30 @@
-/// ----------- 🖼️ Plein écran avec navigation ----------- //
+// ----------- 🖼️ Plein écran avec navigation -----------
+
+// Récupération des éléments
 const fullscreen = document.getElementById('fullscreen-map');
 const fullscreenImg = fullscreen.querySelector('img');
-const allImages = Array.from(document.querySelectorAll('#metro-images img'));
 const closeBtn = document.getElementById('close-fullscreen');
 const prevBtn = document.getElementById('prev-image');
 const nextBtn = document.getElementById('next-image');
 const downloadBtn = document.getElementById('download-image');
 
+const thumbnail = document.getElementById('metro-thumbnail'); // Carte principale
+const lineImages = Array.from(document.querySelectorAll('#metro-images img')); // Lignes
+const allImages = [thumbnail, ...lineImages]; // Toutes les images à afficher
+
 let currentIndex = -1;
 
-// ▶️ Fonction pour ouvrir une image en plein écran
+// ▶️ Ouvrir une image en plein écran
 function openFullscreen(index) {
   if (index >= 0 && index < allImages.length) {
     fullscreen.style.display = 'flex';
     fullscreenImg.src = allImages[index].src;
     currentIndex = index;
+
+    // Définir un nom de fichier adapté
+    const altText = allImages[index].alt || 'image';
+    const fileName = altText.toLowerCase().replace(/\s+/g, '-') + '.png';
+    downloadBtn.setAttribute('data-filename', fileName);
   }
 }
 
@@ -25,41 +35,42 @@ function closeFullscreen() {
   currentIndex = -1;
 }
 
-// ◀️ Afficher l’image précédente
+// ◀️ Image précédente
 function showPrevious() {
   if (currentIndex > 0) {
     openFullscreen(currentIndex - 1);
   }
 }
 
-// ▶️ Afficher l’image suivante
+// ▶️ Image suivante
 function showNext() {
   if (currentIndex < allImages.length - 1) {
     openFullscreen(currentIndex + 1);
   }
 }
 
-// 💾 Télécharger l’image
+// 💾 Télécharger l'image courante
 function downloadCurrentImage() {
   if (fullscreenImg.src) {
     const link = document.createElement('a');
     link.href = fullscreenImg.src;
-    link.download = 'ligne-metro-barcelone.png';
+    link.download = downloadBtn.getAttribute('data-filename') || 'image.png';
     link.click();
   }
 }
 
-// 🎯 Lier les événements
+// 🎯 Lier les événements click sur chaque image
 allImages.forEach((img, index) => {
   img.addEventListener('click', () => openFullscreen(index));
 });
 
+// 🧩 Contrôles du mode plein écran
 closeBtn?.addEventListener('click', closeFullscreen);
 prevBtn?.addEventListener('click', showPrevious);
 nextBtn?.addEventListener('click', showNext);
 downloadBtn?.addEventListener('click', downloadCurrentImage);
 
-// ⎋ Fermer avec la touche Échap
+// ⎋ Touche Échap pour fermer
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeFullscreen();
@@ -67,11 +78,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-
 // ----------- 🔍 Barre de recherche + suggestions ----------- //
 const searchInput = document.getElementById('search-input');
 const suggestionList = document.getElementById('search-suggestions');
-const lineImages = document.querySelectorAll('.metro-line-img');
+// const lineImages = document.querySelectorAll('.metro-line-img');
 const clearBtn = document.createElement('span');
 
 clearBtn.id = 'clear-search';

@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Masquer toutes les sections
       document.querySelector('.transport-info').style.display = 'none';
       document.querySelector('.bateau-info').style.display = 'none';
+      document.querySelector('.avion-info').style.display = 'none';
 
       // Retirer l'état actif de tous les boutons
       document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
@@ -125,3 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
     toggle.classList.toggle("fa-eye-slash");
   });
 });
+
+function updateSlider() {
+  const slideWidth = slider.offsetWidth;
+  slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+}
