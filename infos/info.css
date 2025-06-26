@@ -22,8 +22,8 @@ h2 {
 #login-modal {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(5px);
-  background: rgba(0, 0, 0, 0.2);
+  /* backdrop-filter: blur(5px); */
+  background: rgb(207, 207, 207);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,6 +39,7 @@ h2 {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
   animation: fadeIn 0.3s ease-out;
+  margin: 0px 10px;
 }
 
 #login-box h2 {
@@ -47,10 +48,13 @@ h2 {
   font-size: 1.4em;
 }
 
+#login-form{
+  width: 100%;
+}
+
 #login-form input {
   padding: 12px;
   margin-bottom: 14px;
-  width: 100%;
   border: 1px solid #bdd5f2;
   border-radius: 6px;
   font-size: 1em;
@@ -83,6 +87,45 @@ h2 {
   color: red;
   margin-bottom: 10px;
   display: none;
+}
+
+#login-form input,
+#login-form button {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#password {
+  flex: 1;
+  padding: 12px;
+  padding-right: 38px; /* espace pour l’œil */
+  border: 1px solid #bdd5f2;
+  border-radius: 6px;
+  font-size: 1em;
+  background: #f7fafc;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  font-size: 1.1em;
+  color: #999;
+  cursor: pointer;
+  pointer-events: auto;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
+.toggle-password:hover {
+  color: #2270b4;
 }
 
 /* === MEDIA WRAPPER === */

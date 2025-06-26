@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // === Connexion désactivée temporairement pour dev ===
-  /*
   const LOGIN = "Julie";
-  const PASS = "test";
+  const PASS = "SysBarcelone2025";
   const form = document.getElementById('login-form');
   const errorDiv = document.getElementById('login-error');
   const modal = document.getElementById('login-modal');
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById('username').focus();
-  */
 
   // === Variables pour la visionneuse et le zoom ===
   const modalViewer = document.getElementById("imageModal");
@@ -110,5 +108,20 @@ document.addEventListener("DOMContentLoaded", function () {
         button.classList.add('active');
       }
     });
+  });
+});
+
+
+// Pour voir le mdp
+
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("togglePassword");
+  const password = document.getElementById("password");
+
+  toggle.addEventListener("click", () => {
+    const isVisible = password.type === "text";
+    password.type = isVisible ? "password" : "text";
+    toggle.classList.toggle("fa-eye");
+    toggle.classList.toggle("fa-eye-slash");
   });
 });
