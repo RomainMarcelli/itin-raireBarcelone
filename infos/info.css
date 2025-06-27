@@ -247,7 +247,13 @@ h2 {
   flex-shrink: 0;
   width: 100%;
   object-fit: cover;
+  margin-right: 10px; /* Écart entre les images */
 }
+
+.slider-image:last-child {
+  margin-right: 0; /* pas de marge sur la dernière image */
+}
+
 
 .slider-btn {
   background: #2270b4;
@@ -275,22 +281,6 @@ h2 {
     font-size: 0.95em;
     padding: 10px 12px;
   }
-}
-
-/* === THUMBNAIL IMAGE === */
-.thumbnail {
-  width: 100%;
-  max-width: 450px;
-  margin: 20px auto;
-  display: block;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-}
-.thumbnail:hover {
-  transform: scale(1.015);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* === IMAGE MODAL === */
@@ -390,10 +380,6 @@ h2 {
 
 /* === RESPONSIVE === */
 @media (max-width: 500px) {
-  .thumbnail {
-    max-width: 90%;
-  }
-
   .modal-content {
     max-width: 96%;
     max-height: 86vh;

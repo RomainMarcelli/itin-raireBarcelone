@@ -41,12 +41,13 @@
     <div class="allInfo">
       <h2><i class="fas fa-info-circle"></i> Infos pratiques – Barcelone</h2>
       <div class="info-toggle-buttons">
-        <button class="toggle-btn active" data-target="transport">Infos transport</button>
-        <button class="toggle-btn" data-target="bateau">Infos bateau</button>
+        <button class="toggle-btn active" data-target="transport">Transport</button>
+        <button class="toggle-btn" data-target="bateau">Bateau</button>
+        <button class="toggle-btn" data-target="avion">Avion</button>
       </div>
 
       <div class="info-cards transport-info" style="display: none;">
-        <h4>Info transport : </h4>
+        <h4>Info Transport de l'Aéroport vers l'Hôtel : </h4>
         <div class="info-card"><strong>Date et heure de la sortie</strong><br />27 juin 20H30</div>
         <div class="info-card"><strong>Numéro de vol:</strong><br />VY8251</div>
         <div class="info-card"><strong>Itinéraire :</strong><br />Aéroport Barcelone -> Hôtel Catalonia Ramblas</div>
@@ -62,7 +63,7 @@
         </div>
       </div>
       <div class="info-cards bateau-info" style="display: none;">
-        <h4>Info Bateau : </h4>
+        <h4>Info Bateau: </h4>
         <div class="info-card"><strong>Date et heure</strong><br />28 juin de 11H30 à 15h30</div>
         <div class="info-card"><strong>Nom du bateau:</strong><br />Blue Magic Cat</div>
         <div class="info-card"><strong>Contact :</strong><br />Ricardo : +34 633 562 011 <br> Xavi: +34 647 966 869 <br>
@@ -73,51 +74,54 @@
           personne, 2 bouteilles de cava et 2 bouteilles de vin blanc
           Snacks : jambon, fuet (saucisson catalan), fromage, chips, olives, noix et crackers</div>
       </div>
-    </div>
+      <div class="info-cards avion-info" style="display: none;">
+        <h4>Info Avion Paris -> Barcelone : </h4>
+        <div class="info-card"><strong>Numéro Navette:</strong><br />06 63 76 70 51</div>
+        <div class="info-card"><strong>Code réservation:</strong><br />IIUI9G</div>
+      </div>
 
+      <!-- Affichage image + visionneuse -->
+      <div class="info-gallery">
+        <div class="slider-wrapper">
+          <button class="slider-btn left"><i class="fas fa-chevron-left"></i></button>
 
-    <!-- Affichage image + visionneuse -->
-    <div class="info-gallery">
-      <div class="slider-wrapper">
-        <button class="slider-btn left"><i class="fas fa-chevron-left"></i></button>
+          <div class="slider">
+            <img src="info.png" alt="Infos pratiques Barcelone" class="slider-image" data-full="info.png" />
+            <img src="boarding_info.png" alt="Aperçu PDF" class="slider-image" data-full="boarding_info.png" />
+          </div>
 
-        <div class="slider">
-          <img src="info.png" alt="Infos pratiques Barcelone" class="thumbnail slider-image" data-full="info.png" />
-          <img src="boarding_info.png" alt="Aperçu PDF" class="thumbnail slider-image" data-full="boarding_info.png" />
+          <button class="slider-btn right"><i class="fas fa-chevron-right"></i></button>
         </div>
 
-        <button class="slider-btn right"><i class="fas fa-chevron-right"></i></button>
-      </div>
-
-      <!-- Modale de visualisation -->
-      <div id="imageModal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="fullImage" />
-        <a class="download-btn" id="downloadImg" href="#" download><i class="fas fa-download"></i> Télécharger</a>
+        <!-- Modale de visualisation -->
+        <div id="imageModal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="fullImage" />
+          <a class="download-btn" id="downloadImg" href="#" download><i class="fas fa-download"></i> Télécharger</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- === FOOTER MOBILE === -->
-  <footer class="mobile-footer">
-    <a href="../index.html" class="footer-link">
-      <i class="fas fa-map"></i>
-      <span>Carte</span>
-    </a>
-    <a href="../metro/metro-lignes.html" class="footer-link">
-      <i class="fas fa-subway"></i>
-      <span>Métro</span>
-    </a>
-    <a href="../programme.html" class="footer-link">
-      <i class="fas fa-calendar-alt"></i>
-      <span>Programme</span>
-    </a>
-    <a href="../itineraire/itineraire.html" class="footer-link">
-      <i class="fas fa-route"></i>
-      <span>Dimanche</span>
-    </a>
-  </footer>
-  <script src="info.js" defer></script>
+    <!-- === FOOTER MOBILE === -->
+    <footer class="mobile-footer">
+      <a href="../index.html" class="footer-link">
+        <i class="fas fa-map"></i>
+        <span>Carte</span>
+      </a>
+      <a href="../metro/metro-lignes.html" class="footer-link">
+        <i class="fas fa-subway"></i>
+        <span>Métro</span>
+      </a>
+      <a href="../programme.html" class="footer-link">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Programme</span>
+      </a>
+      <a href="../itineraire/itineraire.html" class="footer-link">
+        <i class="fas fa-route"></i>
+        <span>Dimanche</span>
+      </a>
+    </footer>
+    <script src="info.js" defer></script>
 </body>
 
 </html>

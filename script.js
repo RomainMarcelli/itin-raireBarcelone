@@ -247,6 +247,7 @@ function loadBarceloneData() {
                             ${feature.properties.hours ? `<div style="margin-top: 6px;">${feature.properties.hours}</div>` : ''}
                             ${feature.properties.best_time ? `<div style="margin-top: 6px;">${feature.properties.best_time}</div>` : ''}
                             ${prix ? `<p style="margin: 6px 0px 0px 0px;">Prix d'entrée : ${prix}</p>` : ''}
+                            ${feature.properties.website ? `<div style="margin-top: 6px;"><a href="${feature.properties.website}" target="_blank" style="color: #2270b4; text-decoration: underline;">Site web</a></div>` : ''}
                             ${metroInfo}
                         </div>
                     </div>
