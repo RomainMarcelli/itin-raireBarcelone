@@ -22,6 +22,13 @@ const FILES_TO_CACHE = [
   "metro/lignes.js",
   "itineraire/script.js",
   "mobile-routing.js",
+  "infos/info.js",
+
+  // INFOS
+
+  "infos/boarding_info.png",
+  "infos/info.png",
+  "infos/boarding_info.png",
 
   // Données
   "barcelone.geojson",
