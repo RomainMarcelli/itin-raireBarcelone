@@ -1125,44 +1125,72 @@ window.addEventListener('online', updateNetworkStatus);
 window.addEventListener('offline', updateNetworkStatus);
 window.addEventListener('load', updateNetworkStatus);
 
-// Fonction appelée par tous les boutons
-let userMarker;
+// LOCALISATION 
 
-function locateMe() {
-    if (!navigator.geolocation) {
-        alert("La géolocalisation n'est pas supportée par ce navigateur.");
-        return;
+let userMarker;
+let watchId;
+
+const locateBtn = document.getElementById('locateBtn');
+
+function startRealTimeLocation() {
+  if (!navigator.geolocation) {
+    alert("La géolocalisation n'est pas supportée par ce navigateur.");
+    return;
+  }
+
+  locateBtn.textContent = "❌ Arrêter la localisation";
+
+  watchId = navigator.geolocation.watchPosition((position) => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+    const userLatLng = L.latLng(lat, lng);
+
+    if (!userMarker) {
+      const userIcon = L.icon({
+        iconUrl: 'icons/user-position.png',
+        iconSize: [40, 40],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      });
+
+      userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map);
+      userMarker.bindPopup("Vous êtes ici");
+    } else {
+      userMarker.setLatLng(userLatLng);
     }
 
-    navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        const userLatLng = L.latLng(lat, lng);
-
-        map.setView(userLatLng, 16);
-
-        if (userMarker) {
-            map.removeLayer(userMarker);
-        }
-
-        const userIcon = L.icon({
-            iconUrl: 'icons/user-position.png',
-            iconSize: [40, 40],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32]
-        });
-
-        userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map);
-        userMarker.bindPopup("Vous êtes ici").openPopup();
-
-    }, () => {
-        alert("Impossible de vous localiser.");
-    });
+    map.setView(userLatLng, 16);
+  }, () => {
+    alert("Impossible de vous localiser.");
+  }, {
+    enableHighAccuracy: true
+  });
 }
 
-document.getElementById('locateBtn').addEventListener('click', locateMe);
-// Lier le bouton fixe
-document.getElementById('locateBtn').addEventListener('click', locateMe);
+function stopRealTimeLocation() {
+  if (watchId !== null) {
+    navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+    locateBtn.textContent = "📍 Me localiser";
+
+    // Supprimer le marqueur de l'utilisateur de la carte
+    if (userMarker) {
+      map.removeLayer(userMarker);
+      userMarker = null;
+    }
+  }
+}
+
+
+// 🔄 Toggle géolocalisation
+locateBtn.addEventListener('click', () => {
+  if (watchId === null) {
+    startRealTimeLocation();
+  } else {
+    stopRealTimeLocation();
+  }
+});
+
 
 
 // POUR LES FILTRES 
