@@ -257,7 +257,8 @@ function loadBarceloneData() {
                     specialMarkerRef.marker = marker;
                     specialMarkerRef.added = false;
                     // Ne pas l'ajouter tout de suite à la map
-                } else {
+                }
+                else {
                     marker.addTo(map);
                 }
 
@@ -725,31 +726,45 @@ endSelect.addEventListener('change', updateStartOptions);
 // --------- FONCTION PRINCIPALE DE FILTRAGE ----------
 function updateMapFilters() {
     const filterCheckboxes = Array.from(document.querySelectorAll('.filter')).filter(cb => cb.value !== "metro");
-    const anyChecked = filterCheckboxes.some(cb => cb.checked);
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const checkedCategories = filterCheckboxes
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
     const favorisActive = document.querySelector('.filter[value="favoris"]').checked;
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
     // Met à jour le texte du bouton
+    const allChecked = filterCheckboxes.length > 0 && filterCheckboxes.every(cb => cb.checked);
     const toggleButton = document.getElementById('toggle-filters');
-    toggleButton.textContent = anyChecked ? "Tout désélectionner" : "Tout sélectionner";
+
+    toggleButton.textContent = allChecked ? "Tout désélectionner" : "Tout sélectionner";
 
     // Affichage des marqueurs (hors métro et hors marker spécial)
     for (const cat in markersByCategory) {
         if (cat === "metro") continue;
-        const catCheckbox = document.querySelector(`.filter[value="${cat}"]`);
-        const isChecked = catCheckbox && catCheckbox.checked;
+
+        const isCatChecked = checkedCategories.includes(cat);
+
         markersByCategory[cat].forEach(marker => {
             if (specialMarkerRef.marker && marker === specialMarkerRef.marker) return;
-            if (anyChecked) {
-                if (favorisActive) {
-                    if (isChecked && favorites.includes(marker.options.poiName)) {
-                        marker.addTo(map);
-                    } else {
-                        map.removeLayer(marker);
-                    }
-                } else {
-                    isChecked ? marker.addTo(map) : map.removeLayer(marker);
-                }
+
+            const name = marker.options.poiName;
+
+            let shouldShow = false;
+
+            if (favorisActive && favorites.includes(name)) {
+                // Cas 1 : Favoris seul activé → n'afficher que les favoris
+                shouldShow = true;
+            } else if (!favorisActive && isCatChecked) {
+                // Cas 2 : filtre normal
+                shouldShow = true;
+            } else if (favorisActive && isCatChecked && favorites.includes(name)) {
+                // Cas 3 : combinaison active d’un filtre + favoris
+                shouldShow = true;
+            }
+
+            if (shouldShow) {
+                marker.addTo(map);
             } else {
                 map.removeLayer(marker);
             }
@@ -767,30 +782,50 @@ function updateMapFilters() {
 
 // --------- EVENEMENT SUR CHAQUE CASE A COCHER ----------
 document.querySelectorAll('.filter').forEach(checkbox => {
-    checkbox.addEventListener('change', updateMapFilters);
+    checkbox.addEventListener('change', () => {
+        if (checkbox.value === "favoris" && checkbox.checked) {
+            // Désélectionne tout sauf "favoris" et "metro"
+            document.querySelectorAll('.filter').forEach(cb => {
+                if (cb.value !== "favoris" && cb.value !== "metro") {
+                    cb.checked = false;
+                }
+            });
+        } else if (checkbox.value === "favoris" && !checkbox.checked) {
+            // Récoche tout sauf "favoris" et "metro"
+            document.querySelectorAll('.filter').forEach(cb => {
+                if (cb.value !== "favoris" && cb.value !== "metro") {
+                    cb.checked = true;
+                }
+            });
+        }
+
+        updateMapFilters();
+    });
 });
 
 // --------- BOUTON "TOUT SELECTIONNER / DESELECTIONNER" ----------
 const toggleButton = document.getElementById('toggle-filters');
 toggleButton.addEventListener('click', () => {
     const filterCheckboxes = Array.from(document.querySelectorAll('.filter')).filter(cb => cb.value !== "metro");
+    const favorisCheckbox = document.querySelector('.filter[value="favoris"]');
+
     const allChecked = filterCheckboxes.every(cb => cb.checked);
 
-    // Tout décocher ou tout cocher
+    // On inverse l'état de tous sauf "favoris"
     filterCheckboxes.forEach(cb => {
-        // Lors du "tout sélectionner", on décoche "favoris"
-        if (!allChecked && cb.value === "favoris") {
-            cb.checked = false;
-        } else {
-            cb.checked = !allChecked;
-        }
+        cb.checked = !allChecked;
     });
+
+    // Toujours décocher "favoris" quand on clique sur "Tout sélectionner"
+    if (!allChecked && favorisCheckbox) {
+        favorisCheckbox.checked = false;
+    }
 
     updateMapFilters();
 });
 
 
-
+// --------- AJOUT AUX FAVORIS ----------
 function addToFavorites(name) {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     if (!favorites.includes(name)) {
@@ -803,6 +838,7 @@ function addToFavorites(name) {
     }
 }
 
+// --------- PANEL DRAGGABLE ----------
 (function makeDraggable() {
     const panel = document.getElementById('controls');
     const handle = document.getElementById('drag-handle');
@@ -812,7 +848,7 @@ function addToFavorites(name) {
         isDragging = true;
         offsetX = e.clientX - panel.offsetLeft;
         offsetY = e.clientY - panel.offsetTop;
-        panel.style.transition = 'none'; // désactive transition pendant le drag
+        panel.style.transition = 'none';
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -1125,44 +1161,72 @@ window.addEventListener('online', updateNetworkStatus);
 window.addEventListener('offline', updateNetworkStatus);
 window.addEventListener('load', updateNetworkStatus);
 
-// Fonction appelée par tous les boutons
-let userMarker;
+// LOCALISATION 
 
-function locateMe() {
+let userMarker;
+let watchId;
+
+const locateBtn = document.getElementById('locateBtn');
+
+function startRealTimeLocation() {
     if (!navigator.geolocation) {
         alert("La géolocalisation n'est pas supportée par ce navigateur.");
         return;
     }
 
-    navigator.geolocation.getCurrentPosition((position) => {
+    locateBtn.textContent = "❌ Arrêter la localisation";
+
+    watchId = navigator.geolocation.watchPosition((position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         const userLatLng = L.latLng(lat, lng);
 
-        map.setView(userLatLng, 16);
+        if (!userMarker) {
+            const userIcon = L.icon({
+                iconUrl: 'icons/user-position.png',
+                iconSize: [40, 40],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -32]
+            });
 
-        if (userMarker) {
-            map.removeLayer(userMarker);
+            userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map);
+            userMarker.bindPopup("Vous êtes ici");
+        } else {
+            userMarker.setLatLng(userLatLng);
         }
 
-        const userIcon = L.icon({
-            iconUrl: 'icons/user-position.png',
-            iconSize: [40, 40],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32]
-        });
-
-        userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map);
-        userMarker.bindPopup("Vous êtes ici").openPopup();
-
+        map.setView(userLatLng, 16);
     }, () => {
         alert("Impossible de vous localiser.");
+    }, {
+        enableHighAccuracy: true
     });
 }
 
-document.getElementById('locateBtn').addEventListener('click', locateMe);
-// Lier le bouton fixe
-document.getElementById('locateBtn').addEventListener('click', locateMe);
+function stopRealTimeLocation() {
+    if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+        locateBtn.textContent = "📍 Me localiser";
+
+        // Supprimer le marqueur de l'utilisateur de la carte
+        if (userMarker) {
+            map.removeLayer(userMarker);
+            userMarker = null;
+        }
+    }
+}
+
+
+// 🔄 Toggle géolocalisation
+locateBtn.addEventListener('click', () => {
+    if (watchId === null) {
+        startRealTimeLocation();
+    } else {
+        stopRealTimeLocation();
+    }
+});
+
 
 
 // POUR LES FILTRES 
